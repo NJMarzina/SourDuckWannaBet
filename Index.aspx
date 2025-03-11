@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="SourDuckWannaBet.Index" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="SourDuckWannaBet.Index" Async="true" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -64,7 +64,8 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="button" value="Register" onclick="registerUser()" />
+                        <!-- Change from <input> to <asp:Button> -->
+                        <asp:Button ID="btnRegister" runat="server" Text="Register" OnClick="RegisterButton_Click" />
                     </td>
                 </tr>
             </table>

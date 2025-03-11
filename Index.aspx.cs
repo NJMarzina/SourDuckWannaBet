@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Web.UI;
 using Models;
 using Utilities;
@@ -8,59 +9,80 @@ namespace SourDuckWannaBet
     public partial class Index : Page
     {
         // Reference to the SupabaseService that you have in the Utilities library
-        private readonly SupabaseServices _supabaseService;
+        private SupabaseServices _supabaseService;
 
         public Index()
         {
             // Instantiate the SupabaseService (you can adjust this if you're using DI)
-            //_supabaseService = new SupabaseServices(new System.Net.Http.HttpClient());
+            _supabaseService = new SupabaseServices(new System.Net.Http.HttpClient());
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // If it's a postback and the register button was clicked, we will handle the user registration
-            if (IsPostBack && Request["__EVENTTARGET"] == "register")
+            if (!IsPostBack)
             {
-                string[] userData = Request["__EVENTARGUMENT"].Split(',');
-
-                if (userData.Length == 12)
-                {
-                    var newUser = new User
-                    {
-                        UserID = long.Parse(userData[0]), // Handle UserID generation as needed
-                        Username = userData[1],
-                        Password = userData[2],
-                        FirstName = userData[3],
-                        LastName = userData[4],
-                        Email = userData[5],
-                        PhoneNumber = long.Parse(userData[6]),
-                        Balance = double.Parse(userData[7]),
-                        NumWins = long.Parse(userData[8]),
-                        NumLoses = long.Parse(userData[9]),
-                        NumBets = long.Parse(userData[10]),
-                        CreatedAt = DateTime.UtcNow,
-                        UserType = userData[11],
-                        Subscription = userData[12]
-                    };
-
-                    // Add the user to the database
-                    AddUserAsync(newUser);
-                }
+                // Initialize the SupabaseService with necessary configuration
+                _supabaseService = new SupabaseServices(
+                    new HttpClient(),
+                    "https://sliykwxeogrnrqgysvrh.supabase.co", // Your Supabase URL
+                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNsaXlrd3hlb2dybnJxZ3lzdnJoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczNDcyNjIxMiwiZXhwIjoyMDUwMzAyMjEyfQ.ycvakwhbuLIowmE7X_V-AXCB5GB2EWmbr1_ua9JMzgM" // Your Supabase API Key
+                );
             }
+        }
+
+        // This is the event handler for the Register button
+        protected void RegisterButton_Click(object sender, EventArgs e)
+        {
+            // Retrieve values from form fields
+            var username = txtUsername.Value;
+            var password = txtPassword.Value;
+            var firstName = txtFirstName.Value;
+            var lastName = txtLastName.Value;
+            var email = txtEmail.Value;
+            var phoneNumber = txtPhoneNumber.Value;
+            var balance = double.Parse(txtBalance.Value);
+            var numWins = long.Parse(txtNumWins.Value);
+            var numLoses = long.Parse(txtNumLoses.Value);
+            var numBets = long.Parse(txtNumBets.Value);
+            var userType = txtUserType.Value;
+            var subscription = txtSubscription.Value;
+
+            // Create a new User object
+            var newUser = new User
+            {
+                UserID = 1234, // Or generate an ID as needed
+                Username = username,
+                Password = password, // Remember to hash this password in a real-world application
+                FirstName = firstName,
+                LastName = lastName,
+                Email = email,
+                PhoneNumber = long.Parse(phoneNumber),
+                Balance = balance,
+                NumWins = numWins,
+                NumLoses = numLoses,
+                NumBets = numBets,
+                CreatedAt = DateTime.UtcNow,
+                UserType = userType,
+                Subscription = subscription
+            };
+
+            // Call AddUserAsync method to add the user to the database
+            AddUserAsync(newUser);
         }
 
         private async void AddUserAsync(User newUser)
         {
             try
             {
-                // Call SupabaseService to add the user
+                // Add the user to the Supabase database using the SupabaseService
                 await _supabaseService.AddUserAsync(newUser);
-                // Display success message to the user
+
+                // Success message
                 Response.Write("<script>alert('User added successfully');</script>");
             }
             catch (Exception ex)
             {
-                // Display failure message if something goes wrong
+                // Display error message if the user creation fails
                 Response.Write("<script>alert('Error: " + ex.Message + "');</script>");
             }
         }

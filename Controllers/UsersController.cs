@@ -23,13 +23,12 @@ namespace SourDuckWannaBet.Controllers
         {
             var newUser = new User
             {
-                UserID = 1234567890,
                 Username = "john_doe",
                 Password = "securePassword123",  // Don't forget to hash passwords!
                 FirstName = "John",
                 LastName = "Doe",
                 Email = "john.doe@example.com",
-                PhoneNumber = 1234567890,
+                PhoneNumber = 1234,
                 Balance = 1000.50,
                 NumWins = 10,
                 NumLoses = 5,
