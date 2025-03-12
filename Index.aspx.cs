@@ -23,16 +23,20 @@ namespace SourDuckWannaBet
             if (!IsPostBack)
             {
                 // Initialize the SupabaseService with necessary configuration
+                /*
                 _supabaseService = new SupabaseServices(
                     new HttpClient(),
                     "https://sliykwxeogrnrqgysvrh.supabase.co", // Your Supabase URL
                     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNsaXlrd3hlb2dybnJxZ3lzdnJoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczNDcyNjIxMiwiZXhwIjoyMDUwMzAyMjEyfQ.ycvakwhbuLIowmE7X_V-AXCB5GB2EWmbr1_ua9JMzgM" // Your Supabase API Key
                 );
+                */
+
+                _supabaseService = new SupabaseServices(new HttpClient());
             }
         }
 
         // This is the event handler for the Register button
-        protected void RegisterButton_Click(object sender, EventArgs e)
+        protected void RegisterButton_OnClick(object sender, EventArgs e)
         {
             // Retrieve values from form fields
             var username = txtUsername.Value;
@@ -51,7 +55,7 @@ namespace SourDuckWannaBet
             // Create a new User object
             var newUser = new User
             {
-                UserID = 12345, // Or generate an ID as needed
+                UserID = 123456, // Or generate an ID as needed
                 //generate id
 
                 Username = username,
@@ -72,7 +76,7 @@ namespace SourDuckWannaBet
             // Call AddUserAsync method to add the user to the database
             AddUserAsync(newUser);
 
-            
+            _supabaseService.AddUser(newUser);
             //UsersController uc = new UsersController();
             //_ = uc.AddUser();
 
@@ -83,7 +87,7 @@ namespace SourDuckWannaBet
             try
             {
                 // Add the user to the Supabase database using the SupabaseService
-                await _supabaseService.AddUserAsync(newUser);
+                _supabaseService.AddUser(newUser);
 
                 // Success message
                 Response.Write("<script>alert('User added successfully');</script>");

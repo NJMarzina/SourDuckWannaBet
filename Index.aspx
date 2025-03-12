@@ -65,7 +65,7 @@
                 <tr>
                     <td colspan="2">
                         <!-- Change from <input> to <asp:Button> -->
-                        <asp:Button ID="btnRegister" runat="server" Text="Register" OnClick="RegisterButton_Click" />
+                        <asp:Button ID="btnRegister" runat="server" Text="Register" OnClick="RegisterButton_OnClick" />
                     </td>
                 </tr>
             </table>
@@ -74,26 +74,5 @@
 
         </div>
     </form>
-
-    <script>
-        // JavaScript function to gather form data and call the server-side handler
-        function registerUser() {
-            var username = document.getElementById('<%= txtUsername.ClientID %>').value;
-            var password = document.getElementById('<%= txtPassword.ClientID %>').value;
-            var firstName = document.getElementById('<%= txtFirstName.ClientID %>').value;
-            var lastName = document.getElementById('<%= txtLastName.ClientID %>').value;
-            var email = document.getElementById('<%= txtEmail.ClientID %>').value;
-            var phoneNumber = document.getElementById('<%= txtPhoneNumber.ClientID %>').value;
-            var balance = document.getElementById('<%= txtBalance.ClientID %>').value;
-            var numWins = document.getElementById('<%= txtNumWins.ClientID %>').value;
-            var numLoses = document.getElementById('<%= txtNumLoses.ClientID %>').value;
-            var numBets = document.getElementById('<%= txtNumBets.ClientID %>').value;
-            var userType = document.getElementById('<%= txtUserType.ClientID %>').value;
-            var subscription = document.getElementById('<%= txtSubscription.ClientID %>').value;
-
-            // Call server-side method to add user
-            __doPostBack('register', username + ',' + password + ',' + firstName + ',' + lastName + ',' + email + ',' + phoneNumber + ',' + balance + ',' + numWins + ',' + numLoses + ',' + numBets + ',' + userType + ',' + subscription);
-        }
-    </script>
 </body>
 </html>

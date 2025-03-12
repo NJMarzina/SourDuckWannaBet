@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Models;
 
@@ -27,12 +26,12 @@ namespace Utilities
             _supabaseServiceRoleKey = supabaseServiceRoleKey;
         }
 
-        public async Task AddUserAsync(User user)
+        // Synchronous AddUser method
+        public int AddUser(User user)
         {
             // Map C# properties to match PostgreSQL column names
             var userDto = new
             {
-                userID = user.UserID,
                 username = user.Username,
                 password = user.Password,
                 first_name = user.FirstName,
@@ -60,29 +59,36 @@ namespace Utilities
                 Content = content
             };
 
-            // Set the headers on the HttpRequestMessage (NOT Content-Type since it's already on the content)
+            // Set the headers on the HttpRequestMessage
             request.Headers.Add("apikey", _supabaseServiceRoleKey);
             request.Headers.Add("Authorization", $"Bearer {_supabaseServiceRoleKey}");
             request.Headers.Add("Prefer", "return=representation");
 
             try
             {
-                // Send the request
-                var response = await _httpClient.SendAsync(request);
+                // Send the request synchronously using SendAsync().Result to block the thread
+                var response = _httpClient.SendAsync(request).Result;
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    var errorContent = await response.Content.ReadAsStringAsync();
+                    var errorContent = response.Content.ReadAsStringAsync().Result;  // Blocking call here
                     throw new Exception($"Error adding user to Supabase: {response.StatusCode} - {response.ReasonPhrase}\nDetails: {errorContent}");
                 }
 
                 // Optionally, handle the response
-                var responseData = await response.Content.ReadAsStringAsync();
+                var responseData = response.Content.ReadAsStringAsync().Result;  // Blocking call here
                 Console.WriteLine("User added successfully!");
+
+                // Parse the returned user_id from the response (Supabase returns the full inserted row when "return=representation" is set)
+                dynamic responseJson = JsonConvert.DeserializeObject(responseData);
+                int userId = responseJson.user_id;
+
+                // Return the user_id to the caller
+                return userId;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception in AddUserAsync: {ex.Message}");
+                Console.WriteLine($"Exception in AddUser: {ex.Message}");
                 throw;
             }
         }

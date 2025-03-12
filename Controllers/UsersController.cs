@@ -44,7 +44,7 @@ namespace SourDuckWannaBet.Controllers
                 Subscription = "basic"
             };
 
-            await _supabaseService.AddUserAsync(newUser);
+            _supabaseService.AddUser(newUser);
             return Ok("User added successfully.");
         }
     }
