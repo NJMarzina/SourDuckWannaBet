@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Web.UI;
 using Models;
+using SourDuckWannaBet.Controllers;
 using Utilities;
 
 namespace SourDuckWannaBet
@@ -50,7 +51,9 @@ namespace SourDuckWannaBet
             // Create a new User object
             var newUser = new User
             {
-                UserID = 1234, // Or generate an ID as needed
+                UserID = 12345, // Or generate an ID as needed
+                //generate id
+
                 Username = username,
                 Password = password, // Remember to hash this password in a real-world application
                 FirstName = firstName,
@@ -68,6 +71,11 @@ namespace SourDuckWannaBet
 
             // Call AddUserAsync method to add the user to the database
             AddUserAsync(newUser);
+
+            
+            //UsersController uc = new UsersController();
+            //_ = uc.AddUser();
+
         }
 
         private async void AddUserAsync(User newUser)

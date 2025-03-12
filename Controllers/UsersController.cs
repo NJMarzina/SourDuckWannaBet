@@ -12,7 +12,13 @@ namespace SourDuckWannaBet.Controllers
 {
     public class UsersController : ControllerBase
     {
-        private readonly SupabaseServices _supabaseService;
+        SupabaseServices _supabaseService;
+
+        public UsersController()
+        {
+            
+
+        }
 
         public UsersController(SupabaseServices supabaseService)
         {
@@ -34,8 +40,8 @@ namespace SourDuckWannaBet.Controllers
                 NumLoses = 5,
                 NumBets = 15,
                 CreatedAt = DateTime.UtcNow,
-                UserType = "regular",
-                Subscription = "premium"
+                UserType = "basic",
+                Subscription = "basic"
             };
 
             await _supabaseService.AddUserAsync(newUser);
