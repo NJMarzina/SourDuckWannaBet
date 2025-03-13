@@ -227,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Index.aspx" />
+    <Content Include="SendABet.aspx" />
     <Content Include="ViewAllUsers.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -240,6 +241,13 @@
       <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SendABet.aspx.cs">
+      <DependentUpon>SendABet.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SendABet.aspx.designer.cs">
+      <DependentUpon>SendABet.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ViewAllUsers.aspx.cs">
       <DependentUpon>ViewAllUsers.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

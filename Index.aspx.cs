@@ -76,7 +76,7 @@ namespace SourDuckWannaBet
 
         protected void btnSendABet_OnClick(object sender, EventArgs e)
         {
-            // TODO
+            Response.Redirect("SendABet.aspx");
         }
 
         protected void btnViewBets_OnClick(object sender, EventArgs e)
