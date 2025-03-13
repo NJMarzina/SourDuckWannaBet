@@ -28,6 +28,22 @@ namespace SourDuckWannaBet.Controllers
         {
             try
             {
+                // Log the bet object being sent
+                Console.WriteLine("Bet object being sent:");
+                Console.WriteLine($"UserID_Sender: {bet.UserID_Sender}");
+                Console.WriteLine($"UserID_Receiver: {bet.UserID_Receiver}");
+                Console.WriteLine($"BetA_Amount: {bet.BetA_Amount}");
+                Console.WriteLine($"BetB_Amount: {bet.BetB_Amount}");
+                Console.WriteLine($"Pending_Bet: {bet.Pending_Bet}");
+                Console.WriteLine($"Description: {bet.Description}");
+                Console.WriteLine($"Status: {bet.Status}");
+                Console.WriteLine($"Sender_Result: {bet.Sender_Result}");
+                Console.WriteLine($"Receiver_Result: {bet.Receiver_Result}");
+                Console.WriteLine($"Sender_Balance_Change: {bet.Sender_Balance_Change}");
+                Console.WriteLine($"Receiver_Balance_Change: {bet.Receiver_Balance_Change}");
+                Console.WriteLine($"UserID_Mediator: {bet.UserID_Mediator}");
+                Console.WriteLine($"UpdatedAt: {bet.UpdatedAt}");
+
                 // Add bet to the database
                 var tableName = "bets";
                 int betId = await _supabaseService.AddToIndicatedTableAsync(bet, tableName);
@@ -35,6 +51,9 @@ namespace SourDuckWannaBet.Controllers
             }
             catch (Exception ex)
             {
+                // Log the full error message
+                Console.WriteLine($"Error adding bet: {ex.Message}");
+                Console.WriteLine($"Stack Trace: {ex.StackTrace}");
                 return BadRequest($"Failed to add bet: {ex.Message}");
             }
         }

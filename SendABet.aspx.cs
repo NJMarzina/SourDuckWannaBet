@@ -686,6 +686,9 @@ namespace SourDuckWannaBet
                     }
 
                     // Create a new bet object
+
+                    //error starts here?!?!?!?!?!?!??
+                    //TODO
                     var bet = new Bet
                     {
                         UserID_Sender = senderUserID,    // Use the retrieved sender ID
@@ -699,7 +702,8 @@ namespace SourDuckWannaBet
                         Receiver_Result = txtReceiverResult.Text,
                         Sender_Balance_Change = 0, // Will be updated when bet is settled
                         Receiver_Balance_Change = 0, // Will be updated when bet is settled
-                        UserID_Mediator = chkNeedMediator.Checked ? 0 : -1 // 0 means mediator needed but not assigned, -1 means no mediator
+                        //UserID_Mediator = chkNeedMediator.Checked ? 0 : -1 // 0 means mediator needed but not assigned, -1 means no mediator
+                        UserID_Mediator = 1
                     };
 
                     // Use a BetsController to save the bet

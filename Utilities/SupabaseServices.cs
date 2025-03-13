@@ -120,18 +120,18 @@ namespace Utilities
             {
                 return new
                 {
-                    user_id_sender = bet.UserID_Sender,
-                    user_id_receiver = bet.UserID_Receiver,
-                    beta_amount = bet.BetA_Amount,
-                    betb_amount = bet.BetB_Amount,
-                    pending_bet = bet.Pending_Bet,
+                    userID_Sender = bet.UserID_Sender,
+                    userID_Receiver = bet.UserID_Receiver,
+                    betA_Amount = bet.BetA_Amount,
+                    betB_Amount = bet.BetB_Amount,
+                    pending_Bet = bet.Pending_Bet,
                     description = bet.Description,
                     status = bet.Status,
-                    sender_result = bet.Sender_Result,
-                    receiver_result = bet.Receiver_Result,
-                    sender_balance_change = bet.Sender_Balance_Change,
-                    receiver_balance_change = bet.Receiver_Balance_Change,
-                    user_id_mediator = bet.UserID_Mediator,
+                    sender_Result = bet.Sender_Result,
+                    receiver_Result = bet.Receiver_Result,
+                    sender_Balance_Change = bet.Sender_Balance_Change,
+                    receiver_Balance_Change = bet.Receiver_Balance_Change,
+                    userID_Mediator = bet.UserID_Mediator,
                     updated_at = bet.UpdatedAt
                 };
             }
