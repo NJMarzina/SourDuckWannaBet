@@ -1,5 +1,6 @@
 ﻿using Models;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,21 @@ namespace SourDuckWannaBet.Controllers
             catch (Exception ex)
             {
                 return BadRequest($"Failed to add user: {ex.Message}");
+            }
+        }
+
+        public async Task<List<User>> GetAllUsersAsync()
+        {
+            try
+            {
+                // Get all users from the database
+                var tableName = "users";
+                var users = await _supabaseService.GetAllFromTableAsync<User>(tableName);
+                return users;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to get users: {ex.Message}");
             }
         }
     }

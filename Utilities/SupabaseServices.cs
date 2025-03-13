@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Models;
+using System.Collections.Generic;
 
 namespace Utilities
 {
@@ -133,6 +134,76 @@ namespace Utilities
                 // Add more cases for other tables
                 default:
                     return "id";
+            }
+        }
+
+        // Add this method to your existing SupabaseServices class
+        public async Task<List<T>> GetAllFromTableAsync<T>(string tableName) where T : class, new()
+        {
+            var url = $"{_supabaseUrl}/rest/v1/{tableName}?select=*";
+
+            // Create an HttpRequestMessage
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+            // Set the headers
+            request.Headers.Add("apikey", _supabaseServiceRoleKey);
+            request.Headers.Add("Authorization", $"Bearer {_supabaseServiceRoleKey}");
+
+            try
+            {
+                // Send the request asynchronously
+                var response = await _httpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error getting data from {tableName}: {response.StatusCode} - {response.ReasonPhrase}\nDetails: {errorContent}");
+                }
+
+                // Handle the response
+                var responseData = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Retrieved data from {tableName} successfully!");
+
+                // Parse the returned data from the response
+                var items = JsonConvert.DeserializeObject<List<JObject>>(responseData);
+
+                // Convert JObjects to the requested type
+                var result = new List<T>();
+                foreach (var item in items)
+                {
+                    var obj = new T();
+
+                    if (typeof(T) == typeof(User))
+                    {
+                        var user = obj as User;
+
+                        // Map database columns to C# properties
+                        user.UserID = item["userID"]?.Value<int>() ?? 0;
+                        user.Username = item["username"]?.Value<string>();
+                        user.Password = item["password"]?.Value<string>();
+                        user.FirstName = item["first_name"]?.Value<string>();
+                        user.LastName = item["last_name"]?.Value<string>();
+                        user.Email = item["email"]?.Value<string>();
+                        user.PhoneNumber = item["phone_number"]?.Value<long>() ?? 0;
+                        user.Balance = item["balance"]?.Value<double>() ?? 0;
+                        user.NumWins = item["num_wins"]?.Value<long>() ?? 0;
+                        user.NumLoses = item["num_loses"]?.Value<long>() ?? 0;
+                        user.NumBets = item["num_bets"]?.Value<long>() ?? 0;
+                        user.CreatedAt = item["created_at"]?.Value<DateTime>() ?? DateTime.MinValue;
+                        user.UserType = item["user_type"]?.Value<string>();
+                        user.Subscription = item["subscription"]?.Value<string>();
+                    }
+                    // Add handling for other types as needed
+
+                    result.Add(obj);
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in GetAllFromTableAsync: {ex.Message}");
+                throw;
             }
         }
     }
