@@ -32,8 +32,11 @@ namespace Utilities
         // Generic method to add any object to any table
         public async Task<int> AddToIndicatedTableAsync<T>(T entity, string tableName)
         {
+            // Convert entity to DTO based on its type
+            object dto = ConvertToDTO(entity);
+
             var url = $"{_supabaseUrl}/rest/v1/{tableName}";
-            var json = JsonConvert.SerializeObject(entity);
+            var json = JsonConvert.SerializeObject(dto);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Create an HttpRequestMessage
@@ -55,13 +58,11 @@ namespace Utilities
                 if (!response.IsSuccessStatusCode)
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"Supabase API Error Response: {errorContent}");
                     throw new Exception($"Error adding to {tableName}: {response.StatusCode} - {response.ReasonPhrase}\nDetails: {errorContent}");
                 }
 
                 // Handle the response
                 var responseData = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Supabase API Response: {responseData}");
                 Console.WriteLine($"Added to {tableName} successfully!");
 
                 // Parse the returned ID from the response
