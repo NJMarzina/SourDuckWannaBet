@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Models;
 
 namespace Utilities
@@ -15,8 +17,8 @@ namespace Utilities
         public SupabaseServices(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _supabaseUrl = "https://sliykwxeogrnrqgysvrh.supabase.co";  // Your Supabase URL
-            _supabaseServiceRoleKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNsaXlrd3hlb2dybnJxZ3lzdnJoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczNDcyNjIxMiwiZXhwIjoyMDUwMzAyMjEyfQ.ycvakwhbuLIowmE7X_V-AXCB5GB2EWmbr1_ua9JMzgM";  // Use service_role key
+            _supabaseUrl = "https://sliykwxeogrnrqgysvrh.supabase.co";
+            _supabaseServiceRoleKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNsaXlrd3hlb2dybnJxZ3lzdnJoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczNDcyNjIxMiwiZXhwIjoyMDUwMzAyMjEyfQ.ycvakwhbuLIowmE7X_V-AXCB5GB2EWmbr1_ua9JMzgM";
         }
 
         public SupabaseServices(HttpClient httpClient, string supabaseUrl, string supabaseServiceRoleKey)
@@ -26,31 +28,14 @@ namespace Utilities
             _supabaseServiceRoleKey = supabaseServiceRoleKey;
         }
 
-        // Synchronous AddUser method
-        public int AddUser(User user)
+        // Generic method to add any object to any table
+        public async Task<int> AddToIndicatedTableAsync<T>(T entity, string tableName)
         {
-            // Map C# properties to match PostgreSQL column names
-            var userDto = new
-            {
-                username = user.Username,
-                password = user.Password,
-                first_name = user.FirstName,
-                last_name = user.LastName,
-                email = user.Email,
-                phone_number = user.PhoneNumber,
-                balance = user.Balance,
-                num_wins = user.NumWins,
-                num_loses = user.NumLoses,
-                num_bets = user.NumBets,
-                created_at = user.CreatedAt,
-                user_type = user.UserType,
-                subscription = user.Subscription
-            };
+            // Convert entity to DTO based on its type
+            object dto = ConvertToDTO(entity);
 
-            var url = $"{_supabaseUrl}/rest/v1/users";  // Make sure "users" matches your table name
-            var json = JsonConvert.SerializeObject(userDto);
-
-            // Create the StringContent with Content-Type header
+            var url = $"{_supabaseUrl}/rest/v1/{tableName}";
+            var json = JsonConvert.SerializeObject(dto);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Create an HttpRequestMessage
@@ -59,37 +44,95 @@ namespace Utilities
                 Content = content
             };
 
-            // Set the headers on the HttpRequestMessage
+            // Set the headers
             request.Headers.Add("apikey", _supabaseServiceRoleKey);
             request.Headers.Add("Authorization", $"Bearer {_supabaseServiceRoleKey}");
             request.Headers.Add("Prefer", "return=representation");
 
             try
             {
-                // Send the request synchronously using SendAsync().Result to block the thread
-                var response = _httpClient.SendAsync(request).Result;
+                // Send the request asynchronously
+                var response = await _httpClient.SendAsync(request);
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    var errorContent = response.Content.ReadAsStringAsync().Result;  // Blocking call here
-                    throw new Exception($"Error adding user to Supabase: {response.StatusCode} - {response.ReasonPhrase}\nDetails: {errorContent}");
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error adding to {tableName}: {response.StatusCode} - {response.ReasonPhrase}\nDetails: {errorContent}");
                 }
 
-                // Optionally, handle the response
-                var responseData = response.Content.ReadAsStringAsync().Result;  // Blocking call here
-                Console.WriteLine("User added successfully!");
+                // Handle the response
+                var responseData = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Added to {tableName} successfully!");
 
-                // Parse the returned user_id from the response (Supabase returns the full inserted row when "return=representation" is set)
-                dynamic responseJson = JsonConvert.DeserializeObject(responseData);
-                int userId = responseJson.user_id;
+                // Parse the returned ID from the response
+                JArray responseJsonArray = JsonConvert.DeserializeObject<JArray>(responseData);
 
-                // Return the user_id to the caller
-                return userId;
+                // Check if response is an array and contains at least one element
+                if (responseJsonArray.Count > 0)
+                {
+                    // Extract ID from the first element in the array (assuming primary key column name)
+                    string idColumnName = GetIdColumnName(tableName);
+                    int id = responseJsonArray[0][idColumnName].Value<int>();
+                    return id;
+                }
+                else
+                {
+                    throw new Exception($"Error: The response does not contain {tableName} data.");
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception in AddUser: {ex.Message}");
+                Console.WriteLine($"Exception in AddToIndicatedTable: {ex.Message}");
                 throw;
+            }
+        }
+
+        // For backward compatibility
+        public async Task<int> AddUser(User user)
+        {
+            return await AddToIndicatedTableAsync(user, "users");
+        }
+
+        // Helper method to convert entities to DTOs with proper column naming
+        private object ConvertToDTO<T>(T entity)
+        {
+            if (entity is User user)
+            {
+                return new
+                {
+                    username = user.Username,
+                    password = user.Password,
+                    first_name = user.FirstName,
+                    last_name = user.LastName,
+                    email = user.Email,
+                    phone_number = user.PhoneNumber,
+                    balance = user.Balance,
+                    num_wins = user.NumWins,
+                    num_loses = user.NumLoses,
+                    num_bets = user.NumBets,
+                    created_at = user.CreatedAt,
+                    user_type = user.UserType,
+                    subscription = user.Subscription
+                };
+            }
+
+            // Add more entity types as needed
+            // else if (entity is AnotherModel anotherModel) { ... }
+
+            // Default: return the entity as is (assuming property names match column names)
+            return entity;
+        }
+
+        // Helper method to get the ID column name for a table
+        private string GetIdColumnName(string tableName)
+        {
+            switch (tableName.ToLower())
+            {
+                case "users":
+                    return "user_id";
+                // Add more cases for other tables
+                default:
+                    return "id";
             }
         }
     }

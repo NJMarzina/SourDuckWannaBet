@@ -72,6 +72,9 @@
 
             <div id="message"></div> <!-- Message area to display success or failure -->
 
+            <h3>View All Users</h3>
+            <asp:Button ID="btnViewAllUsers" runat="server" Text="View All Users" OnClick="btnViewAllUsers_OnClick" />
+
         </div>
     </form>
 </body>

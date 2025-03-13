@@ -1,23 +1,19 @@
 ﻿using Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNetCore.Mvc;
-
 using Utilities;
 
 namespace SourDuckWannaBet.Controllers
 {
     public class UsersController : ControllerBase
     {
-        SupabaseServices _supabaseService;
+        private readonly SupabaseServices _supabaseService;
 
-        public UsersController()
+        public UsersController(HttpClient httpClient)
         {
-            
-
+            _supabaseService = new SupabaseServices(httpClient);
         }
 
         public UsersController(SupabaseServices supabaseService)
@@ -25,27 +21,19 @@ namespace SourDuckWannaBet.Controllers
             _supabaseService = supabaseService;
         }
 
-        public async Task<IActionResult> AddUser()
+        public async Task<IActionResult> AddUserAsync(User user)
         {
-            var newUser = new User
+            try
             {
-                Username = "john_doe",
-                Password = "securePassword123",  // Don't forget to hash passwords!
-                FirstName = "John",
-                LastName = "Doe",
-                Email = "john.doe@example.com",
-                PhoneNumber = 1234,
-                Balance = 1000.50,
-                NumWins = 10,
-                NumLoses = 5,
-                NumBets = 15,
-                CreatedAt = DateTime.UtcNow,
-                UserType = "basic",
-                Subscription = "basic"
-            };
-
-            _supabaseService.AddUser(newUser);
-            return Ok("User added successfully.");
+                // Format the command to add a user to the database
+                var tableName = "users";
+                int userId = await _supabaseService.AddToIndicatedTableAsync(user, tableName);
+                return Ok($"User added successfully with ID: {userId}");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to add user: {ex.Message}");
+            }
         }
     }
 }
