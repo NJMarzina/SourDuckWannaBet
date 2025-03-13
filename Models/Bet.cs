@@ -8,9 +8,9 @@ namespace Models
 {
     public class Bet
     {
-        public int BetID { get; set; }
-        public int UserID_Sender { get; set; }
-        public int UserID_Receiver { get; set; }
+        public long BetID { get; set; }
+        public long UserID_Sender { get; set; }
+        public long UserID_Receiver { get; set; }
         public DateTime Created_at { get; set; }
         public double BetA_Amount { get; set; }
         public double BetB_Amount { get; set; }
@@ -21,7 +21,7 @@ namespace Models
         public string Receiver_Result { get; set; }
         public double Sender_Balance_Change { get; set; }
         public double Receiver_Balance_Change { get; set; }
-        public int UserID_Mediator { get; set; }
+        public long UserID_Mediator { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }
 }

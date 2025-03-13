@@ -116,9 +116,26 @@ namespace Utilities
                     subscription = user.Subscription
                 };
             }
-
-            // Add more entity types as needed
-            // else if (entity is AnotherModel anotherModel) { ... }
+            else if (entity is Bet bet)
+            {
+                return new
+                {
+                    user_id_sender = bet.UserID_Sender,
+                    user_id_receiver = bet.UserID_Receiver,
+                    created_at = bet.Created_at,
+                    beta_amount = bet.BetA_Amount,
+                    betb_amount = bet.BetB_Amount,
+                    pending_bet = bet.Pending_Bet,
+                    description = bet.Description,
+                    status = bet.Status,
+                    sender_result = bet.Sender_Result,
+                    receiver_result = bet.Receiver_Result,
+                    sender_balance_change = bet.Sender_Balance_Change,
+                    receiver_balance_change = bet.Receiver_Balance_Change,
+                    user_id_mediator = bet.UserID_Mediator,
+                    updated_at = bet.UpdatedAt
+                };
+            }
 
             // Default: return the entity as is (assuming property names match column names)
             return entity;
@@ -131,6 +148,8 @@ namespace Utilities
             {
                 case "users":
                     return "user_id";
+                case "bets":
+                    return "bet_id";
                 // Add more cases for other tables
                 default:
                     return "id";
@@ -193,7 +212,29 @@ namespace Utilities
                         user.UserType = item["user_type"]?.Value<string>();
                         user.Subscription = item["subscription"]?.Value<string>();
                     }
+
                     // Add handling for other types as needed
+                    if (typeof(T) == typeof(Bet))
+                    {
+                        var bet = obj as Bet;
+
+                        // Map database columns to C# properties
+                        bet.BetID = item["bet_id"]?.Value<long>() ?? 0;
+                        bet.UserID_Sender = item["user_id_sender"]?.Value<long>() ?? 0;
+                        bet.UserID_Receiver = item["user_id_receiver"]?.Value<long>() ?? 0;
+                        bet.Created_at = item["created_at"]?.Value<DateTime>() ?? DateTime.MinValue;
+                        bet.BetA_Amount = item["beta_amount"]?.Value<double>() ?? 0;
+                        bet.BetB_Amount = item["betb_amount"]?.Value<double>() ?? 0;
+                        bet.Pending_Bet = item["pending_bet"]?.Value<double>() ?? 0;
+                        bet.Description = item["description"]?.Value<string>();
+                        bet.Status = item["status"]?.Value<string>();
+                        bet.Sender_Result = item["sender_result"]?.Value<string>();
+                        bet.Receiver_Result = item["receiver_result"]?.Value<string>();
+                        bet.Sender_Balance_Change = item["sender_balance_change"]?.Value<double>() ?? 0;
+                        bet.Receiver_Balance_Change = item["receiver_balance_change"]?.Value<double>() ?? 0;
+                        bet.UserID_Mediator = item["user_id_mediator"]?.Value<long>() ?? 0;
+                        bet.UpdatedAt = item["updated_at"]?.Value<DateTime>();
+                    }
 
                     result.Add(obj);
                 }
