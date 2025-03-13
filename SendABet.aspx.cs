@@ -686,9 +686,6 @@ namespace SourDuckWannaBet
                     }
 
                     // Create a new bet object
-
-                    //error starts here?!?!?!?!?!?!??
-                    //TODO
                     var bet = new Bet
                     {
                         UserID_Sender = senderUserID,    // Use the retrieved sender ID
@@ -705,6 +702,9 @@ namespace SourDuckWannaBet
                         //UserID_Mediator = chkNeedMediator.Checked ? 0 : -1 // 0 means mediator needed but not assigned, -1 means no mediator
                         UserID_Mediator = 1
                     };
+                    //TODO Update UserID_Mediator will be null if not checked, or if checked prompt user to enter username then retrieve.
+                    //will not run if mediator is -1
+
 
                     // Use a BetsController to save the bet
                     using (var httpClient = new HttpClient())
@@ -712,10 +712,15 @@ namespace SourDuckWannaBet
                         var betsController = new BetsController(httpClient);
                         var result = await betsController.AddBetAsync(bet);
 
+                        // Check the result type
                         if (result is OkObjectResult okResult)
                         {
                             lblStatus.Text = "Bet sent successfully!";
                             lblStatus.ForeColor = System.Drawing.Color.Green;
+                        }
+                        else if (result is BadRequestObjectResult badRequestResult)
+                        {
+                            lblStatus.Text = $"Error sending bet: {badRequestResult.Value}";
                         }
                         else
                         {
