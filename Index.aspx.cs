@@ -73,5 +73,15 @@ namespace SourDuckWannaBet
         {
              Response.Redirect("ViewAllUsers.aspx");
         }
+
+        protected void btnSendABet_OnClick(object sender, EventArgs e)
+        {
+            // TODO
+        }
+
+        protected void btnViewBets_OnClick(object sender, EventArgs e)
+        {
+            // TODO
+        }
     }
 }
