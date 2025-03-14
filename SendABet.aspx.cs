@@ -690,7 +690,7 @@ namespace SourDuckWannaBet
                     {
                         UserID_Sender = senderUserID,    // Use the retrieved sender ID
                         UserID_Receiver = recipientUserID,
-                        BetA_Amount = isOneSided ? Convert.ToDouble(txtSenderAmount.Text) : Convert.ToDouble(txtSenderAmount2.Text),
+                        BetA_Amount = isOneSided ? Convert.ToDouble(txtSenderAmount.Text) : Convert.ToDouble(txtSenderAmount2.Text),    // remove 2 sided
                         BetB_Amount = isOneSided ? 0 : Convert.ToDouble(txtReceiverAmount.Text),
                         Pending_Bet = isOneSided ? Convert.ToDouble(txtSenderAmount.Text) : Convert.ToDouble(txtSenderAmount2.Text) + Convert.ToDouble(txtReceiverAmount.Text),
                         Description = txtDescription.Text,
