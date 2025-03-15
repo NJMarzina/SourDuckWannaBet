@@ -1,14 +1,16 @@
-﻿using Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Utilities;
-using System.Linq;
 
 namespace SourDuckWannaBet.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class BetsController : ControllerBase
     {
         private readonly SupabaseServices _supabaseService;
@@ -18,12 +20,53 @@ namespace SourDuckWannaBet.Controllers
             _supabaseService = new SupabaseServices(httpClient);
         }
 
-        public BetsController(SupabaseServices supabaseService)
+        [HttpGet]
+        public async Task<List<Bet>> GetBetsByUserIDAsync(int userId)
         {
-            _supabaseService = supabaseService;
+            try
+            {
+                // Get all bets from the database
+                var bets = await _supabaseService.GetAllFromTableAsync<Bet>("bets");
+
+                // Filter bets where the user is either sender or receiver
+                return bets.Where(b => b.UserID_Sender == userId || b.UserID_Receiver == userId).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to get bets: {ex.Message}");
+            }
         }
 
-        [HttpPost]
+        [HttpPost("update-status")]
+        public async Task<IActionResult> UpdateBetStatusAsync(int betId, string status)
+        {
+            try
+            {
+                // Fetch the bet from the database
+                var bets = await _supabaseService.GetAllFromTableAsync<Bet>("bets");
+                var bet = bets.FirstOrDefault(b => b.BetID == betId);
+
+                if (bet != null)
+                {
+                    // Update the status
+                    bet.Status = status;
+
+                    // Update the bet in the database
+                    await _supabaseService.AddToIndicatedTableAsync(bet, "bets");
+                    return Ok(new { Message = "Bet status updated successfully!" });
+                }
+                else
+                {
+                    return NotFound(new { Message = "Bet not found." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = $"Failed to update bet status: {ex.Message}" });
+            }
+        }
+
+        [HttpPost("add-bet")]
         public async Task<IActionResult> AddBetAsync(Bet bet)
         {
             try
@@ -36,24 +79,6 @@ namespace SourDuckWannaBet.Controllers
             catch (Exception ex)
             {
                 return BadRequest(new { Message = $"Failed to add bet: {ex.Message}" });
-            }
-        }
-
-        [HttpGet]
-        public async Task<List<Bet>> GetBetsByUserIDAsync(int userId)
-        {
-            try
-            {
-                // Get all bets from the database
-                var tableName = "bets";
-                var bets = await _supabaseService.GetAllFromTableAsync<Bet>(tableName);
-
-                // Filter bets where the user is either sender or receiver
-                return bets.Where(b => b.UserID_Sender == userId || b.UserID_Receiver == userId).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Failed to get bets: {ex.Message}");
             }
         }
     }

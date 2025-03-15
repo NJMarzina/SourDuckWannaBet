@@ -81,7 +81,7 @@ namespace SourDuckWannaBet
 
         protected void btnViewBets_OnClick(object sender, EventArgs e)
         {
-            // TODO
+            Response.Redirect("ViewMyBets.aspx");
         }
     }
 }

@@ -181,6 +181,7 @@ namespace Utilities
                 // Handle the response
                 var responseData = await response.Content.ReadAsStringAsync();
                 Console.WriteLine($"Retrieved data from {tableName} successfully!");
+                Console.WriteLine($"Response Data: {responseData}"); // Log the response data
 
                 // Parse the returned data from the response
                 var items = JsonConvert.DeserializeObject<List<JObject>>(responseData);
@@ -191,48 +192,46 @@ namespace Utilities
                 {
                     var obj = new T();
 
-                    if (typeof(T) == typeof(User))
-                    {
-                        var user = obj as User;
-
-                        // Map database columns to C# properties
-                        user.UserID = item["userID"]?.Value<int>() ?? 0;
-                        user.Username = item["username"]?.Value<string>();
-                        user.Password = item["password"]?.Value<string>();
-                        user.FirstName = item["first_name"]?.Value<string>();
-                        user.LastName = item["last_name"]?.Value<string>();
-                        user.Email = item["email"]?.Value<string>();
-                        user.PhoneNumber = item["phone_number"]?.Value<long>() ?? 0;
-                        user.Balance = item["balance"]?.Value<double>() ?? 0;
-                        user.NumWins = item["num_wins"]?.Value<long>() ?? 0;
-                        user.NumLoses = item["num_loses"]?.Value<long>() ?? 0;
-                        user.NumBets = item["num_bets"]?.Value<long>() ?? 0;
-                        user.CreatedAt = item["created_at"]?.Value<DateTime>() ?? DateTime.MinValue;
-                        user.UserType = item["user_type"]?.Value<string>();
-                        user.Subscription = item["subscription"]?.Value<string>();
-                    }
-
-                    // Add handling for other types as needed
                     if (typeof(T) == typeof(Bet))
                     {
                         var bet = obj as Bet;
 
                         // Map database columns to C# properties
-                        bet.BetID = item["bet_id"]?.Value<long>() ?? 0;
-                        bet.UserID_Sender = item["user_id_sender"]?.Value<long>() ?? 0;
-                        bet.UserID_Receiver = item["user_id_receiver"]?.Value<long>() ?? 0;
-                        bet.Created_at = item["created_at"]?.Value<DateTime>() ?? DateTime.MinValue;
-                        bet.BetA_Amount = item["beta_amount"]?.Value<double>() ?? 0;
-                        bet.BetB_Amount = item["betb_amount"]?.Value<double>() ?? 0;
-                        bet.Pending_Bet = item["pending_bet"]?.Value<double>() ?? 0;
+                        bet.BetID = item["bet_id"]?.Value<long?>();
+                        bet.UserID_Sender = item["user_id_sender"]?.Value<long?>();
+                        bet.UserID_Receiver = item["user_id_receiver"]?.Value<long?>();
+                        bet.Created_at = item["created_at"]?.Value<DateTime?>();
+                        bet.BetA_Amount = item["bet_a_amount"]?.Value<double?>();
+                        bet.BetB_Amount = item["bet_b_amount"]?.Value<double?>();
+                        bet.Pending_Bet = item["pending_bet"]?.Value<double?>();
                         bet.Description = item["description"]?.Value<string>();
                         bet.Status = item["status"]?.Value<string>();
                         bet.Sender_Result = item["sender_result"]?.Value<string>();
                         bet.Receiver_Result = item["receiver_result"]?.Value<string>();
-                        bet.Sender_Balance_Change = item["sender_balance_change"]?.Value<double>() ?? 0;
-                        bet.Receiver_Balance_Change = item["receiver_balance_change"]?.Value<double>() ?? 0;
-                        bet.UserID_Mediator = item["user_id_mediator"]?.Value<long>() ?? 0;
-                        bet.UpdatedAt = item["updated_at"]?.Value<DateTime>();
+                        bet.Sender_Balance_Change = item["sender_balance_change"]?.Value<double?>();
+                        bet.Receiver_Balance_Change = item["receiver_balance_change"]?.Value<double?>();
+                        bet.UserID_Mediator = item["user_id_mediator"]?.Value<long?>();
+                        bet.UpdatedAt = item["updated_at"]?.Value<DateTime?>();
+                    }
+                    if (typeof(T) == typeof(User))
+                    {
+                        var user = obj as User;
+
+                        // Map database columns to C# properties
+                        user.UserID = item["user_id"]?.Value<long?>();
+                        user.Username = item["username"]?.Value<string>();
+                        user.Password = item["password"]?.Value<string>();
+                        user.FirstName = item["first_name"]?.Value<string>();
+                        user.LastName = item["last_name"]?.Value<string>();
+                        user.Email = item["email"]?.Value<string>();
+                        user.PhoneNumber = item["phone_number"]?.Value<long?>();
+                        user.Balance = item["balance"]?.Value<double?>();
+                        user.NumWins = item["num_wins"]?.Value<long?>();
+                        user.NumLoses = item["num_loses"]?.Value<long?>();
+                        user.NumBets = item["num_bets"]?.Value<long?>();
+                        user.CreatedAt = item["created_at"]?.Value<DateTime?>();
+                        user.UserType = item["user_type"]?.Value<string>();
+                        user.Subscription = item["subscription"]?.Value<string>();
                     }
 
                     result.Add(obj);

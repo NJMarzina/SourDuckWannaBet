@@ -756,7 +756,7 @@ namespace SourDuckWannaBet
                     var usersController = new UsersController(httpClient);
                     var users = await usersController.GetAllUsersAsync();
                     var user = users.FirstOrDefault(u => u.Username == username);
-                    return user != null ? user.UserID : -1;
+                    return user != null ? user.UserID ?? -1 : -1;
                 }
             }
             catch (Exception ex)
@@ -776,7 +776,7 @@ namespace SourDuckWannaBet
                     var usersController = new UsersController(httpClient);
                     var users = usersController.GetAllUsersAsync().Result;
                     var user = users.FirstOrDefault(u => u.Username == username);
-                    return user != null ? user.UserID : -1;
+                    return user != null ? user.UserID ?? -1: -1;
                 }
             }
             catch (Exception ex)

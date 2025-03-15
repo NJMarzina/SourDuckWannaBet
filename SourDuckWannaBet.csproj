@@ -229,10 +229,14 @@
     <Content Include="Index.aspx" />
     <Content Include="SendABet.aspx" />
     <Content Include="ViewAllUsers.aspx" />
+    <Content Include="ViewMyBets.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BetsController.cs" />
+    <Compile Include="Controllers\MediationsController.cs" />
+    <Compile Include="Controllers\NotificationsController.cs" />
+    <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
@@ -255,6 +259,13 @@
     </Compile>
     <Compile Include="ViewAllUsers.aspx.designer.cs">
       <DependentUpon>ViewAllUsers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewMyBets.aspx.cs">
+      <DependentUpon>ViewMyBets.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewMyBets.aspx.designer.cs">
+      <DependentUpon>ViewMyBets.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
