@@ -118,20 +118,7 @@
             <h2>Bulletin:</h2>
             <h5>TODO List:</h5>
             <p>
-                Create Data Model
-            </p>
-            <p>
-                Ability to enter usernameA to send bet(message) to usernameB
-                Future integration would have usernameA just be the user signed in
-            </p>
-            <p>
-                Ability to view bets sent to you
-            </p>
-            <p>
                 Bet now has money/balance aspect, actually subtracting from users account to be put on hold through the wait for usernameB
-            </p>
-            <p>
-                Ability to accept or deny bet (straight up)
             </p>
             <p>
                 Security for bets, adding a mediator, 'are you sure' modifications, can be voided

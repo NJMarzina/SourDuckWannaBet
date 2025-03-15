@@ -147,5 +147,19 @@ namespace SourDuckWannaBet.Controllers
                 return false;
             }
         }
+        [HttpGet]
+        public async Task<List<Bet>> GetAllBetsAsync()
+        {
+            try
+            {
+                // Get all bets from the database
+                var tableName = "bets";
+                return await _supabaseService.GetAllFromTableAsync<Bet>(tableName);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to get bets: {ex.Message}");
+            }
+        }
     }
 }
