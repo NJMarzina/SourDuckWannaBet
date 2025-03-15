@@ -138,5 +138,10 @@ namespace SourDuckWannaBet
                 }
             }
         }
+
+        protected void btnIndex_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Index.aspx");
+        }
     }
 }

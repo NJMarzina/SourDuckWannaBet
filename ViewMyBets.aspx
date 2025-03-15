@@ -22,10 +22,20 @@
             color: #777;
             font-style: italic;
         }
+        #header {
+            width: 100%;
+            background-color: gold;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <form id="frmViewPendingBets" runat="server">
+        <div id="header">
+            <asp:Button ID="btnIndex" runat="server" Text="Index" OnClick="btnIndex_Click" />
+        </div>
         <div>
             <h1>My Pending Bets</h1>
             <div class="grid-container">

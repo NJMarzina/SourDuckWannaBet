@@ -805,5 +805,10 @@ namespace SourDuckWannaBet
                 return new List<string>();
             }
         }
+
+        protected void btnIndex_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Index.aspx");
+        }
     }
 }

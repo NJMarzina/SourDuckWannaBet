@@ -28,10 +28,20 @@
         h1 {
             color: #333;
         }
+        #header {
+            width: 100%;
+            background-color: gold;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <form id="frmViewAllUsers" runat="server">
+        <div id="header">
+            <asp:Button ID="btnIndex" runat="server" Text="Index" OnClick="btnIndex_Click" />
+        </div>
         <div class="container">
             <h1>All Users</h1>
             <asp:Panel ID="pnlUsers" runat="server">

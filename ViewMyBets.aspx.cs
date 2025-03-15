@@ -97,5 +97,10 @@ namespace SourDuckWannaBet
                 ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('Error: {ex.Message}');", true);
             }
         }
+
+        protected void btnIndex_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Index.aspx");
+        }
     }
 }

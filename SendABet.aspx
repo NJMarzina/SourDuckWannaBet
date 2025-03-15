@@ -51,10 +51,20 @@
             border-radius: 4px;
             background-color: #f9f9f9;
         }
+        #header {
+            width: 100%;
+            background-color: gold;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
+        <div id="header">
+            <asp:Button ID="btnIndex" runat="server" Text="Index" OnClick="btnIndex_Click" />
+        </div>
         <div class="form-container">
             <h2>Send A Bet</h2>
             
