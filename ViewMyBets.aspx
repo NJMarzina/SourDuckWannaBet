@@ -25,7 +25,7 @@
     </style>
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="frmViewPendingBets" runat="server">
         <div>
             <h1>My Pending Bets</h1>
             <div class="grid-container">
