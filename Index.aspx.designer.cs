@@ -159,6 +159,15 @@ namespace SourDuckWannaBet
         protected global::System.Web.UI.WebControls.Button btnSendABet;
 
         /// <summary>
+        /// btnViewAllBets control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnViewAllBets;
+
+        /// <summary>
         /// btnViewBets control.
         /// </summary>
         /// <remarks>

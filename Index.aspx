@@ -105,8 +105,13 @@
         </div>
 
         <div id="left2">
-            <h2>View Bets</h2>
-            <asp:Button ID="btnViewBets" runat="server" Text="View Bets" OnClick="btnViewBets_OnClick" />
+            <h2>View My Bets</h2>
+            <asp:Button ID="btnViewAllBets" runat="server" Text="View All Bets" OnClick="btnViewAllBets_OnClick" />
+        </div>
+
+        <div id="left2">
+            <h2>View My Bets</h2>
+            <asp:Button ID="btnViewBets" runat="server" Text="View My Bets" OnClick="btnViewBets_OnClick" />
         </div>
 
         <div id="left">
