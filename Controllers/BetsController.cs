@@ -56,5 +56,33 @@ namespace SourDuckWannaBet.Controllers
                 throw new Exception($"Failed to get bets: {ex.Message}");
             }
         }
+
+        // Add this method to the existing BetsController class
+        [HttpPut]
+        public async Task<IActionResult> UpdateBetAsync(Bet bet)
+        {
+            try
+            {
+                // Get all bets to find the one we want to update
+                string tableName = "bets";
+                var bets = await _supabaseService.GetAllFromTableAsync<Bet>(tableName);
+                var existingBet = bets.FirstOrDefault(b => b.BetID == bet.BetID);
+
+                if (existingBet == null)
+                {
+                    return NotFound($"Bet with ID {bet.BetID} not found.");
+                }
+
+                // Update the bet in the database
+                bet.UpdatedAt = DateTime.Now;
+                await _supabaseService.UpdateInTableAsync(bet, tableName, "bet_id", bet.BetID);
+
+                return Ok(new { Message = "Bet updated successfully!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = $"Failed to update bet: {ex.Message}" });
+            }
+        }
     }
 }

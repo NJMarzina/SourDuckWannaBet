@@ -218,20 +218,20 @@ namespace Utilities
                         var bet = obj as Bet;
 
                         // Map database columns to C# properties
-                        bet.BetID = item["bet_id"]?.Value<long>() ?? 0;
-                        bet.UserID_Sender = item["user_id_sender"]?.Value<long>() ?? 0;
-                        bet.UserID_Receiver = item["user_id_receiver"]?.Value<long>() ?? 0;
+                        bet.BetID = item["betID"]?.Value<long>() ?? 0;
+                        bet.UserID_Sender = item["userID_Sender"]?.Value<long>() ?? 0;
+                        bet.UserID_Receiver = item["userID_Receiver"]?.Value<long>() ?? 0;
                         bet.Created_at = item["created_at"]?.Value<DateTime>() ?? DateTime.MinValue;
-                        bet.BetA_Amount = item["beta_amount"]?.Value<double>() ?? 0;
-                        bet.BetB_Amount = item["betb_amount"]?.Value<double>() ?? 0;
-                        bet.Pending_Bet = item["pending_bet"]?.Value<double>() ?? 0;
+                        bet.BetA_Amount = item["betA_Amount"]?.Value<double>() ?? 0;
+                        bet.BetB_Amount = item["betB_Amount"]?.Value<double>() ?? 0;
+                        bet.Pending_Bet = item["pending_Bet"]?.Value<double>() ?? 0;
                         bet.Description = item["description"]?.Value<string>();
                         bet.Status = item["status"]?.Value<string>();
-                        bet.Sender_Result = item["sender_result"]?.Value<string>();
-                        bet.Receiver_Result = item["receiver_result"]?.Value<string>();
-                        bet.Sender_Balance_Change = item["sender_balance_change"]?.Value<double>() ?? 0;
-                        bet.Receiver_Balance_Change = item["receiver_balance_change"]?.Value<double>() ?? 0;
-                        bet.UserID_Mediator = item["user_id_mediator"]?.Value<long>() ?? 0;
+                        bet.Sender_Result = item["sender_Result"]?.Value<string>();
+                        bet.Receiver_Result = item["receiver_Result"]?.Value<string>();
+                        bet.Sender_Balance_Change = item["sender_Balance_Change"]?.Value<double>() ?? 0;
+                        bet.Receiver_Balance_Change = item["receiver_Balance_Change"]?.Value<double>() ?? 0;
+                        bet.UserID_Mediator = item["userID_Mediator"]?.Value<long>() ?? 0;
                         bet.UpdatedAt = item["updated_at"]?.Value<DateTime>();
                     }
 
@@ -243,6 +243,50 @@ namespace Utilities
             catch (Exception ex)
             {
                 Console.WriteLine($"Exception in GetAllFromTableAsync: {ex.Message}");
+                throw;
+            }
+        }
+        // Add this method to the existing SupabaseServices class
+        public async Task<bool> UpdateInTableAsync<T>(T entity, string tableName, string primaryKeyColumn, object primaryKeyValue)
+        {
+            // Convert entity to DTO based on its type
+            object dto = ConvertToDTO(entity);
+
+            var url = $"{_supabaseUrl}/rest/v1/{tableName}?{primaryKeyColumn}=eq.{primaryKeyValue}";
+            var json = JsonConvert.SerializeObject(dto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            // Create an HttpRequestMessage for PATCH request
+            var request = new HttpRequestMessage(new HttpMethod("PATCH"), url)
+            {
+                Content = content
+            };
+
+            // Set the headers
+            request.Headers.Add("apikey", _supabaseServiceRoleKey);
+            request.Headers.Add("Authorization", $"Bearer {_supabaseServiceRoleKey}");
+            request.Headers.Add("Prefer", "return=representation");
+
+            try
+            {
+                // Send the request asynchronously
+                var response = await _httpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error updating {tableName}: {response.StatusCode} - {response.ReasonPhrase}\nDetails: {errorContent}");
+                }
+
+                // Handle the response
+                var responseData = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Updated {tableName} successfully!");
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in UpdateInTableAsync: {ex.Message}");
                 throw;
             }
         }
