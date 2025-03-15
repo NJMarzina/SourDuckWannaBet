@@ -121,11 +121,15 @@
                 Bet now has money/balance aspect, actually subtracting from users account to be put on hold through the wait for usernameB
             </p>
             <p>
+                Adding +1 to amount of bet if the bet is accepted for both users
+            </p>
+            <p>
                 Security for bets, adding a mediator, 'are you sure' modifications, can be voided
             </p>
             <p>
                 Actual registration and user can remain signed in upon login
             </p>
+            
         </div>
     </form>
 </body>
