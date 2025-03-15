@@ -93,31 +93,19 @@ namespace SourDuckWannaBet.Controllers
         {
             try
             {
-                // Get all bets
-                var tableName = "bets";
-                var bets = await _supabaseService.GetAllFromTableAsync<Bet>(tableName);
+                // Log the request information
+                Console.WriteLine($"Updating bet {betId} to status: {newStatus}");
 
-                // Find the specific bet
-                var bet = bets.FirstOrDefault(b => b.BetID == betId);
-
-                if (bet == null)
-                {
-                    return false;
-                }
-
-                // Update bet status
-                bet.Status = newStatus;
-                bet.UpdatedAt = DateTime.Now;
-
-                // Use a direct update approach with minimal properties
+                // Prepare the update data
                 var updateData = new
                 {
                     status = newStatus,
-                    updated_at = bet.UpdatedAt
+                    updated_at = DateTime.Now
                 };
 
                 // Prepare the URL for updating the specific bet
-                var url = $"{_supabaseService._supabaseUrl}/rest/v1/bets?bet_id=eq.{betId}";
+                // Notice the change from bet_id to betID to match your database column
+                var url = $"{_supabaseService._supabaseUrl}/rest/v1/bets?betID=eq.{betId}";
                 var json = JsonConvert.SerializeObject(updateData);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -130,15 +118,32 @@ namespace SourDuckWannaBet.Controllers
                 // Set the headers
                 request.Headers.Add("apikey", _supabaseService._supabaseServiceRoleKey);
                 request.Headers.Add("Authorization", $"Bearer {_supabaseService._supabaseServiceRoleKey}");
+                request.Headers.Add("Prefer", "return=representation");
+
+                // Log the request
+                Console.WriteLine($"Sending PATCH request to: {url}");
+                Console.WriteLine($"Request Body: {json}");
 
                 // Send the request asynchronously
                 var response = await _supabaseService._httpClient.SendAsync(request);
 
-                return response.IsSuccessStatusCode;
+                // Log the response
+                var responseContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Response Status Code: {response.StatusCode}");
+                Console.WriteLine($"Response Content: {responseContent}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Error updating bet: {response.StatusCode} - {response.ReasonPhrase}");
+                    return false;
+                }
+
+                Console.WriteLine("Bet updated successfully!");
+                return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in AcceptOrDenyBetAsync: {ex.Message}");
+                Console.WriteLine($"Exception in AcceptOrDenyBetAsync: {ex.Message}");
                 return false;
             }
         }

@@ -34,6 +34,7 @@ namespace SourDuckWannaBet
                 var allUserBets = await _betsController.GetBetsByUserIDAsync(CURRENT_USER_ID);
 
                 // Filter to show only bets where this user is the receiver
+                //var receivedBets = new List<Bet>();
                 var receivedBets = new List<Bet>();
                 foreach (var bet in allUserBets)
                 {
