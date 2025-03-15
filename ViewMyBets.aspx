@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ViewMyBets.aspx.cs" Inherits="SourDuckWannaBet.ViewMyBets" Async="true" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ViewMyBets.aspx.cs" Inherits="SourDuckWannaBet.ViewMyBets" Async="true"%>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -31,7 +31,7 @@
             <div class="grid-container">
                 <asp:GridView ID="gvBets" runat="server" AutoGenerateColumns="False" 
                     CellPadding="4" ForeColor="#333333" GridLines="None" 
-                    OnRowCommand="gvBets_RowCommand" DataKeyNames="BetID">
+                    OnRowCommand="gvBets_RowCommand">
                     <AlternatingRowStyle BackColor="White" />
                     <Columns>
                         <asp:BoundField DataField="BetID" HeaderText="Bet ID" />
@@ -39,7 +39,6 @@
                         <asp:BoundField DataField="BetA_Amount" HeaderText="Your Stake" DataFormatString="{0:C}" />
                         <asp:BoundField DataField="BetB_Amount" HeaderText="Their Stake" DataFormatString="{0:C}" />
                         <asp:BoundField DataField="Description" HeaderText="Description" />
-                        <asp:BoundField DataField="Created_at" HeaderText="Date Created" DataFormatString="{0:MM/dd/yyyy}" />
                         <asp:BoundField DataField="Status" HeaderText="Status" />
                         <asp:TemplateField HeaderText="Actions">
                             <ItemTemplate>
@@ -52,15 +51,8 @@
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
-                    <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                     <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                    <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
                     <RowStyle BackColor="#EFF3FB" />
-                    <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
-                    <SortedAscendingCellStyle BackColor="#F5F7FB" />
-                    <SortedAscendingHeaderStyle BackColor="#6D95E1" />
-                    <SortedDescendingCellStyle BackColor="#E9EBEF" />
-                    <SortedDescendingHeaderStyle BackColor="#4870BE" />
                 </asp:GridView>
                 <asp:Label ID="lblNoBets" runat="server" Text="You have no pending bets." CssClass="no-bets" Visible="false"></asp:Label>
             </div>

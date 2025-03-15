@@ -11,9 +11,9 @@ namespace Utilities
 {
     public class SupabaseServices
     {
-        private readonly HttpClient _httpClient;
-        private readonly string _supabaseUrl;
-        private readonly string _supabaseServiceRoleKey;
+        public readonly HttpClient _httpClient;
+        public readonly string _supabaseUrl;
+        public readonly string _supabaseServiceRoleKey;
 
         public SupabaseServices(HttpClient httpClient)
         {
