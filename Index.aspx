@@ -148,7 +148,14 @@
             <p>
                 Actual registration and user can remain signed in upon login
             </p>
-            
+            <p>
+                Add all actions in BetsController to BetsControllerDemos.aspx
+            </p>
+        </div>
+
+        <div id="left2">
+            <h2>BetsController.cs Demos</h2>
+            <asp:Button ID="btnBetsControllerDemos" runat="server" Text="View BetsController" OnClick="btnBetsControllerDemos_OnClick" />
         </div>
     </form>
 </body>

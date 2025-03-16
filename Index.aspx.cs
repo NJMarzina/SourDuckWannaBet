@@ -93,5 +93,10 @@ namespace SourDuckWannaBet
         {
             Response.Redirect("ViewSelectedBets.aspx");
         }
+
+        protected void btnBetsControllerDemos_OnClick(object sender, EventArgs e)
+        {
+            Response.Redirect("BetsControllerDemos.aspx");
+        }
     }
 }

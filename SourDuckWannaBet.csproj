@@ -226,6 +226,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BetsControllerDemos.aspx" />
     <Content Include="Index.aspx" />
     <Content Include="SendABet.aspx" />
     <Content Include="ViewAllBets.aspx" />
@@ -235,6 +236,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BetsControllerDemos.aspx.cs">
+      <DependentUpon>BetsControllerDemos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BetsControllerDemos.aspx.designer.cs">
+      <DependentUpon>BetsControllerDemos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\BetsController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
