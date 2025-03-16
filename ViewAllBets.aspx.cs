@@ -62,7 +62,7 @@ namespace SourDuckWannaBet
                 case "Accepted":
                     return "status-accepted";
                 case "Denied":
-                    return "status-denied";
+                    return "status-denied"; //a nathan marzina production
                 default:
                     return "";
             }
