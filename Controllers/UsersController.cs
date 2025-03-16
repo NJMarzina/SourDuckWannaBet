@@ -51,5 +51,38 @@ namespace SourDuckWannaBet.Controllers
                 throw new Exception($"Failed to get users: {ex.Message}");
             }
         }
+
+        public async Task<bool> UpdateUserAsync(User user)
+        {
+            try
+            {
+                // Make sure we have the required fields
+                if (user == null || user.UserID <= 0)
+                {
+                    Console.WriteLine("Invalid user data.");
+                    return false;
+                }
+
+                // Update the user in the database
+                var tableName = "users";
+                bool success = await _supabaseService.UpdateInTableAsync(user, tableName, "userID", user.UserID);
+
+                if (success)
+                {
+                    Console.WriteLine("User updated successfully!");
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("Failed to update user.");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in UpdateUserAsync: {ex.Message}");
+                return false;
+            }
+        }
     }
 }

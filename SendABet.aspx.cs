@@ -62,37 +62,75 @@ namespace SourDuckWannaBet
                         return;
                     }
 
-                    // Create a new bet object
-                    var bet = new Bet
-                    {
-                        UserID_Sender = senderUserID,    // Use the retrieved sender ID
-                        UserID_Receiver = recipientUserID,
-                        BetA_Amount = Convert.ToDouble(txtBetA_Amount.Text),
-                        BetB_Amount = Convert.ToDouble(txtBetB_Amount.Text),
-                        Pending_Bet = Convert.ToDouble(txtBetA_Amount.Text), // Pending_Bet starts as Bet A amount
-                        Description = txtDescription.Text,
-                        Status = "Pending",
-                        Sender_Result = txtSenderResult.Text,
-                        Receiver_Result = txtReceiverResult.Text,
-                        Sender_Balance_Change = 0, // Starts at 0
-                        Receiver_Balance_Change = 0, // Starts at 0
-                        UserID_Mediator = chkNeedMediator.Checked ? (long.TryParse(txtMediatorID.Text, out long mediatorId) ? mediatorId : 0) : 0, // Handle mediator ID properly
-                        UpdatedAt = DateTime.Now,
-                        Created_at = DateTime.Now,
-                    };
-
-                    // Log the bet object for debugging
-                    Console.WriteLine($"Bet Object: Sender={bet.UserID_Sender}, Receiver={bet.UserID_Receiver}, BetA={bet.BetA_Amount}, BetB={bet.BetB_Amount}, Pending={bet.Pending_Bet}, Mediator={bet.UserID_Mediator}");
-
-                    // Use a BetsController to save the bet
+                    // Get sender's current balance
                     using (var httpClient = new HttpClient())
                     {
+                        var usersController = new UsersController(httpClient);
+                        var sender_ = (await usersController.GetAllUsersAsync()).FirstOrDefault(u => u.UserID == senderUserID); //sender -> sender_ : a nathan marzina production
+                        if (sender_ == null)
+                        {
+                            lblStatus.Text = "Sender not found.";
+                            return;
+                        }
+
+                        double betA_Amount = Convert.ToDouble(txtBetA_Amount.Text);
+
+                        // Check if sender has enough balance
+                        if (sender_.Balance < betA_Amount)
+                        {
+                            lblStatus.Text = "Insufficient balance to send the bet.";
+                            return;
+                        }
+
+                        // Deduct BetA_Amount from sender's balance
+                        sender_.Balance -= betA_Amount;
+                        await usersController.UpdateUserAsync(sender_); 
+
+                        // Create a new bet object
+                        var bet = new Bet
+                        {
+                            UserID_Sender = senderUserID,    // Use the retrieved sender ID
+                            UserID_Receiver = recipientUserID,
+                            BetA_Amount = betA_Amount,
+                            BetB_Amount = Convert.ToDouble(txtBetB_Amount.Text),
+                            Pending_Bet = betA_Amount, // Pending_Bet starts as Bet A amount
+                            Description = txtDescription.Text,
+                            Status = "Pending",
+                            Sender_Result = txtSenderResult.Text,
+                            Receiver_Result = txtReceiverResult.Text,
+                            Sender_Balance_Change = 0, // Starts at 0
+                            Receiver_Balance_Change = 0, // Starts at 0
+                            UserID_Mediator = chkNeedMediator.Checked ? (long.TryParse(txtMediatorID.Text, out long mediatorId) ? mediatorId : 0) : 0, // Handle mediator ID properly
+                            UpdatedAt = DateTime.Now,
+                            Created_at = DateTime.Now,
+                        };
+
+                        // Log the bet object for debugging
+                        Console.WriteLine($"Bet Object: Sender={bet.UserID_Sender}, Receiver={bet.UserID_Receiver}, BetA={bet.BetA_Amount}, BetB={bet.BetB_Amount}, Pending={bet.Pending_Bet}, Mediator={bet.UserID_Mediator}");
+
+                        // Use a BetsController to save the bet
                         var betsController = new BetsController(httpClient);
                         var result = await betsController.AddBetAsync(bet);
 
                         // Check the result type
                         if (result is OkObjectResult okResult)  //a nathan marzina production
                         {
+                            // Record the transaction
+                            var transaction = new Transaction
+                            {
+                                UserID = (int)senderUserID,
+                                BetID = (int)okResult.Value.GetType().GetProperty("BetId").GetValue(okResult.Value),
+                                Amount = (decimal)betA_Amount,
+                                TransactionType = "bet",
+                                TransactionDate = DateTime.Now,
+                                SenderID = (int)senderUserID,
+                                ReceiverID = (int)recipientUserID,
+                                Status = "pending"
+                            };
+
+                            var transactionsController = new TransactionsController(httpClient);
+                            await transactionsController.AddTransactionAsync(transaction);
+
                             lblStatus.Text = "Bet sent successfully!";
                             lblStatus.ForeColor = System.Drawing.Color.Green;
                         }
