@@ -133,6 +133,11 @@
             <p>Can accept/deny</p>
         </div>
 
+        <div id="left3">
+            <h2>BetsController.cs Demos</h2>
+            <asp:Button ID="btnBetsControllerDemos" runat="server" Text="View BetsController" OnClick="btnBetsControllerDemos_OnClick" />
+        </div>
+
         <div id="left">
             <h2>Bulletin:</h2>
             <h5>TODO List:</h5>
@@ -157,10 +162,7 @@
             </p>
         </div>
 
-        <div id="left2">
-            <h2>BetsController.cs Demos</h2>
-            <asp:Button ID="btnBetsControllerDemos" runat="server" Text="View BetsController" OnClick="btnBetsControllerDemos_OnClick" />
-        </div>
+        
     </form>
 </body>
 </html>
