@@ -729,6 +729,8 @@ namespace SourDuckWannaBet
                     }
 
                     // Clear the form
+
+                    //a nathan marzina production
                     txtSenderUsername.Text = "";  // Clear the sender field
                     txtRecipientUsername.Text = "";
                     txtSenderAmount.Text = "";
