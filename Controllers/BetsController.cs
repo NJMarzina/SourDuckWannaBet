@@ -148,7 +148,7 @@ namespace SourDuckWannaBet.Controllers
             }
         }
 
-        public async Task<bool> AcceptOrDenyBetAsync(long betId, string newStatus, long pendingBet)
+        public async Task<bool> AcceptOrDenyBetAsync(long betId, string newStatus, double pendingBet)
         {
             try
             {

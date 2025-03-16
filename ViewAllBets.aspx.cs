@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -74,16 +75,32 @@ namespace SourDuckWannaBet
             {
                 // Convert the CommandArgument to a long (BetID)
                 long betId = Convert.ToInt64(e.CommandArgument);
+
+                // Fetch the existing bet details
+                var bets = await _betsController.GetAllBetsAsync();
+                var existingBet = bets.FirstOrDefault(b => b.BetID == betId);
+
+                if (existingBet == null)
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('Bet with ID {betId} not found.');", true);
+                    return;
+                }
+
                 bool success = false;
                 string message = "";
 
                 if (e.CommandName == "AcceptBet")
                 {
-                    success = await _betsController.AcceptOrDenyBetAsync(betId, "Accepted");    //TODO get and add sender amount + receiver amount to pending_Bet to update
+                    // Calculate the new Pending_Bet value
+                    double newPendingBet = existingBet.BetA_Amount + existingBet.BetB_Amount;
+
+                    // Call AcceptOrDenyBetAsync with the new Pending_Bet value
+                    success = await _betsController.AcceptOrDenyBetAsync(betId, "Accepted", newPendingBet);
                     message = success ? "Bet accepted successfully!" : "Failed to accept bet.";
                 }
                 else if (e.CommandName == "DenyBet")
                 {
+                    // Set Pending_Bet to 0 for denied bets
                     success = await _betsController.AcceptOrDenyBetAsync(betId, "Denied", 0);   //added 0 to end and overloaded, a nathan marzina production
                     message = success ? "Bet denied successfully!" : "Failed to deny bet.";
                 }

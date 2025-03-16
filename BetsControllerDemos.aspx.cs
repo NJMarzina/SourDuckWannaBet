@@ -124,8 +124,23 @@ namespace SourDuckWannaBet
             if (long.TryParse(txtBetId.Text, out long betId))
             {
                 string newStatus = ddlBetStatus.SelectedValue;
-                bool success = await _betsController.AcceptOrDenyBetAsync(betId, newStatus);
-                lblUpdateBetStatusResult.Text = success ? "Bet status updated successfully!" : "Failed to update bet status.";
+
+                var bets = await _betsController.GetAllBetsAsync();
+                var existingBet = bets.FirstOrDefault(b => b.BetID == betId);
+
+                double newPendingBet = existingBet.BetA_Amount + existingBet.BetB_Amount;
+
+                if(ddlBetStatus.SelectedValue == "Accepted")
+                {
+                    bool success = await _betsController.AcceptOrDenyBetAsync(betId, newStatus, newPendingBet);
+                    lblUpdateBetStatusResult.Text = success ? "Bet status updated successfully!" : "Failed to update bet status.";
+                }
+                else if(ddlBetStatus.SelectedValue == "Denied")
+                {
+                    bool success = await _betsController.AcceptOrDenyBetAsync(betId, newStatus, 0);
+                    lblUpdateBetStatusResult.Text = success ? "Bet status updated successfully!" : "Failed to update bet status.";
+                }
+                
             }
             else
             {

@@ -142,10 +142,6 @@
             <h2>Bulletin:</h2>
             <h5>TODO List:</h5>
             <p>
-                This will be the biggest and most important step in development. In this branch we will be fixing all of the bet logic across the db and all pages. Because of this
-                I believe this will effectively break all previous installments (but maybe not actually). Luckily, I do like the setup of the db itself, so it will just be reworking the bet creation page itself
-            </p>
-            <p>
                 Bet now has money/balance aspect, actually subtracting from users account to be put on hold through the wait for usernameB
             </p>
             <p>
