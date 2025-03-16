@@ -19,6 +19,12 @@
         text-align: center;
         padding: 1rem, 1rem, 1rem, 1rem;
     }
+    #left3 {
+        float: left;
+        width: 15%;
+        text-align: center;
+        padding: 1rem, 1rem, 1rem, 1rem;
+    }
     #right {
         float: right;
     }
@@ -112,6 +118,12 @@
         <div id="left2">
             <h2>View My Bets</h2>
             <asp:Button ID="btnViewBets" runat="server" Text="View My Bets" OnClick="btnViewBets_OnClick" />
+        </div>
+
+        <div id="left3">
+            <h2>View Selected Bets</h2>
+            <asp:Button ID="btnViewSelectedBets" runat="server" Text="View Selected Bets" OnClick="btnViewSelectedBets_OnClick" />
+            <p>View bets of specific Username</p>
         </div>
 
         <div id="left">

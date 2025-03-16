@@ -231,6 +231,7 @@
     <Content Include="ViewAllBets.aspx" />
     <Content Include="ViewAllUsers.aspx" />
     <Content Include="ViewMyBets.aspx" />
+    <Content Include="ViewSelectedBets.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +274,13 @@
     </Compile>
     <Compile Include="ViewMyBets.aspx.designer.cs">
       <DependentUpon>ViewMyBets.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewSelectedBets.aspx.cs">
+      <DependentUpon>ViewSelectedBets.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewSelectedBets.aspx.designer.cs">
+      <DependentUpon>ViewSelectedBets.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

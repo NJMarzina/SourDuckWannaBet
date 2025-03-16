@@ -88,5 +88,10 @@ namespace SourDuckWannaBet
         {
             Response.Redirect("ViewAllBets.aspx");
         }
+
+        protected void btnViewSelectedBets_OnClick(object sender, EventArgs e)
+        {
+            Response.Redirect("ViewSelectedBets.aspx");
+        }
     }
 }
