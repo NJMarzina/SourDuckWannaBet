@@ -22,6 +22,8 @@ namespace SourDuckWannaBet
                 // TODO: Future authentication system
                 // This section will be updated when login functionality is implemented
                 // Currently running with manual sender selection
+
+                btnSendBet.Click += new EventHandler(btnSendBet_Click);
             }
         }
 
@@ -74,10 +76,13 @@ namespace SourDuckWannaBet
                         Receiver_Result = txtReceiverResult.Text,
                         Sender_Balance_Change = 0, // Starts at 0
                         Receiver_Balance_Change = 0, // Starts at 0
-                        UserID_Mediator = chkNeedMediator.Checked ? long.Parse(txtMediatorID.Text) : 0, // 0 means mediator needed but not assigned, 0 means no mediator
-                        //update mediator in future, having -1 breaks 
-                        UpdatedAt = DateTime.Now
+                        UserID_Mediator = chkNeedMediator.Checked ? (long.TryParse(txtMediatorID.Text, out long mediatorId) ? mediatorId : 0) : 0, // Handle mediator ID properly
+                        UpdatedAt = DateTime.Now,
+                        Created_at = DateTime.Now,
                     };
+
+                    // Log the bet object for debugging
+                    Console.WriteLine($"Bet Object: Sender={bet.UserID_Sender}, Receiver={bet.UserID_Receiver}, BetA={bet.BetA_Amount}, BetB={bet.BetB_Amount}, Pending={bet.Pending_Bet}, Mediator={bet.UserID_Mediator}");
 
                     // Use a BetsController to save the bet
                     using (var httpClient = new HttpClient())
