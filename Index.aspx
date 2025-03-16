@@ -138,9 +138,18 @@
             <asp:Button ID="btnBetsControllerDemos" runat="server" Text="View BetsController" OnClick="btnBetsControllerDemos_OnClick" />
         </div>
 
+        <div id="left2">
+            <h2>Backup Users Table</h2>
+            <asp:Button ID="btnBackupUsersTable" runat="server" Text="Backup Users" OnClick="btnBackupUsersTable_OnClick" />
+            <p>Backup all info in users and duplicate it into users_backup</p>
+        </div>
+
         <div id="left">
             <h2>Bulletin:</h2>
             <h5>TODO List:</h5>
+            <p>
+                Add a button on this index which just takes the users table, and duplicates (backs up) it into the users_backup table
+            </p>
             <p>
                 Bet now has money/balance aspect, actually subtracting from users account to be put on hold through the wait for usernameB
             </p>

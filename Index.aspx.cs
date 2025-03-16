@@ -98,5 +98,10 @@ namespace SourDuckWannaBet
         {
             Response.Redirect("BetsControllerDemos.aspx");
         }
+
+        protected void btnBackupUsersTable_OnClick(object sender, EventArgs e)
+        {
+            //TODO Backup users into users_backup
+        }
     }
 }
