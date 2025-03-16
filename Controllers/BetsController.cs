@@ -147,6 +147,67 @@ namespace SourDuckWannaBet.Controllers
                 return false;
             }
         }
+
+        public async Task<bool> AcceptOrDenyBetAsync(long betId, string newStatus, long pendingBet)
+        {
+            try
+            {
+                // Log the request information
+                Console.WriteLine($"Updating bet {betId} to status: {newStatus}");
+
+                // Prepare the update data
+                var updateData = new
+                {
+                    status = newStatus,
+                    pending_Bet = pendingBet,
+                    updated_at = DateTime.Now
+                };
+
+                // Prepare the URL for updating the specific bet
+                // Notice the change from bet_id to betID to match your database column
+                var url = $"{_supabaseService._supabaseUrl}/rest/v1/bets?betID=eq.{betId}";
+                var json = JsonConvert.SerializeObject(updateData);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                // Create an HttpRequestMessage for PATCH request
+                var request = new HttpRequestMessage(new HttpMethod("PATCH"), url)
+                {
+                    Content = content
+                };
+
+                // Set the headers
+                request.Headers.Add("apikey", _supabaseService._supabaseServiceRoleKey);
+                request.Headers.Add("Authorization", $"Bearer {_supabaseService._supabaseServiceRoleKey}");
+                request.Headers.Add("Prefer", "return=representation");
+
+                // Log the request
+                Console.WriteLine($"Sending PATCH request to: {url}");
+                Console.WriteLine($"Request Body: {json}");
+
+                // Send the request asynchronously
+                var response = await _supabaseService._httpClient.SendAsync(request);
+
+                // Log the response
+                var responseContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Response Status Code: {response.StatusCode}");
+                Console.WriteLine($"Response Content: {responseContent}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Error updating bet: {response.StatusCode} - {response.ReasonPhrase}");
+                    return false;
+                }
+
+                Console.WriteLine("Bet updated successfully!");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in AcceptOrDenyBetAsync: {ex.Message}");
+                return false;
+            }
+        }
+
         [HttpGet]
         public async Task<List<Bet>> GetAllBetsAsync()
         {

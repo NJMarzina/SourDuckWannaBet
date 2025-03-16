@@ -100,7 +100,7 @@
                                 <asp:Panel ID="pnlActions" runat="server" Visible='<%# Eval("Status").ToString() == "Pending" %>'>
                                     <asp:Button ID="btnAccept" runat="server" Text="Accept" 
                                         CommandName="AcceptBet" 
-                                        CommandArgument='<%# Eval("BetID") %>' 
+                                        CommandArgument='<%# Eval("BetID") %>'
                                         CssClass="btn-accept" />
                                     <asp:Button ID="btnDeny" runat="server" Text="Deny" 
                                         CommandName="DenyBet" 

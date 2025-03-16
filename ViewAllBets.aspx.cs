@@ -79,12 +79,12 @@ namespace SourDuckWannaBet
 
                 if (e.CommandName == "AcceptBet")
                 {
-                    success = await _betsController.AcceptOrDenyBetAsync(betId, "Accepted");
+                    success = await _betsController.AcceptOrDenyBetAsync(betId, "Accepted");    //TODO get and add sender amount + receiver amount to pending_Bet to update
                     message = success ? "Bet accepted successfully!" : "Failed to accept bet.";
                 }
                 else if (e.CommandName == "DenyBet")
                 {
-                    success = await _betsController.AcceptOrDenyBetAsync(betId, "Denied");
+                    success = await _betsController.AcceptOrDenyBetAsync(betId, "Denied", 0);   //added 0 to end and overloaded, a nathan marzina production
                     message = success ? "Bet denied successfully!" : "Failed to deny bet.";
                 }
 
