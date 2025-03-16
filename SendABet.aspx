@@ -16,6 +16,7 @@
         .form-container {
             max-width: 600px;
             margin: 0 auto;
+            margin-top: 50px;
         }
         .form-group {
             margin-bottom: 15px;
@@ -54,9 +55,13 @@
         #header {
             width: 100%;
             background-color: gold;
-            padding: 0;
+            padding: 10px 0;
             margin: 0;
             text-align: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
         }
     </style>
 </head>

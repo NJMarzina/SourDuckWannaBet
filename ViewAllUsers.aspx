@@ -23,7 +23,7 @@
             background-color: #eaeaea;
         }
         .container {
-            margin: 20px;
+            margin-top: 50px;
         }
         h1 {
             color: #333;
@@ -31,9 +31,13 @@
         #header {
             width: 100%;
             background-color: gold;
-            padding: 0;
+            padding: 10px 0;
             margin: 0;
             text-align: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
         }
     </style>
 </head>

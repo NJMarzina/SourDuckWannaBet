@@ -10,6 +10,10 @@
             padding: 10px 0;
             margin: 0;
             text-align: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
         }
         
         table {
@@ -37,7 +41,7 @@
         }
         
         .container {
-            margin: 20px;
+            margin-top: 50px;
         }
         
         h1 {
@@ -107,6 +111,7 @@
             font-size: 16px;
             color: #666;
         }
+        
     </style>
 </head>
 <body>

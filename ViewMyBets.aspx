@@ -12,7 +12,7 @@
             color: #333;
         }
         .grid-container {
-            margin-top: 20px;
+            margin-top: 50px;
         }
         .btn-action {
             padding: 5px 10px;
@@ -25,9 +25,13 @@
         #header {
             width: 100%;
             background-color: gold;
-            padding: 0;
+            padding: 10px 0;
             margin: 0;
             text-align: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
         }
     </style>
 </head>
@@ -36,9 +40,9 @@
         <div id="header">
             <asp:Button ID="btnIndex" runat="server" Text="Index" OnClick="btnIndex_Click" />
         </div>
-        <div>
+        <div class="grid-container">
             <h1>My Pending Bets</h1>
-            <div class="grid-container">
+            <div>
                 <asp:GridView ID="gvBets" runat="server" AutoGenerateColumns="False" 
                     CellPadding="4" ForeColor="#333333" GridLines="None" 
                     OnRowCommand="gvBets_RowCommand">

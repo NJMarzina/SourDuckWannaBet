@@ -103,27 +103,34 @@
         <div id="left2">
             <h2>View All Users</h2>
             <asp:Button ID="btnViewAllUsers" runat="server" Text="View All Users" OnClick="btnViewAllUsers_OnClick" />
+            <p>View all users and their information</p>
         </div>
 
         <div id="left2">
             <h2>Send a Bet</h2>
             <asp:Button ID="btnSendABet" runat="server" Text="Send a Bet" OnClick="btnSendABet_OnClick" />
+            <p>Send a bet from username A to username B</p>
         </div>
 
         <div id="left2">
             <h2>View All Bets</h2>
             <asp:Button ID="btnViewAllBets" runat="server" Text="View All Bets" OnClick="btnViewAllBets_OnClick" />
+            <p>View all bets in database</p>
+            <p>Can accept/deny</p>
         </div>
 
         <div id="left2">
             <h2>View My Bets</h2>
             <asp:Button ID="btnViewBets" runat="server" Text="View My Bets" OnClick="btnViewBets_OnClick" />
+            <p>View all bets in database associated with userID=1</p>
+            <p>Can accept/deny</p>
         </div>
 
         <div id="left3">
             <h2>View Selected Bets</h2>
             <asp:Button ID="btnViewSelectedBets" runat="server" Text="View Selected Bets" OnClick="btnViewSelectedBets_OnClick" />
             <p>View bets of specific Username</p>
+            <p>Can accept/deny</p>
         </div>
 
         <div id="left">
