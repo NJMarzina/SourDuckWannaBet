@@ -45,13 +45,6 @@
             overflow-y: auto;
             overflow-x: hidden;
         }
-        .bet-type-container {
-            margin-top: 15px;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background-color: #f9f9f9;
-        }
         #header {
             width: 100%;
             background-color: gold;
@@ -85,29 +78,13 @@
             </div>
             
             <div class="form-group">
-                <label for="ddlBetType">Bet Type:</label>
-                <asp:DropDownList ID="ddlBetType" runat="server" AutoPostBack="false">
-                    <asp:ListItem Text="One-sided Bet" Value="one-sided" Selected="True"></asp:ListItem>
-                    <asp:ListItem Text="Two-sided Bet" Value="two-sided"></asp:ListItem>
-                </asp:DropDownList>
+                <label for="txtBetA_Amount">Your Bet Amount (Bet A):</label>
+                <asp:TextBox ID="txtBetA_Amount" runat="server" TextMode="Number" step="0.01" min="0"></asp:TextBox>
             </div>
             
-            <div id="oneSidedBetContainer" class="bet-type-container">
-                <div class="form-group">
-                    <label for="txtSenderAmount">Your Bet Amount:</label>
-                    <asp:TextBox ID="txtSenderAmount" runat="server" TextMode="Number" step="0.01" min="0"></asp:TextBox>
-                </div>
-            </div>
-            
-            <div id="twoSidedBetContainer" class="bet-type-container" style="display:none;">
-                <div class="form-group">
-                    <label for="txtSenderAmount2">Your Bet Amount (Bet A):</label>
-                    <asp:TextBox ID="txtSenderAmount2" runat="server" TextMode="Number" step="0.01" min="0"></asp:TextBox>
-                </div>
-                <div class="form-group">
-                    <label for="txtReceiverAmount">Recipient's Bet Amount (Bet B):</label>
-                    <asp:TextBox ID="txtReceiverAmount" runat="server" TextMode="Number" step="0.01" min="0"></asp:TextBox>
-                </div>
+            <div class="form-group">
+                <label for="txtBetB_Amount">Recipient's Bet Amount (Bet B):</label>
+                <asp:TextBox ID="txtBetB_Amount" runat="server" TextMode="Number" step="0.01" min="0"></asp:TextBox>
             </div>
             
             <div class="form-group">
@@ -116,17 +93,18 @@
             </div>
             
             <div class="form-group">
-                <label for="ddlSenderResult">Your Expected Outcome:</label>
+                <label for="txtSenderResult">Your Expected Outcome:</label>
                 <asp:TextBox ID="txtSenderResult" runat="server" placeholder="e.g., Team A wins, Over 30 points, etc."></asp:TextBox>
             </div>
             
             <div class="form-group">
-                <label for="ddlReceiverResult">Recipient's Expected Outcome:</label>
+                <label for="txtReceiverResult">Recipient's Expected Outcome:</label>
                 <asp:TextBox ID="txtReceiverResult" runat="server" placeholder="e.g., Team B wins, Under 30 points, etc."></asp:TextBox>
             </div>
             
             <div class="form-group">
-                <asp:CheckBox ID="chkNeedMediator" runat="server" Text="Request a mediator for this bet" />
+                <asp:CheckBox ID="chkNeedMediator" runat="server" Text="Request a mediator for this bet" OnCheckedChanged="chkNeedMediator_CheckedChanged" />
+                <asp:TextBox ID="txtMediatorID" runat="server" TextMode="Number" step="0.01" min="0"></asp:TextBox>
             </div>
             
             <div class="form-group">
@@ -135,60 +113,47 @@
             </div>
         </div>
     </form>
-    <!--
     <script type="text/javascript">
         $(document).ready(function () {
             // Load usernames for autocomplete
             $.ajax({
                 type: "POST",
                 url: '<%=ResolveUrl("~/SendABet.aspx/GetUsernames") %>',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-                console.log("Usernames fetched from server:", data.d); // Log all usernames
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    console.log("Usernames fetched from server:", data.d); // Log all usernames
 
-                $(".username-autocomplete").autocomplete({
-                    source: data.d,
-                    minLength: 2,
-                    select: function (event, ui) {
-                        console.log("Selected username:", ui.item.value); // Log selected username
+                    $(".username-autocomplete").autocomplete({
+                        source: data.d,
+                        minLength: 2,
+                        select: function (event, ui) {
+                            console.log("Selected username:", ui.item.value); // Log selected username
 
-                        // When a username is selected, get the corresponding user ID
-                        $.ajax({
-                            type: "POST",
-                            url: '<%=ResolveUrl("~/SendABet.aspx/GetUserIDByUsername") %>',
-                            data: JSON.stringify({ username: ui.item.value }),
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (data) {
-                                console.log("User ID fetched for username:", ui.item.value, "is", data.d); // Log fetched user ID
-                                $("#<%= hdnRecipientUserID.ClientID %>").val(data.d);
-                                console.log("hdnRecipientUserID set to:", data.d); // Log hidden field value
-                            },
-                            error: function (xhr, status, error) {
-                                console.error("Error getting user ID: " + error);
-                            }
-                        });
-                    }
-                });
-            },
-            error: function (xhr, status, error) {
-                console.error("Error loading usernames: " + error);
-            }
+                            // When a username is selected, get the corresponding user ID
+                            $.ajax({
+                                type: "POST",
+                                url: '<%=ResolveUrl("~/SendABet.aspx/GetUserIDByUsername") %>',
+                                data: JSON.stringify({ username: ui.item.value }),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (data) {
+                                    console.log("User ID fetched for username:", ui.item.value, "is", data.d); // Log fetched user ID
+                                    $("#<%= hdnRecipientUserID.ClientID %>").val(data.d);
+                                    console.log("hdnRecipientUserID set to:", data.d); // Log hidden field value
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error("Error getting user ID: " + error);
+                                }
+                            });
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error loading usernames: " + error);
+                }
+            });
         });
-
-        // Toggle bet type containers
-        $("#<%= ddlBetType.ClientID %>").change(function () {
-            if ($(this).val() === "one-sided") {
-                $("#oneSidedBetContainer").show();
-                $("#twoSidedBetContainer").hide();
-            } else {
-                $("#oneSidedBetContainer").hide();
-                $("#twoSidedBetContainer").show();
-            }
-        });
-    });
     </script>
-    -->
 </body>
 </html>

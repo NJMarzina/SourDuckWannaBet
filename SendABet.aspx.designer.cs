@@ -60,40 +60,22 @@ namespace SourDuckWannaBet
         protected global::System.Web.UI.WebControls.HiddenField hdnRecipientUserID;
 
         /// <summary>
-        /// ddlBetType control.
+        /// txtBetA_Amount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlBetType;
+        protected global::System.Web.UI.WebControls.TextBox txtBetA_Amount;
 
         /// <summary>
-        /// txtSenderAmount control.
+        /// txtBetB_Amount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSenderAmount;
-
-        /// <summary>
-        /// txtSenderAmount2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSenderAmount2;
-
-        /// <summary>
-        /// txtReceiverAmount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtReceiverAmount;
+        protected global::System.Web.UI.WebControls.TextBox txtBetB_Amount;
 
         /// <summary>
         /// txtDescription control.
@@ -130,6 +112,15 @@ namespace SourDuckWannaBet
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkNeedMediator;
+
+        /// <summary>
+        /// txtMediatorID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMediatorID;
 
         /// <summary>
         /// btnSendBet control.
