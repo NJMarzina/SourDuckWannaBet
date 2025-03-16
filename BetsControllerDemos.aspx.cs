@@ -29,34 +29,72 @@ namespace SourDuckWannaBet
 
         protected async void btnGetAllBets_Click(object sender, EventArgs e)
         {
-            var bets = await _betsController.GetAllBetsAsync();
-            lblAllBets.Text = JsonConvert.SerializeObject(bets, Formatting.Indented);
+            try
+            {
+                var bets = await _betsController.GetAllBetsAsync();
+                if (bets != null && bets.Count > 0)
+                {
+                    gvAllBets.DataSource = bets;
+                    gvAllBets.DataBind();
+                    lblNoBets.Visible = false;
+                }
+                else
+                {
+                    gvAllBets.Visible = false;
+                    lblNoBets.Visible = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                lblNoBets.Text = $"Error: {ex.Message}";
+                lblNoBets.Visible = true;
+            }
         }
 
         protected async void btnGetBetsByUserId_Click(object sender, EventArgs e)
         {
-            if (int.TryParse(txtUserId.Text, out int userId))
+            if (long.TryParse(txtUserId.Text, out long userId))
             {
-                var bets = await _betsController.GetBetsByUserIDAsync(userId);
-                lblBetsByUserId.Text = JsonConvert.SerializeObject(bets, Formatting.Indented);
+                try
+                {
+                    var bets = await _betsController.GetBetsByUserIDAsync((int)userId);
+                    if (bets != null && bets.Count > 0)
+                    {
+                        gvBetsByUserId.DataSource = bets;
+                        gvBetsByUserId.DataBind();
+                        lblNoBetsByUserId.Visible = false;
+                    }
+                    else
+                    {
+                        gvBetsByUserId.Visible = false;
+                        lblNoBetsByUserId.Visible = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    lblNoBetsByUserId.Text = $"Error: {ex.Message}";
+                    lblNoBetsByUserId.Visible = true;
+                }
             }
             else
             {
-                lblBetsByUserId.Text = "Invalid User ID";
+                lblNoBetsByUserId.Text = "Invalid User ID";
+                lblNoBetsByUserId.Visible = true;
             }
         }
 
         protected async void btnAddBet_Click(object sender, EventArgs e)
         {
-            if (int.TryParse(txtBetSenderId.Text, out int senderId) &&
-                int.TryParse(txtBetReceiverId.Text, out int receiverId) &&
-                decimal.TryParse(txtBetAmount.Text, out decimal amount))
+            if (long.TryParse(txtBetSenderId.Text, out long senderId) &&
+                long.TryParse(txtBetReceiverId.Text, out long receiverId) &&
+                double.TryParse(txtPendingBet.Text, out double pendingBet))
             {
                 var bet = new Bet
                 {
                     UserID_Sender = senderId,
                     UserID_Receiver = receiverId,
-                    Pending_Bet = double.Parse(amount.ToString()),
+                    Pending_Bet = pendingBet,
+                    Description = txtDescription.Text,
                     Status = "Pending",
                     Created_at = DateTime.Now,
                     UpdatedAt = DateTime.Now

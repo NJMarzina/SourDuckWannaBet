@@ -42,13 +42,22 @@ namespace SourDuckWannaBet
         protected global::System.Web.UI.WebControls.Button btnGetAllBets;
 
         /// <summary>
-        /// lblAllBets control.
+        /// gvAllBets control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAllBets;
+        protected global::System.Web.UI.WebControls.GridView gvAllBets;
+
+        /// <summary>
+        /// lblNoBets control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNoBets;
 
         /// <summary>
         /// txtUserId control.
@@ -69,13 +78,22 @@ namespace SourDuckWannaBet
         protected global::System.Web.UI.WebControls.Button btnGetBetsByUserId;
 
         /// <summary>
-        /// lblBetsByUserId control.
+        /// gvBetsByUserId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblBetsByUserId;
+        protected global::System.Web.UI.WebControls.GridView gvBetsByUserId;
+
+        /// <summary>
+        /// lblNoBetsByUserId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNoBetsByUserId;
 
         /// <summary>
         /// txtBetSenderId control.
@@ -96,13 +114,22 @@ namespace SourDuckWannaBet
         protected global::System.Web.UI.WebControls.TextBox txtBetReceiverId;
 
         /// <summary>
-        /// txtBetAmount control.
+        /// txtPendingBet control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBetAmount;
+        protected global::System.Web.UI.WebControls.TextBox txtPendingBet;
+
+        /// <summary>
+        /// txtDescription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDescription;
 
         /// <summary>
         /// btnAddBet control.
