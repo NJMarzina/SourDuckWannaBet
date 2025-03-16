@@ -88,12 +88,6 @@ namespace Utilities
             }
         }
 
-        // For backward compatibility
-        public async Task<int> AddUser(User user)
-        {
-            return await AddToIndicatedTableAsync(user, "users");
-        }
-
         // Helper method to convert entities to DTOs with proper column naming
         private object ConvertToDTO<T>(T entity)
         {
@@ -135,6 +129,20 @@ namespace Utilities
                     updated_at = bet.UpdatedAt
                 };
             }
+            else if (entity is Transaction transaction)
+            {
+                return new
+                {
+                    userID = transaction.UserID,
+                    betID = transaction.BetID,
+                    amount = transaction.Amount,
+                    transaction_type = transaction.TransactionType,
+                    transaction_date = transaction.TransactionDate,
+                    senderID = transaction.SenderID,
+                    receiverID = transaction.ReceiverID,
+                    status = transaction.Status
+                };
+            }
 
             // Default: return the entity as is (assuming property names match column names)
             return entity;
@@ -149,6 +157,8 @@ namespace Utilities
                     return "user_id";
                 case "bets":
                     return "bet_id";
+                case "transactions":
+                    return "transaction_id"; // Assuming the primary key column name for transactions
                 // Add more cases for other tables
                 default:
                     return "id";
@@ -246,6 +256,7 @@ namespace Utilities
                 throw;
             }
         }
+
         // Add this method to the existing SupabaseServices class
         public async Task<bool> UpdateInTableAsync<T>(T entity, string tableName, string primaryKeyColumn, object primaryKeyValue)
         {

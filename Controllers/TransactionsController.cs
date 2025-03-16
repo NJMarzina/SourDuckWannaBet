@@ -30,8 +30,8 @@ namespace SourDuckWannaBet.Controllers
             {
                 // Add transaction to the database
                 var tableName = "transactions";
-                int transactionId = await _supabaseService.AddToIndicatedTableAsync(transaction, tableName);
-                return Ok(new { Message = "Transaction added successfully!", TransactionId = transactionId });
+                int transactionID = await _supabaseService.AddToIndicatedTableAsync(transaction, tableName);
+                return Ok(new { Message = "Transaction added successfully!", TransactionId = transactionID });
             }
             catch (Exception ex)
             {
