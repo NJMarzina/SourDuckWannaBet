@@ -111,16 +111,39 @@ namespace SourDuckWannaBet
                 // Create a label to display the backup status
                 Label lblStatus = new Label();
                 lblStatus.ID = "lblBackupStatus";
+                this.Controls.Add(lblStatus);
 
                 // Initialize UsersController to access user data
                 HttpClient httpClient = new HttpClient();
                 UsersController usersController = new UsersController(httpClient);
 
-                // Get all users from the users table
-                lblStatus.Text = "Fetching users from database...";
-                lblStatus.ForeColor = System.Drawing.Color.Blue;
-                this.Controls.Add(lblStatus);
+                // Create a SupabaseServices instance for backup operations
+                SupabaseServices supabaseService = new SupabaseServices(httpClient);
 
+                // Step 1: Delete all users from the users_backup table (optional, if you want to clear old data)
+                lblStatus.Text = "Clearing users_backup table...";
+                lblStatus.ForeColor = System.Drawing.Color.Blue;
+
+                var deleteUrl = $"{supabaseService._supabaseUrl}/rest/v1/users_backup";
+                var deleteRequest = new HttpRequestMessage(HttpMethod.Delete, deleteUrl);
+
+                deleteRequest.Headers.Add("apikey", supabaseService._supabaseServiceRoleKey);
+                deleteRequest.Headers.Add("Authorization", $"Bearer {supabaseService._supabaseServiceRoleKey}");
+                deleteRequest.Headers.Add("Prefer", "return=minimal");
+
+                var deleteResponse = await supabaseService._httpClient.SendAsync(deleteRequest);
+
+                if (!deleteResponse.IsSuccessStatusCode)
+                {
+                    lblStatus.Text = "Warning: Could not clear backup table. Proceeding with backup...";
+                    lblStatus.ForeColor = System.Drawing.Color.Orange;
+                }
+                else
+                {
+                    lblStatus.Text = "users_backup table cleared. Fetching users from database...";
+                }
+
+                // Step 2: Get all users from the users table
                 List<User> allUsers = await usersController.GetAllUsersAsync();
 
                 if (allUsers == null || allUsers.Count == 0)
@@ -132,88 +155,128 @@ namespace SourDuckWannaBet
 
                 lblStatus.Text = $"Found {allUsers.Count} users. Starting backup...";
 
-                // Create a SupabaseServices instance for backup operations
-                SupabaseServices supabaseService = new SupabaseServices(httpClient);
-
-                // Counter for successfully backed up users
-                int successCount = 0;
-
-                // Process each user with direct insertion to preserve UserID
+                // Step 3: Process each user
                 foreach (User user in allUsers)
                 {
-                    try
+                    var userDTO = new
                     {
-                        // Create a direct insert query that includes the UserID
-                        var url = $"{supabaseService._supabaseUrl}/rest/v1/users_backup";
+                        userID = user.UserID,
+                        username = user.Username,
+                        password = user.Password,
+                        first_name = user.FirstName,
+                        last_name = user.LastName,
+                        email = user.Email,
+                        phone_number = user.PhoneNumber,
+                        balance = user.Balance,
+                        num_wins = user.NumWins,
+                        num_loses = user.NumLoses,
+                        num_bets = user.NumBets,
+                        created_at = user.CreatedAt,
+                        user_type = user.UserType,
+                        subscription = user.Subscription
+                    };
 
-                        // Create a user DTO that includes the UserID
-                        var userDTO = new
+                    var json = JsonConvert.SerializeObject(userDTO);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    // Check if the user already exists in the users_backup table
+                    var checkUrl = $"{supabaseService._supabaseUrl}/rest/v1/users_backup?userID=eq.{user.UserID}";
+                    var checkRequest = new HttpRequestMessage(HttpMethod.Get, checkUrl);
+
+                    checkRequest.Headers.Add("apikey", supabaseService._supabaseServiceRoleKey);
+                    checkRequest.Headers.Add("Authorization", $"Bearer {supabaseService._supabaseServiceRoleKey}");
+                    checkRequest.Headers.Add("Prefer", "return=representation");
+
+                    var checkResponse = await supabaseService._httpClient.SendAsync(checkRequest);
+
+                    if (checkResponse.IsSuccessStatusCode)
+                    {
+                        var existingUser = await checkResponse.Content.ReadAsStringAsync();
+
+                        // Check if the user exists by verifying the response is not empty
+                        if (!string.IsNullOrEmpty(existingUser) && existingUser != "[]")
                         {
-                            userID = user.UserID,  // Preserve the original UserID
-                            username = user.Username,
-                            password = user.Password,
-                            first_name = user.FirstName,
-                            last_name = user.LastName,
-                            email = user.Email,
-                            phone_number = user.PhoneNumber,
-                            balance = user.Balance,
-                            num_wins = user.NumWins,
-                            num_loses = user.NumLoses,
-                            num_bets = user.NumBets,
-                            created_at = user.CreatedAt,
-                            user_type = user.UserType,
-                            subscription = user.Subscription
-                        };
+                            // User exists, perform update (PATCH request)
+                            var updateUrl = $"{supabaseService._supabaseUrl}/rest/v1/users_backup?userID=eq.{user.UserID}";
 
-                        var json = JsonConvert.SerializeObject(userDTO);
-                        var content = new StringContent(json, Encoding.UTF8, "application/json");
+                            var updateRequest = new HttpRequestMessage(new HttpMethod("PATCH"), updateUrl)
+                            {
+                                Content = content  // The updated user data
+                            };
 
-                        // Create an HttpRequestMessage with POST method
-                        var request = new HttpRequestMessage(HttpMethod.Post, url)
-                        {
-                            Content = content
-                        };
+                            updateRequest.Headers.Add("apikey", supabaseService._supabaseServiceRoleKey);
+                            updateRequest.Headers.Add("Authorization", $"Bearer {supabaseService._supabaseServiceRoleKey}");
+                            updateRequest.Headers.Add("Prefer", "return=representation");
 
-                        // Set the headers
-                        request.Headers.Add("apikey", supabaseService._supabaseServiceRoleKey);
-                        request.Headers.Add("Authorization", $"Bearer {supabaseService._supabaseServiceRoleKey}");
-                        request.Headers.Add("Prefer", "return=representation");
+                            var updateResponse = await supabaseService._httpClient.SendAsync(updateRequest);
 
-                        // Send the request asynchronously
-                        var response = await supabaseService._httpClient.SendAsync(request);
-
-                        if (response.IsSuccessStatusCode)
-                        {
-                            successCount++;
+                            if (updateResponse.IsSuccessStatusCode)
+                            {
+                                Console.WriteLine($"User {user.UserID} updated successfully.");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Error updating user {user.UserID}");
+                            }
                         }
                         else
                         {
-                            var errorContent = await response.Content.ReadAsStringAsync();
-                            Console.WriteLine($"Error backing up user {user.UserID}: {errorContent}");
+                            // User does not exist, perform insert (POST request)
+                            var insertUrl = $"{supabaseService._supabaseUrl}/rest/v1/users_backup";
+
+                            using (var insertClient = new HttpClient())
+                            {
+                                insertClient.DefaultRequestHeaders.Add("apikey", supabaseService._supabaseServiceRoleKey);
+                                insertClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {supabaseService._supabaseServiceRoleKey}");
+                                insertClient.DefaultRequestHeaders.Add("Prefer", "return=minimal");
+
+                                var insertResponse = await insertClient.PostAsync(insertUrl, content);
+
+                                if (insertResponse.IsSuccessStatusCode)
+                                {
+                                    Console.WriteLine($"User {user.UserID} added successfully.");
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"Error inserting user {user.UserID}");
+                                }
+                            }
                         }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        // Log the error but continue with the next user
-                        Console.WriteLine($"Error backing up user {user.UserID}: {ex.Message}");
+                        // If check failed, it likely means the user doesn't exist, so we insert the new user
+                        var insertUrl = $"{supabaseService._supabaseUrl}/rest/v1/users_backup";
+
+                        using (var insertClient = new HttpClient())
+                        {
+                            insertClient.DefaultRequestHeaders.Add("apikey", supabaseService._supabaseServiceRoleKey);
+                            insertClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {supabaseService._supabaseServiceRoleKey}");
+                            insertClient.DefaultRequestHeaders.Add("Prefer", "return=minimal");
+
+                            var insertResponse = await insertClient.PostAsync(insertUrl, content);
+
+                            if (insertResponse.IsSuccessStatusCode)
+                            {
+                                Console.WriteLine($"User {user.UserID} added successfully.");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Error inserting user {user.UserID}");
+                            }
+                        }
                     }
                 }
 
-                // Display the final result
-                if (successCount == allUsers.Count)
-                {
-                    lblStatus.Text = $"Backup complete! {successCount} users successfully backed up with original UserIDs preserved.";
-                    lblStatus.ForeColor = System.Drawing.Color.Green;
-                }
-                else
-                {
-                    lblStatus.Text = $"Backup partially complete. {successCount} of {allUsers.Count} users backed up.";
-                    lblStatus.ForeColor = System.Drawing.Color.Orange;
-                }
+                lblStatus.Text = "Backup complete!";
+                lblStatus.ForeColor = System.Drawing.Color.Green;
             }
             catch (Exception ex)
             {
                 // Handle any unexpected errors
+                Console.WriteLine($"Critical error during backup: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+
                 Label lblError = new Label
                 {
                     ID = "lblBackupError",
@@ -223,6 +286,8 @@ namespace SourDuckWannaBet
                 this.Controls.Add(lblError);
             }
         }
+
+
 
         protected void btnMarzyBlog_OnClick(object sender, EventArgs e)
         {
