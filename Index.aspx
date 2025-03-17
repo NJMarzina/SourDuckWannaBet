@@ -144,6 +144,10 @@
             <p>Backup all info in users and duplicate it into users_backup</p>
         </div>
 
+        <div id="left2">
+            <asp:Button ID="btnMarzyBlog" runat="server" Text="Dev Log" OnClick="btnMarzyBlog_OnClick" />
+        </div>
+
         <div id="left">
             <h2>Bulletin:</h2>
             <h5>TODO List:</h5>

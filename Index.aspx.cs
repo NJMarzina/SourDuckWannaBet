@@ -223,5 +223,10 @@ namespace SourDuckWannaBet
                 this.Controls.Add(lblError);
             }
         }
+
+        protected void btnMarzyBlog_OnClick(object sender, EventArgs e)
+        {
+            Response.Redirect("MarzyBlog.aspx");
+        }
     }
 }
