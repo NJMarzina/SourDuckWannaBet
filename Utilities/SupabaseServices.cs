@@ -14,6 +14,7 @@ namespace Utilities
         public readonly HttpClient _httpClient;
         public readonly string _supabaseUrl;
         public readonly string _supabaseServiceRoleKey;
+        public string _supabaseApiKey;
 
         public SupabaseServices(HttpClient httpClient)
         {
@@ -299,6 +300,79 @@ namespace Utilities
             {
                 Console.WriteLine($"Exception in UpdateInTableAsync: {ex.Message}");
                 throw;
+            }
+        }
+
+        // Method to add a message to the messages table
+        public async Task<bool> AddMessageAsync(Message message)
+        {
+            var url = $"{_supabaseUrl}/rest/v1/messages";
+            var json = JsonConvert.SerializeObject(new
+            {
+                user_id = message.UserID,
+                header = message.Header,
+                body = message.Body,
+                image_url = message.ImageUrl,
+                created_at = message.CreatedAt
+            });
+
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var request = new HttpRequestMessage(HttpMethod.Post, url)
+            {
+                Content = content
+            };
+
+            request.Headers.Add("apikey", _supabaseServiceRoleKey);
+            request.Headers.Add("Authorization", $"Bearer {_supabaseServiceRoleKey}");
+            request.Headers.Add("Prefer", "return=representation");
+
+            try
+            {
+                var response = await _httpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error adding message: {response.StatusCode} - {response.ReasonPhrase}\nDetails: {errorContent}");
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in AddMessageAsync: {ex.Message}");
+                return false;
+            }
+        }
+
+        // Method to get all messages from the messages table
+        public async Task<List<Message>> GetMessagesAsync()
+        {
+            var url = $"{_supabaseUrl}/rest/v1/messages?select=*";
+
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Add("apikey", _supabaseServiceRoleKey);
+            request.Headers.Add("Authorization", $"Bearer {_supabaseServiceRoleKey}");
+
+            try
+            {
+                var response = await _httpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error retrieving messages: {response.StatusCode} - {response.ReasonPhrase}\nDetails: {errorContent}");
+                }
+
+                var responseData = await response.Content.ReadAsStringAsync();
+                var messages = JsonConvert.DeserializeObject<List<Message>>(responseData);
+                return messages;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in GetMessagesAsync: {ex.Message}");
+                return new List<Message>();
             }
         }
     }

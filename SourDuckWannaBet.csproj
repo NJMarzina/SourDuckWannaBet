@@ -246,6 +246,7 @@
       <DependentUpon>BetsControllerDemos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\BetsController.cs" />
+    <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
