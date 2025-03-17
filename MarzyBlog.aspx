@@ -103,6 +103,10 @@
         #btnIndex:hover {
             background-color: #0056b3;
         }
+
+        #imgSelfie1 {
+            width: 25%;
+        }
     </style>
 </head>
 <body>
@@ -116,6 +120,13 @@
         <div class="container">
             <h1>Dev Log</h1>
             <h2>a nathan marzina production</h2>
+            <h3>Entry 2: 3/16/2025 @9:21pm</h3>
+            <p>
+                He was coding while simulataneously drinking and blogging! Nah well I'm not drinking, but I do like this little blog page.
+                I just finished making this button on the index page which allows us to backup all of the users from the users table,
+                and copies any new users and updates previous users in the users_backup table.
+                <asp:Image ID="imgSelfie1" runat="server" ImageUrl="~/images/selfie1.jpg" />
+            </p>
             <h3>Entry 1: 3/16/2025 @8:05pm</h3>
             <p>
                 This is really me being Zuckkk. I have been tracking all of the progress thus far via GitHub,

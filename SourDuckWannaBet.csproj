@@ -227,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BetsControllerDemos.aspx" />
+    <Content Include="images\selfie1.jpg" />
     <Content Include="Index.aspx" />
     <Content Include="MarzyBlog.aspx" />
     <Content Include="SendABet.aspx" />
