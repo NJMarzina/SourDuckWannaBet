@@ -152,8 +152,7 @@
             <h2>Bulletin:</h2>
             <h5>TODO List:</h5>
             <p>
-                Add a button on this index which just takes the users table, and duplicates (backs up) it into the users_backup table
-            </p>
+                Add balance_at_time_of_bet to transactions table, which also should be reworked</p>
             <p>
                 Bet now has money/balance aspect, actually subtracting from users account to be put on hold through the wait for usernameB
             </p>
@@ -165,9 +164,6 @@
             </p>
             <p>
                 Actual registration and user can remain signed in upon login
-            </p>
-            <p>
-                Add all actions in BetsController to BetsControllerDemos.aspx
             </p>
         </div>
 

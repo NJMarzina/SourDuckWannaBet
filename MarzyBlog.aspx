@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MarzyBlog.aspx.cs" Inherits="SourDuckWannaBet.MarzyBlog" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MarzyBlog.aspx.cs" Inherits="SourDuckWannaBet.MarzyBlog" Async="true"%>
 
 <!DOCTYPE html>
 
@@ -107,6 +107,67 @@
         #imgSelfie1 {
             width: 25%;
         }
+        
+        /* New blog post form styling */
+        .blog-form {
+            background-color: #f5f5f5;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .form-control-textarea {
+            min-height: 150px;
+        }
+        
+        .btn-primary {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        .btn-primary:hover {
+            background-color: #218838;
+        }
+        
+        .status-message {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .blog-image {
+            max-width: 50%;
+            height: auto;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -120,52 +181,82 @@
         <div class="container">
             <h1>Dev Log</h1>
             <h2>a nathan marzina production</h2>
-            <h3>Entry 2: 3/16/2025 @9:21pm</h3>
-            <p>
-                He was coding while simulataneously drinking and blogging! Nah well I'm not drinking, but I do like this little blog page.
-                I just finished making this button on the index page which allows us to backup all of the users from the users table,
-                and copies any new users and updates previous users in the users_backup table.
-                <asp:Image ID="imgSelfie1" runat="server" ImageUrl="~/images/selfie1.jpg" />
-            </p>
-            <h3>Entry 1: 3/16/2025 @8:05pm</h3>
-            <p>
-                This is really me being Zuckkk. I have been tracking all of the progress thus far via GitHub,
-                but I really want to be able to see visuals and track what's been going on day-to-day
-                and not have to scroll through my git. So basically, we have a bunch of pages, controllers, and models created.
-            </p>
+            
+            <!-- New Blog Post Form -->
+            <div class="blog-form">
+                <h3>Add New Blog Entry</h3>
+                
+                <asp:Label ID="lblStatus" runat="server" CssClass="status-message" Visible="false"></asp:Label>
+                
+                <div class="form-group">
+                    <asp:Label runat="server" AssociatedControlID="txtHeader">Header (Optional)</asp:Label>
+                    <asp:TextBox ID="txtHeader" runat="server" CssClass="form-control"></asp:TextBox>
+                </div>
+                
+                <div class="form-group">
+                    <asp:Label runat="server" AssociatedControlID="txtBody">Content</asp:Label>
+                    <asp:TextBox ID="txtBody" runat="server" TextMode="MultiLine" CssClass="form-control form-control-textarea"></asp:TextBox>
+                </div>
+                
+                <div class="form-group">
+                    <asp:Label runat="server" AssociatedControlID="txtImageUrl">Image URL (Optional)</asp:Label>
+                    <asp:TextBox ID="txtImageUrl" runat="server" CssClass="form-control"></asp:TextBox>
+                </div>
+                
+                <asp:Button ID="btnAddPost" runat="server" Text="Add Entry" CssClass="btn-primary" OnClick="btnAddPost_Click" />
+            </div>
+            
+            <!-- Blog Content -->
+            <asp:PlaceHolder ID="blogContent" runat="server">
+                <h3>Entry 2: 3/16/2025 @9:21pm</h3>
+                <p>
+                    He was coding while simulataneously drinking and blogging! Nah well I'm not drinking, but I do like this little blog page.
+                    I just finished making this button on the index page which allows us to backup all of the users from the users table,
+                    and copies any new users and updates previous users in the users_backup table.
+                    <asp:Image ID="imgSelfie1" runat="server" ImageUrl="~/images/selfie1.jpg" />
+                </p>
+                <h3>Entry 1: 3/16/2025 @8:05pm</h3>
+                <p>
+                    This is really me being Zuckkk. I have been tracking all of the progress thus far via GitHub,
+                    but I really want to be able to see visuals and track what's been going on day-to-day
+                    and not have to scroll through my git. So basically, we have a bunch of pages, controllers, and models created.
+                </p>
 
-            <h4>Models</h4>
-            <ul>
-                <li>User.cs</li>
-                <li>Bet.cs</li>
-                <li>Transaction.cs</li>
-                <li>Notification.cs</li>
-                <li>Mediation.cs</li>
-            </ul>
+                <h4>Models</h4>
+                <ul>
+                    <li>User.cs</li>
+                    <li>Bet.cs</li>
+                    <li>Transaction.cs</li>
+                    <li>Notification.cs</li>
+                    <li>Mediation.cs</li>
+                </ul>
 
-            <h4>.aspx Pages</h4>
-            <ul>
-                <li>Index.aspx</li>
-                <li>ViewAllUsers.aspx</li>
-                <li>SendABet.aspx</li>
-                <li>ViewAllBets.aspx</li>
-                <li>ViewMyBets.aspx</li>
-                <li>ViewSelectedBets.aspx</li>
-                <li>BetsControllerDemos.aspx</li>
-            </ul>
+                <h4>.aspx Pages</h4>
+                <ul>
+                    <li>Index.aspx</li>
+                    <li>ViewAllUsers.aspx</li>
+                    <li>SendABet.aspx</li>
+                    <li>ViewAllBets.aspx</li>
+                    <li>ViewMyBets.aspx</li>
+                    <li>ViewSelectedBets.aspx</li>
+                    <li>BetsControllerDemos.aspx</li>
+                    <li>MarzyBlog.aspx</li>
+                </ul>
 
-            <h4>Controllers</h4>
-            <ul>
-                <li>UsersController.cs</li>
-                <li>BetsController.cs</li>
-                <li>TransactionsController.cs</li>
-                <li>NotificationsController.cs</li>
-            </ul>
+                <h4>Controllers</h4>
+                <ul>
+                    <li>UsersController.cs</li>
+                    <li>BetsController.cs</li>
+                    <li>TransactionsController.cs</li>
+                    <li>NotificationsController.cs</li>
+                    <li>MessagesController.cs</li>
+                </ul>
 
-            <h4>Utilities</h4>
-            <ul>
-                <li>SupabaseServices.cs</li>
-            </ul>
+                <h4>Utilities</h4>
+                <ul>
+                    <li>SupabaseServices.cs</li>
+                </ul>
+            </asp:PlaceHolder>
         </div>
     </form>
 </body>

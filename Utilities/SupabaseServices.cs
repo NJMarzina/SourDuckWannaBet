@@ -143,12 +143,25 @@ namespace Utilities
                     status = transaction.Status
                 };
             }
+            // Add this to the ConvertToDTO method in SupabaseServices.cs
+            else if (entity is Message message)
+            {
+                return new
+                {
+                    userID = message.UserID,
+                    header = message.Header,
+                    body = message.Body,
+                    image = message.Image,
+                    created_at = message.CreatedAt
+                };
+            }
 
             // Default: return the entity as is (assuming property names match column names)
             return entity;
         }
 
         // Helper method to get the ID column name for a table
+        // Update the GetIdColumnName method in SupabaseServices.cs
         private string GetIdColumnName(string tableName)
         {
             switch (tableName.ToLower())
@@ -158,7 +171,9 @@ namespace Utilities
                 case "bets":
                     return "bet_id";
                 case "transactions":
-                    return "transaction_id"; // Assuming the primary key column name for transactions
+                    return "transaction_id";
+                case "messages":
+                    return "message_id";
                 // Add more cases for other tables
                 default:
                     return "id";
@@ -243,6 +258,19 @@ namespace Utilities
                         bet.Receiver_Balance_Change = item["receiver_Balance_Change"]?.Value<double>() ?? 0;
                         bet.UserID_Mediator = item["userID_Mediator"]?.Value<long>() ?? 0;
                         bet.UpdatedAt = item["updated_at"]?.Value<DateTime>();
+                    }
+                    // Add transaction type here
+                    if (typeof(T) == typeof(Message))
+                    {
+                        var message = obj as Message;
+
+                        // Map database columns to C# properties
+                        message.MessageID = item["messageID"]?.Value<int>() ?? 0;
+                        message.UserID = item["userID"]?.Value<int>() ?? 0;
+                        message.Header = item["header"]?.Value<string>();
+                        message.Body = item["body"]?.Value<string>();
+                        message.Image = item["image"]?.Value<string>();
+                        message.CreatedAt = item["created_at"]?.Value<DateTime>() ?? DateTime.MinValue;
                     }
 
                     result.Add(obj);
