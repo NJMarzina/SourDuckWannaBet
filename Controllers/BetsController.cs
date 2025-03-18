@@ -189,6 +189,12 @@ namespace SourDuckWannaBet.Controllers
                         receiver.Balance -= existingBet.BetB_Amount;
                         await usersController.UpdateUserAsync(receiver);
 
+                        // Increment num_bets for both sender and receiver
+                        sender.NumBets++;
+                        receiver.NumBets++;
+                        await usersController.UpdateUserAsync(sender);
+                        await usersController.UpdateUserAsync(receiver);
+
                         // Record the transaction
                         var transaction = new Transaction
                         {

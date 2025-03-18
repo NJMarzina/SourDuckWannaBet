@@ -138,6 +138,7 @@ namespace SourDuckWannaBet
                             break;
                         case "Accepted":
                             lblStatus.CssClass = "status-accepted";
+                            //TODO add 1 to num_bets in users table
                             break;
                         case "Denied":
                             lblStatus.CssClass = "status-denied";
