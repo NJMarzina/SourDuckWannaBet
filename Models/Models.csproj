@@ -166,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bet.cs" />
+    <Compile Include="BetWithUsernames.cs" />
     <Compile Include="Mediation.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Notification.cs" />

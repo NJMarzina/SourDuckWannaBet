@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Utilities;
+using System.Linq;
 
 namespace SourDuckWannaBet.Controllers
 {
@@ -82,6 +83,25 @@ namespace SourDuckWannaBet.Controllers
             {
                 Console.WriteLine($"Exception in UpdateUserAsync: {ex.Message}");
                 return false;
+            }
+        }
+        // Method to get the username by userID
+        public async Task<string> GetUserNameByUserIDAsync(long userID)
+        {
+            try
+            {
+                // Fetch all users (this could be optimized to get only the user you're interested in)
+                var users = await GetAllUsersAsync();
+
+                // Find the user based on userID
+                var user = users.FirstOrDefault(u => u.UserID == userID);
+
+                return user?.Username; // Return the username or null if not found
+            }
+            catch (Exception ex)
+            {
+                // Handle any potential exceptions (e.g., log them)
+                throw new Exception($"Error fetching username for userID {userID}: {ex.Message}");
             }
         }
     }

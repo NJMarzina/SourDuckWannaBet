@@ -289,5 +289,23 @@ namespace SourDuckWannaBet.Controllers
                 throw new Exception($"Failed to get bets: {ex.Message}");
             }
         }
+
+        [HttpGet]
+        public async Task<List<Bet>> GetAcceptedBetsByUserIDAsync(int userId)
+        {
+            try
+            {
+                // Get all bets from the database
+                var tableName = "bets";
+                var bets = await _supabaseService.GetAllFromTableAsync<Bet>(tableName);
+
+                // Filter bets where the user is either sender or receiver and status is "Accepted"
+                return bets.Where(b => (b.UserID_Sender == userId || b.UserID_Receiver == userId) && b.Status == "Accepted").ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to get accepted bets: {ex.Message}");
+            }
+        }
     }
 }
