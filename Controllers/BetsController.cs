@@ -33,13 +33,33 @@ namespace SourDuckWannaBet.Controllers
                 // Add bet to the database
                 var tableName = "bets";
                 int betId = await _supabaseService.AddToIndicatedTableAsync(bet, tableName);
+                // Return a successful response with the bet ID
                 return Ok(new { Message = "Bet added successfully!", BetId = betId });
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error in AddBetAsync: {ex.Message}");
+                // Return a bad request response with the error message
                 return BadRequest(new { Message = $"Failed to add bet: {ex.Message}" });
             }
         }
+
+        /*
+         * public async Task<IActionResult> AddUserAsync(User user)
+        {
+            try
+            {
+                // Format the command to add a user to the database
+                var tableName = "users";
+                int userId = await _supabaseService.AddToIndicatedTableAsync(user, tableName);
+                return Ok($"User added successfully with ID: {userId}");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to add user: {ex.Message}");
+            }
+        }
+        */
 
         [HttpGet]
         public async Task<List<Bet>> GetBetsByUserIDAsync(int userId)

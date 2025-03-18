@@ -66,7 +66,7 @@ namespace SourDuckWannaBet
                     using (var httpClient = new HttpClient())
                     {
                         var usersController = new UsersController(httpClient);
-                        var sender_ = (await usersController.GetAllUsersAsync()).FirstOrDefault(u => u.UserID == senderUserID); //sender -> sender_ : a nathan marzina production
+                        var sender_ = (await usersController.GetAllUsersAsync()).FirstOrDefault(u => u.UserID == senderUserID);
                         if (sender_ == null)
                         {
                             lblStatus.Text = "Sender not found.";
@@ -84,25 +84,25 @@ namespace SourDuckWannaBet
 
                         // Deduct BetA_Amount from sender's balance
                         sender_.Balance -= betA_Amount;
-                        await usersController.UpdateUserAsync(sender_); 
+                        await usersController.UpdateUserAsync(sender_);
 
                         // Create a new bet object
                         var bet = new Bet
                         {
-                            UserID_Sender = senderUserID,    // Use the retrieved sender ID
+                            UserID_Sender = senderUserID,
                             UserID_Receiver = recipientUserID,
                             BetA_Amount = betA_Amount,
                             BetB_Amount = Convert.ToDouble(txtBetB_Amount.Text),
-                            Pending_Bet = betA_Amount, // Pending_Bet starts as Bet A amount
+                            Pending_Bet = betA_Amount,
                             Description = txtDescription.Text,
                             Status = "Pending",
                             Sender_Result = txtSenderResult.Text,
                             Receiver_Result = txtReceiverResult.Text,
-                            Sender_Balance_Change = 0, // Starts at 0
-                            Receiver_Balance_Change = 0, // Starts at 0
-                            UserID_Mediator = chkNeedMediator.Checked ? (long.TryParse(txtMediatorID.Text, out long mediatorId) ? mediatorId : 0) : 0, // Handle mediator ID properly
+                            Sender_Balance_Change = 0,
+                            Receiver_Balance_Change = 0,
+                            UserID_Mediator = chkNeedMediator.Checked ? (long.TryParse(txtMediatorID.Text, out long mediatorId) ? mediatorId : 0) : 0,
                             UpdatedAt = DateTime.Now,
-                            Created_at = DateTime.Now,
+                            Created_at = DateTime.Now
                         };
 
                         // Log the bet object for debugging
@@ -113,7 +113,7 @@ namespace SourDuckWannaBet
                         var result = await betsController.AddBetAsync(bet);
 
                         // Check the result type
-                        if (result is OkObjectResult okResult)  //a nathan marzina production
+                        if (result is OkObjectResult okResult)
                         {
                             // Record the transaction
                             var transaction = new Transaction
@@ -136,16 +136,24 @@ namespace SourDuckWannaBet
                         }
                         else if (result is BadRequestObjectResult badRequestResult)
                         {
+                            // Revert the sender's balance if the bet addition failed
+                            sender_.Balance += betA_Amount;
+                            await usersController.UpdateUserAsync(sender_);
+
                             lblStatus.Text = $"Error sending bet: {badRequestResult.Value}";
                         }
                         else
                         {
+                            // Revert the sender's balance if the bet addition failed
+                            sender_.Balance += betA_Amount;
+                            await usersController.UpdateUserAsync(sender_);
+
                             lblStatus.Text = "Error sending bet. Please try again.";
                         }
                     }
 
                     // Clear the form
-                    txtSenderUsername.Text = "";  // Clear the sender field
+                    txtSenderUsername.Text = "";
                     txtRecipientUsername.Text = "";
                     txtBetA_Amount.Text = "";
                     txtBetB_Amount.Text = "";
@@ -154,8 +162,6 @@ namespace SourDuckWannaBet
                     txtReceiverResult.Text = "";
                     chkNeedMediator.Checked = false;
                     txtMediatorID.Text = "";
-
-                    // a Nathan Marzina production
                 }
                 catch (Exception ex)
                 {
