@@ -145,6 +145,12 @@
         </div>
 
         <div id="left2">
+            <h2>Decide Winner</h2>
+            <asp:Button ID="btnViewAcceptedBets" runat="server" Text="Decide Winner" OnClick="btnViewAcceptedBets_OnClick" />
+            <p>Now that the bet's been accepted, let's decide whos gonna win</p>
+        </div>
+
+        <div id="left2">
             <asp:Button ID="btnMarzyBlog" runat="server" Text="Dev Log" OnClick="btnMarzyBlog_OnClick" />
         </div>
 

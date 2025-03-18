@@ -293,5 +293,10 @@ namespace SourDuckWannaBet
         {
             Response.Redirect("MarzyBlog.aspx");
         }
+
+        protected void btnViewAcceptedBets_OnClick(object sender, EventArgs e)
+        {
+            Response.Redirect("ViewAcceptedBets.aspx");
+        }
     }
 }
