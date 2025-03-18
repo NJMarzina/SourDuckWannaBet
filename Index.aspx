@@ -151,6 +151,12 @@
         </div>
 
         <div id="left2">
+            <h2>Add a friend</h2>
+            <asp:Button ID="btnAddFriend" runat="server" Text="Add Friend" OnClick="btnAddFriend_OnClick" />
+            <p>Send a friend request</p>
+        </div>
+
+        <div id="left2">
             <asp:Button ID="btnMarzyBlog" runat="server" Text="Dev Log" OnClick="btnMarzyBlog_OnClick" />
         </div>
 

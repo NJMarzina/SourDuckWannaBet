@@ -298,5 +298,10 @@ namespace SourDuckWannaBet
         {
             Response.Redirect("ViewAcceptedBets.aspx");
         }
+
+        protected void btnAddFriend_OnClick(object sender, EventArgs e)
+        {
+            Response.Redirect("AddAFriend.aspx");
+        }
     }
 }

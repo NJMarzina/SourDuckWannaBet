@@ -226,6 +226,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AddAFriend.aspx" />
     <Content Include="BetsControllerDemos.aspx" />
     <Content Include="images\selfie1.jpg" />
     <Content Include="Index.aspx" />
@@ -239,6 +240,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddAFriend.aspx.cs">
+      <DependentUpon>AddAFriend.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddAFriend.aspx.designer.cs">
+      <DependentUpon>AddAFriend.aspx</DependentUpon>
+    </Compile>
     <Compile Include="BetsControllerDemos.aspx.cs">
       <DependentUpon>BetsControllerDemos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -247,6 +255,7 @@
       <DependentUpon>BetsControllerDemos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\BetsController.cs" />
+    <Compile Include="Controllers\FriendsController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
