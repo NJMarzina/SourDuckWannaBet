@@ -200,7 +200,7 @@ namespace SourDuckWannaBet.Controllers
                         {
                             UserID = (int)existingBet.UserID_Receiver,
                             BetID = (int)betId,
-                            Amount = (decimal)existingBet.BetB_Amount,
+                            Amount = (decimal)existingBet.BetA_Amount + (decimal)existingBet.BetB_Amount,
                             TransactionType = "bet",
                             TransactionDate = DateTime.Now,
                             SenderID = (int)existingBet.UserID_Sender,

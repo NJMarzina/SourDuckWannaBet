@@ -231,6 +231,7 @@
     <Content Include="Index.aspx" />
     <Content Include="MarzyBlog.aspx" />
     <Content Include="SendABet.aspx" />
+    <Content Include="ViewAcceptedBets.aspx" />
     <Content Include="ViewAllBets.aspx" />
     <Content Include="ViewAllUsers.aspx" />
     <Content Include="ViewMyBets.aspx" />
@@ -271,6 +272,13 @@
     </Compile>
     <Compile Include="SendABet.aspx.designer.cs">
       <DependentUpon>SendABet.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewAcceptedBets.aspx.cs">
+      <DependentUpon>ViewAcceptedBets.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewAcceptedBets.aspx.designer.cs">
+      <DependentUpon>ViewAcceptedBets.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewAllBets.aspx.cs">
       <DependentUpon>ViewAllBets.aspx</DependentUpon>
