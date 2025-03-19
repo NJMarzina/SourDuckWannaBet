@@ -23,10 +23,11 @@ namespace SourDuckWannaBet
                 // This section will be updated when login functionality is implemented
                 // Currently running with manual sender selection
 
-                btnSendBet.Click += new EventHandler(btnSendBet_Click);
+                //btnSendBet.Click += new EventHandler(btnSendBet_Click);
             }
         }
 
+        /*
         protected void btnSendBet_Click(object sender, EventArgs e)
         {
             RegisterAsyncTask(new PageAsyncTask(async () =>
@@ -169,7 +170,73 @@ namespace SourDuckWannaBet
                 }
             }));
         }
+        */
+        protected void btnSendBet_Click(object sender, EventArgs e)
+        {
+            RegisterAsyncTask(new PageAsyncTask(async () =>
+            {
+                var _betsController = new BetsController(new HttpClient());
 
+                try
+                {
+                    // Retrieve values from form fields
+                    var senderUsername = txtSenderUsername.Text;
+                    var recipientUsername = txtRecipientUsername.Text;
+                    var betA_Amount = double.Parse(txtBetA_Amount.Text);
+                    var betB_Amount = double.Parse(txtBetB_Amount.Text);
+                    var description = txtDescription.Text;
+                    var senderResult = txtSenderResult.Text;
+                    var receiverResult = txtReceiverResult.Text;
+
+                    // Get sender and recipient user IDs
+                    var senderUserID = await GetUserIDByUsernameAsync(senderUsername);
+                    var recipientUserID = await GetUserIDByUsernameAsync(recipientUsername);
+
+                    // Create a new Bet object
+                    var newBet = new Bet
+                    {
+                        UserID_Sender = senderUserID,
+                        UserID_Receiver = recipientUserID,
+                        BetA_Amount = betA_Amount,
+                        BetB_Amount = betB_Amount,
+                        Pending_Bet = betA_Amount,
+                        Description = description,
+                        Status = "Pending",
+                        Sender_Result = senderResult,
+                        Receiver_Result = receiverResult,
+                        Sender_Balance_Change = 0,
+                        Receiver_Balance_Change = 0,
+                        UserID_Mediator = 0,
+                        UpdatedAt = DateTime.Now,
+                        Created_at = DateTime.Now
+                    };
+
+                    // Call the controller to add the bet
+                    var result = await _betsController.AddBetAsync(newBet);
+                    Response.Write("Bet sent successfully!");
+
+                    lblStatus.Text = "Bet sent successfully!";
+                    lblStatus.ForeColor = System.Drawing.Color.Green;
+
+                    // Clear the form
+                    txtSenderUsername.Text = "";
+                    txtRecipientUsername.Text = "";
+                    txtBetA_Amount.Text = "";
+                    txtBetB_Amount.Text = "";
+                    txtDescription.Text = "";
+                    txtSenderResult.Text = "";
+                    txtReceiverResult.Text = "";
+                    chkNeedMediator.Checked = false;
+                    txtMediatorID.Text = "";
+                }
+                catch (Exception ex)
+                {
+                    // Display error message
+                    Response.Write($"Error sending bet: {ex.Message}");
+                    lblStatus.Text = $"Error sending bet " + ex.Message;
+                }
+            }));
+        }
         private async Task<long> GetUserIDByUsernameAsync(string username)
         {
             try

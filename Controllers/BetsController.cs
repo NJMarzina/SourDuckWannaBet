@@ -25,6 +25,7 @@ namespace SourDuckWannaBet.Controllers
             _supabaseService = supabaseService;
         }
 
+        /*
         [HttpPost]
         public async Task<IActionResult> AddBetAsync(Bet bet)
         {
@@ -43,6 +44,24 @@ namespace SourDuckWannaBet.Controllers
                 return BadRequest(new { Message = $"Failed to add bet: {ex.Message}" });
             }
         }
+        */
+        [HttpPost]
+        public async Task<IActionResult> AddBetAsync(Bet bet)
+        {
+            try
+            {
+                // Format the command to add a bet to the database
+                var tableName = "bets";
+                int betId = await _supabaseService.AddToIndicatedTableAsync(bet, tableName);
+                return Ok($"Bet added successfully with ID: {betId}");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to add bet: {ex.Message}");
+            }
+        }
+
+
 
         /*
          * public async Task<IActionResult> AddUserAsync(User user)

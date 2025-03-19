@@ -73,8 +73,15 @@ namespace Utilities
                 {
                     // Extract ID from the first element in the array (assuming primary key column name)
                     string idColumnName = GetIdColumnName(tableName);
-                    int id = responseJsonArray[0][idColumnName].Value<int>();
-                    return id;
+                    if (responseJsonArray[0][idColumnName] != null)
+                    {
+                        int id = responseJsonArray[0][idColumnName].Value<int>();
+                        return id;
+                    }
+                    else
+                    {
+                        throw new Exception($"Error: The response does not contain {tableName} data.");
+                    }
                 }
                 else
                 {
@@ -87,6 +94,7 @@ namespace Utilities
                 throw;
             }
         }
+
 
         // Helper method to convert entities to DTOs with proper column naming
         private object ConvertToDTO<T>(T entity)
@@ -126,7 +134,8 @@ namespace Utilities
                     sender_Balance_Change = bet.Sender_Balance_Change,
                     receiver_Balance_Change = bet.Receiver_Balance_Change,
                     userID_Mediator = bet.UserID_Mediator,
-                    updated_at = bet.UpdatedAt
+                    updated_at = bet.UpdatedAt,
+                    created_at = bet.Created_at
                 };
             }
             else if (entity is Transaction transaction)
@@ -246,7 +255,7 @@ namespace Utilities
                         bet.BetID = item["betID"]?.Value<long>() ?? 0;
                         bet.UserID_Sender = item["userID_Sender"]?.Value<long>() ?? 0;
                         bet.UserID_Receiver = item["userID_Receiver"]?.Value<long>() ?? 0;
-                        bet.Created_at = item["created_at"]?.Value<DateTime>() ?? DateTime.MinValue;
+                        bet.Created_at = item["created_at"]?.Value<DateTime>();
                         bet.BetA_Amount = item["betA_Amount"]?.Value<double>() ?? 0;
                         bet.BetB_Amount = item["betB_Amount"]?.Value<double>() ?? 0;
                         bet.Pending_Bet = item["pending_Bet"]?.Value<double>() ?? 0;
