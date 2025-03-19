@@ -158,7 +158,7 @@ namespace SourDuckWannaBet
         {
             try
             {
-                int friendId = Convert.ToInt32(e.CommandArgument);
+                long friendId = Convert.ToInt32(e.CommandArgument);     //a nathan marzina production
 
                 // Get the friend request
                 var friendRequests = await _friendsController.GetFriendRequestsAsync(_currentUserId);
@@ -194,7 +194,7 @@ namespace SourDuckWannaBet
         {
             try
             {
-                int friendId = Convert.ToInt32(e.CommandArgument);
+                long friendId = Convert.ToInt32(e.CommandArgument);
 
                 // Get the friend request
                 var friendRequests = await _friendsController.GetFriendRequestsAsync(_currentUserId);
