@@ -164,6 +164,17 @@ namespace Utilities
                     created_at = message.CreatedAt
                 };
             }
+            else if (entity is Friend friend)
+            {
+                return new
+                {
+                    userID_1 = friend.UserID_1,
+                    userID_2 = friend.UserID_2,
+                    status = friend.Status,
+                    created_at = friend.CreatedAt,
+                    accept_date = friend.AcceptDate
+                };
+            }
 
             // Default: return the entity as is (assuming property names match column names)
             return entity;
@@ -183,6 +194,8 @@ namespace Utilities
                     return "transaction_id";
                 case "messages":
                     return "message_id";
+                case "friends":
+                    return "friend_id";
                 // Add more cases for other tables
                 default:
                     return "id";
@@ -280,6 +293,19 @@ namespace Utilities
                         message.Body = item["body"]?.Value<string>();
                         message.Image = item["image"]?.Value<string>();
                         message.CreatedAt = item["created_at"]?.Value<DateTime>() ?? DateTime.MinValue;
+                    }
+
+                    if (typeof(T) == typeof(Friend))
+                    {
+                        var friend = obj as Friend;
+
+                        // Map database columns to C# properties
+                        friend.FriendID = item["friendID"]?.Value<int>() ?? 0;
+                        friend.UserID_1 = item["userID_1"]?.Value<long>() ?? 0;
+                        friend.UserID_2 = item["userID_2"]?.Value<long>() ?? 0;
+                        friend.Status = item["status"]?.Value<string>();
+                        friend.CreatedAt = item["created_at"]?.Value<DateTime>() ?? DateTime.MinValue;
+                        friend.AcceptDate = item["acceptdate"]?.ToObject<DateTime?>();
                     }
 
                     result.Add(obj);

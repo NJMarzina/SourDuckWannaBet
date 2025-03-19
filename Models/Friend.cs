@@ -8,11 +8,11 @@ namespace Models
 {
     public class Friend
     {
-        public Bet FriendID { get; set; }
+        public int FriendID { get; set; } // Changed from Bet to int
         public long UserID_1 { get; set; }
         public long UserID_2 { get; set; }
-        public string Status { get; set; }
-        public DateTime CreatedAt { get; set; }  // timestamp corresponds to DateTime in C#
-        public DateTime AcceptDate {  get; set; }
+        public string Status { get; set; } // "pending", "accepted", "rejected"
+        public DateTime CreatedAt { get; set; }
+        public DateTime? AcceptDate { get; set; } // Made nullable for pending requests
     }
 }
