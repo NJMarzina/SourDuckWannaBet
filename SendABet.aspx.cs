@@ -192,6 +192,19 @@ namespace SourDuckWannaBet
                     var senderUserID = await GetUserIDByUsernameAsync(senderUsername);
                     var recipientUserID = await GetUserIDByUsernameAsync(recipientUsername);
 
+                    //ensures the user's exist; a nathan marzina production
+                    if (senderUserID == -1)
+                    {
+                        lblStatus.Text = "Invalid sender. Please enter a valid username.";
+                        return;
+                    }
+
+                    if (recipientUserID == -1)
+                    {
+                        lblStatus.Text = "Invalid recipient. Please enter a valid username.";
+                        return;
+                    }
+
                     // Create a new Bet object
                     var newBet = new Bet
                     {
@@ -217,6 +230,8 @@ namespace SourDuckWannaBet
 
                     lblStatus.Text = "Bet sent successfully!";
                     lblStatus.ForeColor = System.Drawing.Color.Green;
+
+                    //TODO add transaction
 
                     // Clear the form
                     txtSenderUsername.Text = "";
@@ -306,3 +321,153 @@ namespace SourDuckWannaBet
         }
     }
 }
+/*
+ protected void btnSendBet_Click(object sender, EventArgs e)
+        {
+            RegisterAsyncTask(new PageAsyncTask(async () =>
+            {
+                var _betsController = new BetsController(new HttpClient());
+                var _usersController = new UsersController(new HttpClient());
+                var _transactionsController = new TransactionsController(new HttpClient());
+
+                try
+                {
+                    // Validate input fields
+                    if (string.IsNullOrEmpty(txtSenderUsername.Text) ||
+                        string.IsNullOrEmpty(txtRecipientUsername.Text) ||
+                        string.IsNullOrEmpty(txtDescription.Text) ||
+                        string.IsNullOrEmpty(txtSenderResult.Text) ||
+                        string.IsNullOrEmpty(txtReceiverResult.Text) ||
+                        string.IsNullOrEmpty(txtBetA_Amount.Text) ||
+                        string.IsNullOrEmpty(txtBetB_Amount.Text))
+                    {
+                        lblStatus.Text = "Please fill out all required fields.";
+                        return;
+                    }
+
+                    // Retrieve values from form fields
+                    var senderUsername = txtSenderUsername.Text;
+                    var recipientUsername = txtRecipientUsername.Text;
+                    var betA_Amount = double.Parse(txtBetA_Amount.Text);
+                    var betB_Amount = double.Parse(txtBetB_Amount.Text);
+                    var description = txtDescription.Text;
+                    var senderResult = txtSenderResult.Text;
+                    var receiverResult = txtReceiverResult.Text;
+
+                    // Get sender and recipient user IDs
+                    var senderUserID = await GetUserIDByUsernameAsync(senderUsername);
+                    var recipientUserID = await GetUserIDByUsernameAsync(recipientUsername);
+
+                    // Check if sender and recipient usernames exist
+                    if (senderUserID == -1)
+                    {
+                        lblStatus.Text = "Invalid sender. Please enter a valid username.";
+                        return;
+                    }
+
+                    if (recipientUserID == -1)
+                    {
+                        lblStatus.Text = "Invalid recipient. Please enter a valid username.";
+                        return;
+                    }
+
+                    // Get sender's current balance
+                    var sender_ = (await _usersController.GetAllUsersAsync()).FirstOrDefault(u => u.UserID == senderUserID);
+                    if (sender_ == null)
+                    {
+                        lblStatus.Text = "Sender not found.";
+                        return;
+                    }
+
+                    // Check if sender has enough balance
+                    if (sender_.Balance < betA_Amount)
+                    {
+                        lblStatus.Text = "Insufficient balance to send the bet.";
+                        return;
+                    }
+
+                    // Deduct BetA_Amount from sender's balance
+                    sender_.Balance -= betA_Amount;
+                    await _usersController.UpdateUserAsync(sender_);
+
+                    // Create a new Bet object
+                    var newBet = new Bet
+                    {
+                        UserID_Sender = senderUserID,
+                        UserID_Receiver = recipientUserID,
+                        BetA_Amount = betA_Amount,
+                        BetB_Amount = betB_Amount,
+                        Pending_Bet = betA_Amount,
+                        Description = description,
+                        Status = "Pending",
+                        Sender_Result = senderResult,
+                        Receiver_Result = receiverResult,
+                        Sender_Balance_Change = 0,
+                        Receiver_Balance_Change = 0,
+                        UserID_Mediator = chkNeedMediator.Checked ? (long.TryParse(txtMediatorID.Text, out long mediatorId) ? mediatorId : 0) : 0,
+                        UpdatedAt = DateTime.Now,
+                        Created_at = DateTime.Now
+                    };
+
+                    // Call the controller to add the bet
+                    var result = await _betsController.AddBetAsync(newBet);
+
+                    // Check the result type
+                    if (result is OkObjectResult okResult)
+                    {
+                        /*
+                        // Record the transaction
+                        var transaction = new Transaction
+                        {
+                            UserID = (int)senderUserID,
+                            BetID = (int)okResult.Value.GetType().GetProperty("BetId").GetValue(okResult.Value),
+                            Amount = (decimal)betA_Amount,
+                            TransactionType = "bet",
+                            TransactionDate = DateTime.Now,
+                            SenderID = (int)senderUserID,
+                            ReceiverID = (int)recipientUserID,
+                            Status = "pending"
+                        };
+
+                        await _transactionsController.AddTransactionAsync(transaction);
+                        
+lblStatus.Text = "Bet sent successfully!";
+lblStatus.ForeColor = System.Drawing.Color.Green;
+                    }
+                    else if (result is BadRequestObjectResult badRequestResult)
+{
+    // Revert the sender's balance if the bet addition failed
+    sender_.Balance += betA_Amount;
+    await _usersController.UpdateUserAsync(sender_);
+
+    lblStatus.Text = $"Error sending bet: {badRequestResult.Value}";
+}
+else
+{
+    // Revert the sender's balance if the bet addition failed
+    sender_.Balance += betA_Amount;
+    await _usersController.UpdateUserAsync(sender_);
+
+    lblStatus.Text = "Error sending bet. Please try again.";
+}
+
+// Clear the form
+txtSenderUsername.Text = "";
+txtRecipientUsername.Text = "";
+txtBetA_Amount.Text = "";
+txtBetB_Amount.Text = "";
+txtDescription.Text = "";
+txtSenderResult.Text = "";
+txtReceiverResult.Text = "";
+chkNeedMediator.Checked = false;
+txtMediatorID.Text = "";
+                }
+                catch (Exception ex)
+                {
+                    // Display error message
+                    Response.Write($"Error sending bet: {ex.Message}");
+lblStatus.Text = $"Error sending bet " + ex.Message;
+                }
+            }));
+        }
+*/
