@@ -174,6 +174,9 @@
             <p>
                 Actual registration and user can remain signed in upon login
             </p>
+            <p>
+                Friend requests
+            </p>
         </div>
 
         
