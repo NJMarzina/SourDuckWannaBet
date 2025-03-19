@@ -75,6 +75,8 @@ namespace SourDuckWannaBet
 
                 var loser = await usersController.GetUserByUserIDAsync((winnerId == bet.UserID_Sender) ? bet.UserID_Receiver : bet.UserID_Sender);
 
+                
+
                 if (bet != null)
                 {
                     // Update the bet with the winner
@@ -95,7 +97,20 @@ namespace SourDuckWannaBet
                     loser.NumLoses += 1;
                     await usersController.UpdateUserAsync(loser);   // a nathan marzina production
 
-                    //TODO create the transaction here.
+                    //BANG
+                    var transactionsController = new TransactionsController(new HttpClient());
+                    Transaction transaction1 = new Transaction();
+
+                    transaction1.UserID = int.Parse(winnerId.ToString());   // obselete
+                    transaction1.BetID = int.Parse(bet.BetID.ToString());   
+                    transaction1.Amount = int.Parse(bet.Pending_Bet.ToString());
+                    transaction1.TransactionType = "win";
+                    transaction1.TransactionDate = DateTime.Now;
+                    transaction1.SenderID = int.Parse(bet.UserID_Sender.ToString());
+                    transaction1.ReceiverID = int.Parse(bet.UserID_Receiver.ToString());
+                    transaction1.Status = "completed_win";
+
+                    var result = await transactionsController.AddTransactionAsync(transaction1);
                 }
             }
             catch (Exception ex)
