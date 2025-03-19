@@ -164,6 +164,9 @@
             <h2>Bulletin:</h2>
             <h5>TODO List:</h5>
             <p>
+                bet updates for on completed bets
+            </p>
+            <p>
                 Add balance_at_time_of_bet to transactions table, which also should be reworked</p>
             <p>
                 Bet now has money/balance aspect, actually subtracting from users account to be put on hold through the wait for usernameB
@@ -173,9 +176,6 @@
             </p>
             <p>
                 Actual registration and user can remain signed in upon login
-            </p>
-            <p>
-                Friend requests
             </p>
         </div>
 
