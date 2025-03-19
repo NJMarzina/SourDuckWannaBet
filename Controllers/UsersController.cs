@@ -104,5 +104,24 @@ namespace SourDuckWannaBet.Controllers
                 throw new Exception($"Error fetching username for userID {userID}: {ex.Message}");
             }
         }
+
+        public async Task<User> GetUserByUserIDAsync(long userID)
+        {
+            try
+            {
+                // Fetch all users (this could be optimized to get only the user you're interested in)
+                var users = await GetAllUsersAsync();
+
+                // Find the user based on userID
+                var user = users.FirstOrDefault(u => u.UserID == userID);
+
+                return user;
+            }
+            catch (Exception ex)
+            {
+                // Handle any potential exceptions (e.g., log them)
+                throw new Exception($"Error fetching username for userID {userID}: {ex.Message}");
+            }
+        }
     }
 }

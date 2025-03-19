@@ -68,15 +68,34 @@ namespace SourDuckWannaBet
                 var bets = await betsController.GetAllBetsAsync();
                 var bet = bets.FirstOrDefault(b => b.BetID == betId);
 
+                var usersController = new UsersController(new HttpClient());
+
+                //get user by winnerId
+                var winner = await usersController.GetUserByUserIDAsync(winnerId);
+
+                var loser = await usersController.GetUserByUserIDAsync((winnerId == bet.UserID_Sender) ? bet.UserID_Receiver : bet.UserID_Sender);
+
                 if (bet != null)
                 {
                     // Update the bet with the winner
                     bet.Sender_Result = (winnerId == bet.UserID_Sender) ? "Win" : "Lose";
                     bet.Receiver_Result = (winnerId == bet.UserID_Receiver) ? "Win" : "Lose";
                     bet.Status = "Completed";
+                    bet.Sender_Balance_Change = (winnerId == bet.UserID_Sender) ? bet.Pending_Bet : -bet.Pending_Bet;
+                    bet.Receiver_Balance_Change = (winnerId == bet.UserID_Receiver) ? bet.Pending_Bet : -bet.Pending_Bet;
 
                     // Save the updated bet
                     await betsController.UpdateBetAsync(bet);
+
+                    winner.Balance += double.Parse(bet.Pending_Bet.ToString());
+                    winner.NumWins += 1;
+
+                    await usersController.UpdateUserAsync(winner);
+
+                    loser.NumLoses += 1;
+                    await usersController.UpdateUserAsync(loser);   // a nathan marzina production
+
+                    //TODO create the transaction here.
                 }
             }
             catch (Exception ex)
