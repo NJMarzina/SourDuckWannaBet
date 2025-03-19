@@ -43,7 +43,10 @@
                 <ItemTemplate>
                     <div class="bet-container">
                         <div class="bet-description">
-                            Description: <%# Eval("Description") %>
+                            <%# Eval("Description") %>
+                        </div>
+                        <div>
+                            Total <%# Eval("Pending_Bet") %>
                         </div>
                         <div class="bet-stakes">
                             Stakes: <%# Eval("BetA_Amount") %> (Sender) vs <%# Eval("BetB_Amount") %> (Receiver)

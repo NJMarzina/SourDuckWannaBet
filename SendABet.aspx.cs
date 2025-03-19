@@ -102,7 +102,7 @@ namespace SourDuckWannaBet
                             Receiver_Balance_Change = 0, // Starts at 0
                             UserID_Mediator = chkNeedMediator.Checked ? (long.TryParse(txtMediatorID.Text, out long mediatorId) ? mediatorId : 0) : 0, // Handle mediator ID properly
                             UpdatedAt = DateTime.Now,
-                            Created_at = DateTime.Now,
+                            //Created_at = DateTime.Now,
                         };
 
                         // Log the bet object for debugging
