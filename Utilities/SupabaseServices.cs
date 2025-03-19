@@ -300,12 +300,12 @@ namespace Utilities
                         var friend = obj as Friend;
 
                         // Map database columns to C# properties
-                        friend.FriendID = item["friendID"]?.Value<int>() ?? 0;
+                        friend.FriendID = item["friendID"]?.Value<long>() ?? 0;
                         friend.UserID_1 = item["userID_1"]?.Value<long>() ?? 0;
                         friend.UserID_2 = item["userID_2"]?.Value<long>() ?? 0;
                         friend.Status = item["status"]?.Value<string>();
                         friend.CreatedAt = item["created_at"]?.Value<DateTime>() ?? DateTime.MinValue;
-                        friend.AcceptDate = item["acceptdate"]?.ToObject<DateTime?>();
+                        friend.AcceptDate = item["accept_date"]?.ToObject<DateTime?>();
                     }
 
                     result.Add(obj);

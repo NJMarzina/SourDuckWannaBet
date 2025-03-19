@@ -85,7 +85,8 @@ namespace SourDuckWannaBet
                     UserID_1 = _currentUserId,
                     UserID_2 = targetUser.UserID,
                     Status = "pending",
-                    CreatedAt = DateTime.Now
+                    CreatedAt = DateTime.Now,
+                    AcceptDate = DateTime.Now
                 };
 
                 // Send the friend request
