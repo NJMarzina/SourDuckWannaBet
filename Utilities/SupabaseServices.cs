@@ -320,12 +320,13 @@ namespace Utilities
             }
         }
 
-        // Add this method to the existing SupabaseServices class
+  
         public async Task<bool> UpdateInTableAsync<T>(T entity, string tableName, string primaryKeyColumn, object primaryKeyValue)
         {
             // Convert entity to DTO based on its type
             object dto = ConvertToDTO(entity);
 
+            // URL for the PATCH request to update the friend request by matching the primary key
             var url = $"{_supabaseUrl}/rest/v1/{tableName}?{primaryKeyColumn}=eq.{primaryKeyValue}";
             var json = JsonConvert.SerializeObject(dto);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -336,14 +337,14 @@ namespace Utilities
                 Content = content
             };
 
-            // Set the headers
+            // Set the headers for authentication and content type
             request.Headers.Add("apikey", _supabaseServiceRoleKey);
             request.Headers.Add("Authorization", $"Bearer {_supabaseServiceRoleKey}");
             request.Headers.Add("Prefer", "return=representation");
 
             try
             {
-                // Send the request asynchronously
+                // Send the request asynchronously to update the table
                 var response = await _httpClient.SendAsync(request);
 
                 if (!response.IsSuccessStatusCode)
@@ -352,7 +353,7 @@ namespace Utilities
                     throw new Exception($"Error updating {tableName}: {response.StatusCode} - {response.ReasonPhrase}\nDetails: {errorContent}");
                 }
 
-                // Handle the response
+                // Handle the response if the update is successful
                 var responseData = await response.Content.ReadAsStringAsync();
                 Console.WriteLine($"Updated {tableName} successfully!");
 
@@ -364,5 +365,6 @@ namespace Utilities
                 throw;
             }
         }
+
     }
 }
