@@ -1,10 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WB_Registration.aspx.cs" Inherits="SourDuckWannaBet.WB_Registration" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WBRegistration.aspx.cs" Inherits="SourDuckWannaBet.WBRegistration" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>WB Registration</title>
+    <title>WBRegistration</title>
 </head>
 <body>
     <form id="frmWBRegistration" runat="server">

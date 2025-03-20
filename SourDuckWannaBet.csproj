@@ -238,8 +238,9 @@
     <Content Include="ViewMyBets.aspx" />
     <Content Include="ViewSelectedBets.aspx" />
     <Content Include="WBDashboard.aspx" />
+    <Content Include="WBForgotPassword.aspx" />
     <Content Include="WBLogin.aspx" />
-    <Content Include="WB_Registration.aspx" />
+    <Content Include="WBRegistration.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -327,6 +328,13 @@
     <Compile Include="WBDashboard.aspx.designer.cs">
       <DependentUpon>WBDashboard.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WBForgotPassword.aspx.cs">
+      <DependentUpon>WBForgotPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WBForgotPassword.aspx.designer.cs">
+      <DependentUpon>WBForgotPassword.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WBLogin.aspx.cs">
       <DependentUpon>WBLogin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -334,12 +342,12 @@
     <Compile Include="WBLogin.aspx.designer.cs">
       <DependentUpon>WBLogin.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WB_Registration.aspx.cs">
-      <DependentUpon>WB_Registration.aspx</DependentUpon>
+    <Compile Include="WBRegistration.aspx.cs">
+      <DependentUpon>WBRegistration.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WB_Registration.aspx.designer.cs">
-      <DependentUpon>WB_Registration.aspx</DependentUpon>
+    <Compile Include="WBRegistration.aspx.designer.cs">
+      <DependentUpon>WBRegistration.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
