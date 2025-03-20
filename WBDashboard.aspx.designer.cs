@@ -15,12 +15,39 @@ namespace SourDuckWannaBet
     {
 
         /// <summary>
-        /// frmWBDashboard control.
+        /// frmDashboard control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm frmWBDashboard;
+        protected global::System.Web.UI.HtmlControls.HtmlForm frmDashboard;
+
+        /// <summary>
+        /// btnSendBet control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSendBet;
+
+        /// <summary>
+        /// btnAnotherButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAnotherButton;
+
+        /// <summary>
+        /// btnAddFriend control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddFriend;
     }
 }

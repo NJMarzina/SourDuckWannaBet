@@ -1,14 +1,285 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WBDashboard.aspx.cs" Inherits="SourDuckWannaBet.WBDashboard" %>
 
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>WB Dashboard</title>
+    <title>Wanna Bet Dashboard</title>
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Container for the dashboard */
+        .dashboard-container {
+            width: 95%;
+            max-width: 1400px; /* Increased max-width */
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        /* Header styling */
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #444;
+        }
+
+        .site-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .user-balance {
+            font-size: 18px;
+            background-color: #4CAF50;
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+
+        /* Actions bar styling */
+        .actions-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: white;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .action-button {
+            background-color: #FFD700; /* Gold color */
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .action-button:hover {
+            background-color: #e6b800; /* Darker gold on hover */
+        }
+
+        /* Bet list styling */
+        .bet-list {
+            padding: 20px;
+        }
+
+        .bet-container {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+            transition: transform 0.2s;
+        }
+
+        .bet-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .bet-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .bet-users {
+            font-weight: bold;
+        }
+
+        .bet-date {
+            color: #777;
+        }
+
+        .bet-description {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .bet-stakes {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .bet-stakes div {
+            margin-bottom: 5px;
+        }
+
+        .winner-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .winner-button {
+            width: 48%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .sender-win {
+            background-color: #4CAF50; /* Green for sender win */
+            color: white;
+        }
+
+        .sender-win:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        .receiver-win {
+            background-color: #2196F3; /* Blue for receiver win */
+            color: white;
+        }
+
+        .receiver-win:hover {
+            background-color: #1e88e5; /* Darker blue on hover */
+        }
+
+        /* No bets message styling */
+        .no-bets-message {
+            text-align: center;
+            margin-top: 50px;
+            color: #777;
+            font-size: 18px;
+        }
+
+        /* Hamburger menu styling */
+        .hamburger-menu {
+            cursor: pointer;
+            font-size: 24px;
+            margin-right: 15px;
+        }
+
+        /* Dropdown menu styling */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-menu a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .show {
+            display: block;
+        }
+        #content1 {
+            width: 80%;
+            text-align: center;
+            margin-left: 10%;
+        }
+        #content2 {
+            width: 80%;
+            text-align: center;
+            margin-left: 10%;
+        }
+    </style>
+    <script>
+        // Function to toggle the dropdown menu when clicking the hamburger icon
+        function toggleMenu() {
+            var menu = document.getElementById("dropdownMenu");
+            menu.classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function (event) {
+            if (!event.target.matches('.hamburger-menu')) {
+                var dropdowns = document.getElementsByClassName("dropdown-menu");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 <body>
-    <form id="frmWBDashboard" runat="server">
-        <div>
+    <form id="frmDashboard" runat="server">
+        <div class="dashboard-container">
+            <!-- Header -->
+            <div class="header">
+                <div style="display: flex; align-items: center;">
+                    <div class="hamburger-menu" onclick="toggleMenu()">☰</div>
+                    <div class="site-title">
+                        Wanna Bet <%= Request.Cookies["Username"]?.Value %>?
+                    </div>
+                </div>
+                <div class="user-balance">
+                    Balance: $<%= Request.Cookies["Balance"]?.Value %>
+                </div>
+            </div>
+
+            <!-- Dropdown menu -->
+            <div id="dropdownMenu" class="dropdown-menu">
+                <a href="Index.aspx">Home</a>
+                <a href="Profile.aspx">My Profile</a>
+                <a href="MyBets.aspx">My Bets</a>
+                <a href="Friends.aspx">Friends</a>
+                <a href="Logout.aspx">Logout</a>
+            </div>
+
+            <div id="content1">
+                <h3>
+                    Welcome to your dashboard, <%= Request.Cookies["Username"]?.Value %>!
+                </h3>
+                <p>
+                    Here you can view your active bets, manage your profile, and interact with your friends.
+                </p>
+                <p>
+                    Enjoy betting and good luck!
+                </p>
+            </div>
+
+            <!-- Actions bar -->
+            <div class="actions-bar">
+                <asp:Button ID="btnSendBet" runat="server" Text="Send A Bet" CssClass="action-button" OnClick="btnSendBet_Click" />
+                <asp:Button ID="btnAnotherButton" runat="server" Text="Another Button" CssClass="action-button" />
+                <asp:Button ID="btnAddFriend" runat="server" Text="Add A Friend" CssClass="action-button" OnClick="btnAddFriend_Click" />
+            </div>
+            <div id="content2">
+                <h3>
+                    Active Bets
+                </h3>
+                <p>
+                    Insert repeater here
+                </p>
+            </div>
         </div>
     </form>
 </body>
