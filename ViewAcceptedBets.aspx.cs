@@ -108,9 +108,48 @@ namespace SourDuckWannaBet
                     transaction1.TransactionDate = DateTime.Now;
                     transaction1.SenderID = int.Parse(bet.UserID_Sender.ToString());
                     transaction1.ReceiverID = int.Parse(bet.UserID_Receiver.ToString());
-                    transaction1.Status = "completed_win";
+
+                    bool idCheck = false;
+
+                    if (winnerId == bet.UserID_Sender)
+                    {
+                        transaction1.Status = "completed_win_sender";
+                    }
+                    else if (winnerId == bet.UserID_Receiver)
+                    {
+                        transaction1.Status = "completed_win_receiver";
+                        idCheck = true;
+                    }
+
+                    //transaction2 starts here
+                    Transaction transaction2 = new Transaction();
+
+                    if(idCheck)
+                    {
+                        transaction2.UserID = int.Parse(bet.UserID_Sender.ToString());   // obselete
+                    }
+                    else
+                    {
+                        transaction2.UserID = int.Parse(bet.UserID_Receiver.ToString());   // obselete
+                    }
+                    
+                    transaction2.BetID = int.Parse(bet.BetID.ToString());
+                    transaction2.Amount = (int.Parse(bet.Pending_Bet.ToString()))*-1;
+                    transaction2.TransactionType = "loss";
+                    transaction2.TransactionDate = DateTime.Now;
+                    transaction2.SenderID = int.Parse(bet.UserID_Sender.ToString());
+                    transaction2.ReceiverID = int.Parse(bet.UserID_Receiver.ToString());
+                    if (winnerId != bet.UserID_Sender)
+                    {
+                        transaction2.Status = "completed_loss_sender";
+                    }
+                    else if (winnerId != bet.UserID_Receiver)
+                    {
+                        transaction2.Status = "completed_loss_receiver";
+                    }
 
                     var result = await transactionsController.AddTransactionAsync(transaction1);
+                    var result2 = await transactionsController.AddTransactionAsync(transaction2);
                 }
             }
             catch (Exception ex)
