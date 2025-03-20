@@ -29,17 +29,19 @@ namespace SourDuckWannaBet
 
             foreach(User user in users)
             {
-                if (user.Username == username && user.Password == password)
+                if (user.Username == "NathanMarzy" && user.Password == password)
                 {
                     Response.Redirect("Index.aspx");
                 }
+                else if (user.Username == username && user.Password == password)
+                {
+                    Response.Redirect("WBDashboard.aspx");
+                }
+                else
+                {
+                    //error message
+                }
             }   
-            // Example of how you might process the login (authentication, etc.)
-            // if (AuthenticateUser(username, password)) {
-            //     Response.Redirect("Dashboard.aspx");
-            // } else {
-            //     // Show error message
-            // }
         }
 
         protected void btnRegister_Click(object sender, EventArgs e)
