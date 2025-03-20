@@ -101,7 +101,6 @@ namespace SourDuckWannaBet
                     var transactionsController = new TransactionsController(new HttpClient());
                     Transaction transaction1 = new Transaction();
 
-                    transaction1.UserID = int.Parse(winnerId.ToString());   // obselete
                     transaction1.BetID = int.Parse(bet.BetID.ToString());   
                     transaction1.Amount = int.Parse(bet.Pending_Bet.ToString());
                     transaction1.TransactionType = "win";
@@ -123,15 +122,6 @@ namespace SourDuckWannaBet
 
                     //transaction2 starts here
                     Transaction transaction2 = new Transaction();
-
-                    if(idCheck)
-                    {
-                        transaction2.UserID = int.Parse(bet.UserID_Sender.ToString());   // obselete
-                    }
-                    else
-                    {
-                        transaction2.UserID = int.Parse(bet.UserID_Receiver.ToString());   // obselete
-                    }
                     
                     transaction2.BetID = int.Parse(bet.BetID.ToString());
                     transaction2.Amount = (int.Parse(bet.Pending_Bet.ToString()))*-1;

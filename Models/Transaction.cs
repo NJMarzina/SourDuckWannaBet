@@ -9,7 +9,6 @@ namespace Models
     public class Transaction
     {
         public int TransactionID { get; set; } // Primary key
-        public int UserID { get; set; }       // Foreign key to Users table
         public int BetID { get; set; }        // Foreign key to Bets table
         public decimal Amount { get; set; }   // Amount involved in the transaction
         public string TransactionType { get; set; } // Type of transaction (e.g., "bet", "win", "loss", "refund")
@@ -19,9 +18,8 @@ namespace Models
         public string Status { get; set; }    // Status of the transaction (e.g., "pending", "completed", "refunded")
 
         // Constructor for initializing a new transaction
-        public Transaction(int userID, int betID, decimal amount, string transactionType, DateTime transactionDate, int senderID, int receiverID, string status)
+        public Transaction(int betID, decimal amount, string transactionType, DateTime transactionDate, int senderID, int receiverID, string status)
         {
-            UserID = userID;
             BetID = betID;
             Amount = amount;
             TransactionType = transactionType;

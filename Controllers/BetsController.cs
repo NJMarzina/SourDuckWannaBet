@@ -237,7 +237,6 @@ namespace SourDuckWannaBet.Controllers
                         // Record the transaction
                         var transaction = new Transaction
                         {
-                            UserID = (int)existingBet.UserID_Receiver,
                             BetID = (int)betId,
                             Amount = (decimal)existingBet.BetA_Amount + (decimal)existingBet.BetB_Amount,
                             TransactionType = "bet",
@@ -260,7 +259,6 @@ namespace SourDuckWannaBet.Controllers
                         // Record the transaction
                         var transaction = new Transaction
                         {
-                            UserID = (int)existingBet.UserID_Sender,
                             BetID = (int)betId,
                             Amount = (decimal)existingBet.BetA_Amount,
                             TransactionType = "refund",

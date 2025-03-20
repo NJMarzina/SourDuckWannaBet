@@ -49,7 +49,7 @@ namespace SourDuckWannaBet.Controllers
                 var transactions = await _supabaseService.GetAllFromTableAsync<Transaction>(tableName);
 
                 // Filter transactions for the specified user
-                return transactions.Where(t => t.UserID == userId).ToList();
+                return transactions.Where(t => t.SenderID == userId || t.ReceiverID == userId).ToList();
             }
             catch (Exception ex)
             {

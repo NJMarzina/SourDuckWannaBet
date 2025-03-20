@@ -142,7 +142,6 @@ namespace Utilities
             {
                 return new
                 {
-                    userID = transaction.UserID,
                     betID = transaction.BetID,
                     amount = transaction.Amount,
                     transaction_type = transaction.TransactionType,
