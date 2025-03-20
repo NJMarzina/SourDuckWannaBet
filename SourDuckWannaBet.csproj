@@ -237,6 +237,9 @@
     <Content Include="ViewAllUsers.aspx" />
     <Content Include="ViewMyBets.aspx" />
     <Content Include="ViewSelectedBets.aspx" />
+    <Content Include="WBDashboard.aspx" />
+    <Content Include="WBLogin.aspx" />
+    <Content Include="WB_Registration.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -316,6 +319,27 @@
     </Compile>
     <Compile Include="ViewSelectedBets.aspx.designer.cs">
       <DependentUpon>ViewSelectedBets.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WBDashboard.aspx.cs">
+      <DependentUpon>WBDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WBDashboard.aspx.designer.cs">
+      <DependentUpon>WBDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WBLogin.aspx.cs">
+      <DependentUpon>WBLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WBLogin.aspx.designer.cs">
+      <DependentUpon>WBLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WB_Registration.aspx.cs">
+      <DependentUpon>WB_Registration.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WB_Registration.aspx.designer.cs">
+      <DependentUpon>WB_Registration.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
