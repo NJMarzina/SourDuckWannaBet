@@ -344,5 +344,110 @@ namespace SourDuckWannaBet.Controllers
                 throw new Exception($"Failed to get accepted bets: {ex.Message}");
             }
         }
+        public async Task<bool> UpdateBetWinnerAsync(long betId, string winner)
+        {
+            try
+            {
+                var bet = await GetBetByIdAsync(betId);
+
+                var usersController = new UsersController(new HttpClient());
+
+                var sender = await usersController.GetUserByUserIDAsync(bet.UserID_Sender);
+                var receiver = await usersController.GetUserByUserIDAsync(bet.UserID_Receiver);
+
+                var transactionsController = new TransactionsController(new HttpClient());
+                Transaction transaction1 = new Transaction();
+                Transaction transaction2 = new Transaction();
+
+                if (bet != null)
+                {
+                    if (winner == "Sender")
+                    {
+                        bet.Sender_Result = "Win - " + bet.Sender_Result;
+                        bet.Receiver_Result = "Lose - " + bet.Receiver_Result;
+                        bet.Status = "Completed";
+                        bet.Sender_Balance_Change = bet.Pending_Bet;
+                        bet.Receiver_Balance_Change = -bet.Pending_Bet;
+
+                        await UpdateBetAsync(bet);
+
+                        sender.Balance += double.Parse(bet.Pending_Bet.ToString());
+                        sender.NumWins += 1;
+                        receiver.NumLoses += 1;
+
+                        await usersController.UpdateUserAsync(sender);
+                        await usersController.UpdateUserAsync(receiver);
+
+                        transaction1.Status = "completed_win_sender";
+                        transaction2.Status = "completed_loss_receiver";
+                    }
+                    else if (winner == "Receiver")
+                    {
+                        bet.Sender_Result = "Lose - " + bet.Sender_Result;
+                        bet.Receiver_Result = "Win - " + bet.Receiver_Result;
+                        bet.Status = "Completed";
+                        bet.Sender_Balance_Change = -bet.Pending_Bet;
+                        bet.Receiver_Balance_Change = bet.Pending_Bet;
+
+                        await UpdateBetAsync(bet);
+
+                        receiver.Balance += double.Parse(bet.Pending_Bet.ToString());
+                        receiver.NumWins += 1;
+                        sender.NumLoses += 1;
+
+                        await usersController.UpdateUserAsync(receiver);
+                        await usersController.UpdateUserAsync(sender);
+
+                        transaction1.Status = "completed_win_receiver";
+                        transaction2.Status = "completed_loss_sender";
+                    }
+
+                    transaction1.BetID = int.Parse(bet.BetID.ToString());
+                    transaction1.Amount = int.Parse(bet.Pending_Bet.ToString());
+                    transaction1.TransactionType = "win";
+                    transaction1.TransactionDate = DateTime.Now;
+                    transaction1.SenderID = int.Parse(bet.UserID_Sender.ToString());
+                    transaction1.ReceiverID = int.Parse(bet.UserID_Receiver.ToString());
+
+                    //transaction2 starts here
+                    transaction2.BetID = int.Parse(bet.BetID.ToString());
+                    transaction2.Amount = (int.Parse(bet.Pending_Bet.ToString())) * -1;
+                    transaction2.TransactionType = "loss";
+                    transaction2.TransactionDate = DateTime.Now;
+                    transaction2.SenderID = int.Parse(bet.UserID_Sender.ToString());
+                    transaction2.ReceiverID = int.Parse(bet.UserID_Receiver.ToString());
+
+                    var result = await transactionsController.AddTransactionAsync(transaction1);
+                    var result2 = await transactionsController.AddTransactionAsync(transaction2);
+
+                    //await UpdateBetAsync(bet);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                // Log error
+                return false;
+            }
+        }
+        public async Task<Bet> GetBetByIdAsync(long betID)
+        {
+            try
+            {
+                // Fetch all users (this could be optimized to get only the user you're interested in)
+                var bets = await GetAllBetsAsync();
+
+                // Find the user based on userID
+                var bet = bets.FirstOrDefault(b => b.BetID == betID);
+
+                return bet;
+            }
+            catch (Exception ex)
+            {
+                // Handle any potential exceptions (e.g., log them)
+                throw new Exception($"Error fetching username for betID {betID}: {ex.Message}");
+            }
+        }
     }
 }
