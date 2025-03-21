@@ -240,6 +240,7 @@
     <Content Include="WBDashboard.aspx" />
     <Content Include="WBForgotPassword.aspx" />
     <Content Include="WBLogin.aspx" />
+    <Content Include="WBLogout.aspx" />
     <Content Include="WBRegistration.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -341,6 +342,13 @@
     </Compile>
     <Compile Include="WBLogin.aspx.designer.cs">
       <DependentUpon>WBLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WBLogout.aspx.cs">
+      <DependentUpon>WBLogout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WBLogout.aspx.designer.cs">
+      <DependentUpon>WBLogout.aspx</DependentUpon>
     </Compile>
     <Compile Include="WBRegistration.aspx.cs">
       <DependentUpon>WBRegistration.aspx</DependentUpon>

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WBDashboard.aspx.cs" Inherits="SourDuckWannaBet.WBDashboard" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WBDashboard.aspx.cs" Inherits="SourDuckWannaBet.WBDashboard" Async="true"%>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -79,84 +79,91 @@
             padding: 20px;
         }
 
-        .bet-container {
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            padding: 20px;
-            transition: transform 0.2s;
-        }
+        /* Enhanced bet-container styling */
+.bet-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
 
-        .bet-container:hover {
-            transform: translateY(-5px);
-        }
+.bet-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
 
-        .bet-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
+/* Bet header section */
+.bet-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+    font-size: 18px;
+    font-weight: bold;
+}
 
-        .bet-users {
-            font-weight: bold;
-        }
+/* Description styling */
+.bet-description {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.5;
+}
 
-        .bet-date {
-            color: #777;
-        }
+/* Stakes styling */
+.bet-stakes {
+    background-color: #f7f7f7;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
 
-        .bet-description {
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
+/* Winner selection buttons */
+.winner-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
 
-        .bet-stakes {
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
+.winner-button {
+    width: 48%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background-color 0.3s, transform 0.3s;
+}
 
-        .bet-stakes div {
-            margin-bottom: 5px;
-        }
+.winner-button:hover {
+    transform: translateY(-2px);
+}
 
-        .winner-buttons {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-        }
+/* Button styles */
+.sender-win {
+    background-color: #4CAF50; /* Green for sender win */
+    color: white;
+}
 
-        .winner-button {
-            width: 48%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
+.sender-win:hover {
+    background-color: #45a049;
+}
 
-        .sender-win {
-            background-color: #4CAF50; /* Green for sender win */
-            color: white;
-        }
+.receiver-win {
+    background-color: #2196F3; /* Blue for receiver win */
+    color: white;
+}
 
-        .sender-win:hover {
-            background-color: #45a049; /* Darker green on hover */
-        }
+.receiver-win:hover {
+    background-color: #1e88e5;
+}
 
-        .receiver-win {
-            background-color: #2196F3; /* Blue for receiver win */
-            color: white;
-        }
-
-        .receiver-win:hover {
-            background-color: #1e88e5; /* Darker blue on hover */
-        }
 
         /* No bets message styling */
         .no-bets-message {
@@ -251,7 +258,7 @@
                 <a href="Profile.aspx">My Profile</a>
                 <a href="MyBets.aspx">My Bets</a>
                 <a href="Friends.aspx">Friends</a>
-                <a href="Logout.aspx">Logout</a>
+                <a href="WBLogout.aspx">Logout</a>
             </div>
 
             <div id="content1">
@@ -277,7 +284,7 @@
                     Active Bets
                 </h3>
                 <p>
-                    Insert repeater here
+                    TODO insert repeater not p
                 </p>
             </div>
         </div>
