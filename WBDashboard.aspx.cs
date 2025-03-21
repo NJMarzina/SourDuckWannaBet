@@ -46,7 +46,7 @@ namespace SourDuckWannaBet
         protected void btnAddFriend_Click(object sender, EventArgs e)
         {
             // TODO: Implement Add A Friend functionality
-            Response.Redirect("AddAFriend.aspx");
+            Response.Redirect("WBAddAFriend.aspx");
         }
 
         private async Task LoadAcceptedBetsAsync()

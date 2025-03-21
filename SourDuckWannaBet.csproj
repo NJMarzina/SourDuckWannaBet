@@ -237,6 +237,7 @@
     <Content Include="ViewAllUsers.aspx" />
     <Content Include="ViewMyBets.aspx" />
     <Content Include="ViewSelectedBets.aspx" />
+    <Content Include="WBAddAFriend.aspx" />
     <Content Include="WBDashboard.aspx" />
     <Content Include="WBForgotPassword.aspx" />
     <Content Include="WBLogin.aspx" />
@@ -321,6 +322,13 @@
     </Compile>
     <Compile Include="ViewSelectedBets.aspx.designer.cs">
       <DependentUpon>ViewSelectedBets.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WBAddAFriend.aspx.cs">
+      <DependentUpon>WBAddAFriend.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WBAddAFriend.aspx.designer.cs">
+      <DependentUpon>WBAddAFriend.aspx</DependentUpon>
     </Compile>
     <Compile Include="WBDashboard.aspx.cs">
       <DependentUpon>WBDashboard.aspx</DependentUpon>
