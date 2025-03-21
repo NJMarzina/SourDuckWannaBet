@@ -58,7 +58,11 @@ namespace SourDuckWannaBet
             {
                 if (bet.Status == "Accepted")
                 {
-                    acceptedBets.Add(bet);
+                    if (bet.UserID_Sender == long.Parse(Request.Cookies["UserID"].Value) ||
+                        bet.UserID_Receiver == long.Parse(Request.Cookies["UserID"].Value))
+                    {
+                        acceptedBets.Add(bet);
+                    }
                 }
             }
 
