@@ -102,16 +102,18 @@
     margin-bottom: 10px;
     padding-bottom: 10px;
     border-bottom: 2px solid #f0f0f0;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: bold;
 }
 
 /* Description styling */
 .bet-description {
     margin-bottom: 15px;
-    font-size: 16px;
+    font-size: 20px;
     color: #333;
     line-height: 1.5;
+    font-weight: 450;
+    text-decoration: underline;
 }
 
 /* Stakes styling */
