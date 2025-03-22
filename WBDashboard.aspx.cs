@@ -34,6 +34,7 @@ namespace SourDuckWannaBet
                 }
 
                 await LoadAcceptedBetsAsync();
+                await LoadPendingBetsAsync();
             }
         }
 
@@ -123,6 +124,67 @@ namespace SourDuckWannaBet
             await LoadAcceptedBetsAsync();
         }
 
+        private async Task LoadPendingBetsAsync()
+        {
+            var bets = await _betsController.GetAllBetsAsync();
+            var pendingBets = new List<Bet>();
 
+            foreach (var bet in bets)
+            {
+                if (bet.Status == "Pending" && bet.UserID_Receiver == long.Parse(Request.Cookies["UserID"].Value))
+                {
+                    pendingBets.Add(bet);
+                }
+            }
+
+            // Bind the filtered bets to the repeater
+            rptPendingBets.DataSource = pendingBets;
+            rptPendingBets.DataBind();
+        }
+
+        protected async void rptPendingBets_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                var bet = (Bet)e.Item.DataItem;
+
+                // Get labels
+                Label lblSenderUsername = (Label)e.Item.FindControl("lblSenderUsername");
+
+                // Get buttons
+                Button btnAccept = (Button)e.Item.FindControl("btnAccept");
+                Button btnDecline = (Button)e.Item.FindControl("btnDecline");
+
+                // Get usernames
+                var senderUser = await _usersController.GetUserByUserIDAsync(bet.UserID_Sender);
+                var receiverUser = await _usersController.GetUserByUserIDAsync(bet.UserID_Receiver);
+
+                if (senderUser != null && receiverUser != null)
+                {
+                    // Set usernames
+                    lblSenderUsername.Text = "From " + senderUser.Username;
+                }
+            }
+        }
+
+        protected async void BetResponse_Command(object sender, CommandEventArgs e)
+        {
+            long betId = Convert.ToInt64(e.CommandArgument);
+            string response = e.CommandName;
+
+            if (response == "Accept")
+            {
+                // Update bet status to Accepted
+                await _betsController.UpdateBetStatusAsync(betId, "Accepted");
+            }
+            else if (response == "Decline")
+            {
+                // Update bet status to Declined
+                await _betsController.UpdateBetStatusAsync(betId, "Declined");
+            }
+
+            // Reload the bets
+            await LoadPendingBetsAsync();
+        }
     }
 }

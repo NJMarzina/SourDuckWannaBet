@@ -216,6 +216,118 @@
             text-align: center;
             margin-left: 10%;
         }
+        /* Pending bets styling to match accepted bets */
+.active-bet-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    width: 73%;
+    text-align: center;
+    margin: 1rem 0 0 4.3rem;
+}
+
+.active-bet-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Bet header section */
+.active-bet-card .bet-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* Users styling */
+.active-bet-card .bet-users {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.active-bet-card .sender-username,
+.active-bet-card .receiver-username {
+    font-weight: bold;
+}
+
+/* Description styling */
+.active-bet-card .bet-description {
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #333;
+    line-height: 1.5;
+    font-weight: 450;
+    text-decoration: underline;
+}
+
+/* Amounts styling */
+.active-bet-card .bet-amounts {
+    background-color: #f7f7f7;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+/* Created date styling */
+.active-bet-card .bet-created {
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Action buttons styling */
+.active-bet-card .bet-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.active-bet-card .btn-accept,
+.active-bet-card .btn-decline {
+    width: 48%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.active-bet-card .btn-accept {
+    background-color: #4CAF50; /* Green for accept */
+    color: white;
+}
+
+.active-bet-card .btn-accept:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+.active-bet-card .btn-decline {
+    background-color: #f44336; /* Red for decline */
+    color: white;
+}
+
+.active-bet-card .btn-decline:hover {
+    background-color: #d32f2f;
+    transform: translateY(-2px);
+}
+h3 {
+    text-align: center;
+}
     </style>
     <script>
         // Function to toggle the dropdown menu when clicking the hamburger icon
@@ -281,39 +393,75 @@
                 <asp:Button ID="btnAnotherButton" runat="server" Text="Another Button" CssClass="action-button" />
                 <asp:Button ID="btnAddFriend" runat="server" Text="Add A Friend" CssClass="action-button" OnClick="btnAddFriend_Click" />
             </div>
+
+            <div id="pendingBetsSection">
+    <h3>Pending Bets</h3>
+    <asp:Repeater ID="rptPendingBets" runat="server" OnItemDataBound="rptPendingBets_ItemDataBound">
+        <ItemTemplate>
+            <div class="active-bet-card">
+                <div class="bet-header">
+                    <asp:Label ID="lblSenderUsername" runat="server" CssClass="sender-username"></asp:Label>
+                </div>
+                
+                <div class="bet-description">
+                    <%# Eval("Description") %>
+                </div>
+                
+                <div class="bet-amounts">
+                    Bet: $<%# Eval("BetB_Amount", "{0:F2}") %><br />
+                    To win: $<%# Eval("Pending_Bet", "{0:F2}") %>
+                </div>
+                
+                <div class="bet-created">
+                    Created: <%# Eval("Created_at", "{0:MMM dd, yyyy hh:mm tt}") %>
+                </div>
+                
+                <div class="bet-actions">
+                    <asp:Button ID="btnAccept" runat="server" Text="Accept" 
+                        CommandName="Accept" CommandArgument='<%# Eval("BetID") %>' 
+                        OnCommand="BetResponse_Command" CssClass="btn-accept" />
+                    <asp:Button ID="btnDecline" runat="server" Text="Decline" 
+                        CommandName="Decline" CommandArgument='<%# Eval("BetID") %>' 
+                        OnCommand="BetResponse_Command" CssClass="btn-decline" />
+                </div>
+            </div>
+        </ItemTemplate>
+    </asp:Repeater>
+</div>
+
             <div id="content2">
                 <h3>
                     Active Bets
                 </h3>
                 <asp:Repeater ID="rptAcceptedBets" runat="server" OnItemDataBound="rptAcceptedBets_ItemDataBound">
-    <ItemTemplate>
-        <div class="bet-container">
-            <div class="bet-header">
+                <ItemTemplate>
+                <div class="bet-container">
+                <div class="bet-header">
                 <asp:Label ID="lblSenderUsername" runat="server" Text="" CssClass="sender-name"></asp:Label>
                 <span> vs </span>
                 <asp:Label ID="lblReceiverUsername" runat="server" Text="" CssClass="receiver-name"></asp:Label>
-            </div>
-            <div class="bet-description">
+                </div>
+                <div class="bet-description">
                 <%# Eval("Description") %>
-            </div>
-            <div class="bet-stakes">
+                </div>
+                <div class="bet-stakes">
                 $<%# Eval("BetA_Amount", "{0:F2}") %> vs $<%# Eval("BetB_Amount", "{0:F2}") %><br />
                 To win: $<%# Eval("Pending_Bet", "{0:F2}") %>
-            </div>
-            <div class="winner-buttons">
+                </div>
+                <div class="winner-buttons">
                 <asp:Button ID="btnSenderWin" runat="server" CssClass="winner-button sender-win" 
                     CommandName="SenderWin" CommandArgument='<%# Eval("BetID") %>' 
                     OnCommand="BetWinner_Command" />
                 <asp:Button ID="btnReceiverWin" runat="server" CssClass="winner-button receiver-win" 
                     CommandName="ReceiverWin" CommandArgument='<%# Eval("BetID") %>' 
                     OnCommand="BetWinner_Command" />
+                </div>
+                <div class="bet-date">
+                    Created: <%# Eval("Created_at", "{0:MMM dd, yyyy hh:mm tt}") %>
+                </div>
             </div>
-            <div class="bet-date">
-                Created: <%# Eval("Created_at", "{0:MMM dd, yyyy hh:mm tt}") %>
-            </div>
-        </div>
-    </ItemTemplate>
-</asp:Repeater>
+            </ItemTemplate>
+            </asp:Repeater>
             </div>
         </div>
     </form>

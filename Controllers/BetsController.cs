@@ -449,5 +449,38 @@ namespace SourDuckWannaBet.Controllers
                 throw new Exception($"Error fetching username for betID {betID}: {ex.Message}");
             }
         }
+
+        public async Task<bool> UpdateBetStatusAsync(long betId, string status)
+        {
+            try
+            {
+                // Get the bet by ID
+                var bet = await GetBetByIdAsync(betId);
+
+                if (bet != null)
+                {
+                    // Update only the status field
+                    if (status == "Accepted" || status == "Declined")
+                    {
+                        bet.Status = status;
+
+                        // Save the updated bet
+                        await UpdateBetAsync(bet);
+                        return true;
+                    }
+                    else
+                    {
+                        // Invalid status provided
+                        return false;
+                    }
+                }
+                return false; // Bet not found
+            }
+            catch (Exception ex)
+            {
+                // Log error
+                return false;
+            }
+        }
     }
 }
