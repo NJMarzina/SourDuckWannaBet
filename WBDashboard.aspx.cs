@@ -40,7 +40,7 @@ namespace SourDuckWannaBet
         protected void btnSendBet_Click(object sender, EventArgs e)
         {
             // TODO: Implement Send A Bet functionality
-            Response.Redirect("SendABet.aspx");
+            Response.Redirect("WBSendABet.aspx");
         }
 
         protected void btnAddFriend_Click(object sender, EventArgs e)

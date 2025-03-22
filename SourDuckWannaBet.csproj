@@ -243,6 +243,7 @@
     <Content Include="WBLogin.aspx" />
     <Content Include="WBLogout.aspx" />
     <Content Include="WBRegistration.aspx" />
+    <Content Include="WBSendABet.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -364,6 +365,13 @@
     </Compile>
     <Compile Include="WBRegistration.aspx.designer.cs">
       <DependentUpon>WBRegistration.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WBSendABet.aspx.cs">
+      <DependentUpon>WBSendABet.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WBSendABet.aspx.designer.cs">
+      <DependentUpon>WBSendABet.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
