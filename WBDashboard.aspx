@@ -409,7 +409,12 @@ h3 {
                 
                 <div class="bet-amounts">
                     Bet: $<%# Eval("BetB_Amount", "{0:F2}") %><br />
-                    To win: $<%# Eval("Pending_Bet", "{0:F2}") %>
+                    To win: $<%# Eval("Pending_Bet", "{0:F2}") %> <br />
+                    <asp:Label ID="lblPendingSides" runat="server"></asp:Label>
+                </div>
+
+                <div>
+                    
                 </div>
                 
                 <div class="bet-created">

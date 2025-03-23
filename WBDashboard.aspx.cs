@@ -168,6 +168,9 @@ namespace SourDuckWannaBet
                 var senderUser = await _usersController.GetUserByUserIDAsync(bet.UserID_Sender);
                 var receiverUser = await _usersController.GetUserByUserIDAsync(bet.UserID_Receiver);
 
+                Label lblPendingSides = (Label)e.Item.FindControl("lblPendingSides");
+                lblPendingSides.Text = "Sender: " + bet.Sender_Result.ToString() + " vs Receiver: " + bet.Receiver_Result.ToString();
+
                 if (senderUser != null && receiverUser != null)
                 {
                     // Set usernames
