@@ -225,9 +225,9 @@
     padding: 20px;
     transition: transform 0.2s, box-shadow 0.2s;
     cursor: pointer;
-    width: 73%;
+    width: 72%;
     text-align: center;
-    margin: 1rem 0 0 4.3rem;
+    margin: 0.5rem 0 0 4.1rem;
 }
 
 .active-bet-card:hover {
