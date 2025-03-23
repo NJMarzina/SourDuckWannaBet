@@ -15,21 +15,22 @@ namespace SourDuckWannaBet
     public partial class WBRegistration : System.Web.UI.Page
     {
         private UsersController _usersController;
-        
+
         public WBRegistration()
         {
             _usersController = new UsersController(new HttpClient());
         }
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
+
         protected async void btnRegister_Click(object sender, EventArgs e)
         {
-            // Clear previous error messages
             lblError.Visible = false;
 
-            // Validate if any required field is empty
+            // Validation checks (same as before)
             if (string.IsNullOrWhiteSpace(txtUsername.Value))
             {
                 lblError.Text = "Username is required.";
@@ -99,12 +100,11 @@ namespace SourDuckWannaBet
                 return;
             }
 
-            // Create a new user object
+            // Create a new user object and hash the password
             User newUser = new User
             {
-                // Assign values from the form
                 Username = txtUsername.Value,
-                Password = txtPassword.Value,
+                Password = PasswordHasher.HashPassword(txtPassword.Value), // Hash password here
                 FirstName = txtFirstName.Value,
                 LastName = txtLastName.Value,
                 Email = txtEmail.Value,
