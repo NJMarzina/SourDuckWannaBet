@@ -197,9 +197,7 @@ namespace SourDuckWannaBet
             }
             else if (response == "Modify")
             {
-                //TODO Response.Redirect modify bet?
-
-                //just ask receiver for what they wanna update?
+                Response.Redirect("WBModifyBet.aspx");
             }
 
             // Reload the bets
