@@ -11,97 +11,124 @@ namespace SourDuckWannaBet
 {
 
 
-    public partial class WBRegistration
+    public partial class WBSendABet
     {
 
         /// <summary>
-        /// frmWBRegistration control.
+        /// frmWBSendABet control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm frmWBRegistration;
+        protected global::System.Web.UI.HtmlControls.HtmlForm frmWBSendABet;
 
         /// <summary>
-        /// txtUsername control.
+        /// btnIndex control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtUsername;
+        protected global::System.Web.UI.WebControls.Button btnIndex;
 
         /// <summary>
-        /// txtFirstName control.
+        /// txtRecipientUsername control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtFirstName;
+        protected global::System.Web.UI.WebControls.TextBox txtRecipientUsername;
 
         /// <summary>
-        /// txtLastName control.
+        /// hdnRecipientUserID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtLastName;
+        protected global::System.Web.UI.WebControls.HiddenField hdnRecipientUserID;
 
         /// <summary>
-        /// txtEmail control.
+        /// txtBetA_Amount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txtEmail;
+        protected global::System.Web.UI.WebControls.TextBox txtBetA_Amount;
 
         /// <summary>
-        /// txtPhoneNumber control.
+        /// txtBetB_Amount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txtPhoneNumber;
+        protected global::System.Web.UI.WebControls.TextBox txtBetB_Amount;
 
         /// <summary>
-        /// txtPassword control.
+        /// txtDescription control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputPassword txtPassword;
+        protected global::System.Web.UI.WebControls.TextBox txtDescription;
 
         /// <summary>
-        /// btnRegister control.
+        /// txtSenderResult control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRegister;
+        protected global::System.Web.UI.WebControls.TextBox txtSenderResult;
 
         /// <summary>
-        /// btnLogin control.
+        /// txtReceiverResult control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLogin;
+        protected global::System.Web.UI.WebControls.TextBox txtReceiverResult;
 
         /// <summary>
-        /// lblError control.
+        /// chkNeedMediator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblError;
+        protected global::System.Web.UI.WebControls.CheckBox chkNeedMediator;
+
+        /// <summary>
+        /// txtMediatorID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMediatorID;
+
+        /// <summary>
+        /// btnSendBet control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSendBet;
+
+        /// <summary>
+        /// lblStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblStatus;
     }
 }

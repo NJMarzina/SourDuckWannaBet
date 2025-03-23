@@ -11,61 +11,88 @@ namespace SourDuckWannaBet
 {
 
 
-    public partial class WBDashboard
+    public partial class WBAddAFriend
     {
 
         /// <summary>
-        /// frmDashboard control.
+        /// frmWBAddAFriend control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm frmDashboard;
+        protected global::System.Web.UI.HtmlControls.HtmlForm frmWBAddAFriend;
 
         /// <summary>
-        /// btnSendBet control.
+        /// btnIndex control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSendBet;
+        protected global::System.Web.UI.WebControls.Button btnIndex;
 
         /// <summary>
-        /// btnAnotherButton control.
+        /// txtFriendUsername control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAnotherButton;
+        protected global::System.Web.UI.WebControls.TextBox txtFriendUsername;
 
         /// <summary>
-        /// btnAddFriend control.
+        /// btnSendRequest control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddFriend;
+        protected global::System.Web.UI.WebControls.Button btnSendRequest;
 
         /// <summary>
-        /// rptPendingBets control.
+        /// lblStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptPendingBets;
+        protected global::System.Web.UI.WebControls.Label lblStatus;
 
         /// <summary>
-        /// rptAcceptedBets control.
+        /// lblPendingError control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptAcceptedBets;
+        protected global::System.Web.UI.WebControls.Label lblPendingError;
+
+        /// <summary>
+        /// rptPendingRequests control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptPendingRequests;
+
+        /// <summary>
+        /// lblFriendsError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFriendsError;
+
+        /// <summary>
+        /// rptFriends control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptFriends;
     }
 }

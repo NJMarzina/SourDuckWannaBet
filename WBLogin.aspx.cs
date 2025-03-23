@@ -27,19 +27,41 @@ namespace SourDuckWannaBet
 
             var users = await _usersController.GetAllUsersAsync();
 
-            foreach(User user in users)
+            foreach (User user in users)
             {
-                if (user.Username == username && user.Password == password)
+                if (user.Username == "NathanMarzy" && user.Password == password)
                 {
-                    Response.Redirect("Index.aspx");
+                    // Set cookies
+                    Response.Cookies["Username"].Value = "NathanMarzy";
+                    Response.Cookies["UserID"].Value = user.UserID.ToString();
+                    Response.Cookies["Balance"].Value = user.Balance.ToString();
+
+                    // Set cookie expiration (e.g., 7 days)
+                    Response.Cookies["Username"].Expires = DateTime.Now.AddDays(7);
+                    Response.Cookies["UserID"].Expires = DateTime.Now.AddDays(7);
+                    Response.Cookies["Balance"].Expires = DateTime.Now.AddDays(7);
+
+                    Response.Redirect("WBDashboard.aspx");
                 }
-            }   
-            // Example of how you might process the login (authentication, etc.)
-            // if (AuthenticateUser(username, password)) {
-            //     Response.Redirect("Dashboard.aspx");
-            // } else {
-            //     // Show error message
-            // }
+                else if (user.Username == username && user.Password == password)
+                {
+                    // Set cookies
+                    Response.Cookies["Username"].Value = user.Username;
+                    Response.Cookies["UserID"].Value = user.UserID.ToString();
+                    Response.Cookies["Balance"].Value = user.Balance.ToString();
+
+                    // Set cookie expiration (e.g., 7 days)
+                    Response.Cookies["Username"].Expires = DateTime.Now.AddDays(7);
+                    Response.Cookies["UserID"].Expires = DateTime.Now.AddDays(7);
+                    Response.Cookies["Balance"].Expires = DateTime.Now.AddDays(7);
+
+                    Response.Redirect("WBDashboard.aspx");
+                }
+                else
+                {
+                    // Error message
+                }
+            }
         }
 
         protected void btnRegister_Click(object sender, EventArgs e)
@@ -53,5 +75,18 @@ namespace SourDuckWannaBet
             // Redirect to the forgot password page
             Response.Redirect("WBForgotPassword.aspx");
         }
+
+        /*
+         * protected void btnLogout_Click(object sender, EventArgs e)
+            {
+        // Clear cookies
+        Response.Cookies["Username"].Expires = DateTime.Now.AddDays(-1);
+        Response.Cookies["UserID"].Expires = DateTime.Now.AddDays(-1);
+        Response.Cookies["Balance"].Expires = DateTime.Now.AddDays(-1);
+
+        // Redirect to login page
+        Response.Redirect("WBLogin.aspx");
+        }
+        */
     }
 }
