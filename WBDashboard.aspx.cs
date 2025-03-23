@@ -163,6 +163,7 @@ namespace SourDuckWannaBet
                 // Get buttons
                 Button btnAccept = (Button)e.Item.FindControl("btnAccept");
                 Button btnDecline = (Button)e.Item.FindControl("btnDecline");
+                Button btnModify = (Button)e.Item.FindControl("btnModify");
 
                 // Get usernames
                 var senderUser = await _usersController.GetUserByUserIDAsync(bet.UserID_Sender);
@@ -193,6 +194,12 @@ namespace SourDuckWannaBet
             {
                 // Update bet status to Declined
                 await _betsController.UpdateBetStatusAsync(betId, "Declined");
+            }
+            else if (response == "Modify")
+            {
+                //TODO Response.Redirect modify bet?
+
+                //just ask receiver for what they wanna update?
             }
 
             // Reload the bets

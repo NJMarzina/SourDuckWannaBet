@@ -295,8 +295,9 @@
 }
 
 .active-bet-card .btn-accept,
-.active-bet-card .btn-decline {
-    width: 48%;
+.active-bet-card .btn-decline,
+.active-bet-card .btn-modify {
+    width: 30%;
     padding: 12px;
     border: none;
     border-radius: 5px;
@@ -323,6 +324,14 @@
 
 .active-bet-card .btn-decline:hover {
     background-color: #d32f2f;
+    transform: translateY(-2px);
+}
+.active-bet-card .btn-modify {
+    background-color: mediumpurple;
+    color: white;
+}
+.active-bet-card .btn-modify:hover {
+    background-color: rebeccapurple;
     transform: translateY(-2px);
 }
 h3 {
@@ -425,6 +434,9 @@ h3 {
                     <asp:Button ID="btnAccept" runat="server" Text="Accept" 
                         CommandName="Accept" CommandArgument='<%# Eval("BetID") %>' 
                         OnCommand="BetResponse_Command" CssClass="btn-accept" />
+                    <asp:Button ID="btnModify" runat="server" Text="Modify" 
+                        CommandName="Modify" CommandArgument='<%# Eval("BetID") %>' 
+                        OnCommand="BetResponse_Command" CssClass="btn-modify" />
                     <asp:Button ID="btnDecline" runat="server" Text="Decline" 
                         CommandName="Decline" CommandArgument='<%# Eval("BetID") %>' 
                         OnCommand="BetResponse_Command" CssClass="btn-decline" />
