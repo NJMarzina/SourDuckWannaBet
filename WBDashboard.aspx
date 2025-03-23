@@ -434,33 +434,36 @@ h3 {
                     Active Bets
                 </h3>
                 <asp:Repeater ID="rptAcceptedBets" runat="server" OnItemDataBound="rptAcceptedBets_ItemDataBound">
-                <ItemTemplate>
-                <div class="bet-container">
-                <div class="bet-header">
-                <asp:Label ID="lblSenderUsername" runat="server" Text="" CssClass="sender-name"></asp:Label>
-                <span> vs </span>
-                <asp:Label ID="lblReceiverUsername" runat="server" Text="" CssClass="receiver-name"></asp:Label>
-                </div>
-                <div class="bet-description">
-                <%# Eval("Description") %>
-                </div>
-                <div class="bet-stakes">
-                $<%# Eval("BetA_Amount", "{0:F2}") %> vs $<%# Eval("BetB_Amount", "{0:F2}") %><br />
-                To win: $<%# Eval("Pending_Bet", "{0:F2}") %>
-                </div>
-                <div class="winner-buttons">
-                <asp:Button ID="btnSenderWin" runat="server" CssClass="winner-button sender-win" 
-                    CommandName="SenderWin" CommandArgument='<%# Eval("BetID") %>' 
-                    OnCommand="BetWinner_Command" />
-                <asp:Button ID="btnReceiverWin" runat="server" CssClass="winner-button receiver-win" 
-                    CommandName="ReceiverWin" CommandArgument='<%# Eval("BetID") %>' 
-                    OnCommand="BetWinner_Command" />
-                </div>
-                <div class="bet-date">
-                    Created: <%# Eval("Created_at", "{0:MMM dd, yyyy hh:mm tt}") %>
-                </div>
-            </div>
-            </ItemTemplate>
+               <ItemTemplate>
+    <div class="bet-container">
+        <div class="bet-header">
+            <asp:Label ID="lblSenderUsername" runat="server" Text="" CssClass="sender-name"></asp:Label>
+            <span> vs </span>
+            <asp:Label ID="lblReceiverUsername" runat="server" Text="" CssClass="receiver-name"></asp:Label>
+        </div>
+        <div class="bet-description">
+            <%# Eval("Description") %>
+        </div>
+        <div class="bet-stakes">
+            $<%# Eval("BetA_Amount", "{0:F2}") %> vs $<%# Eval("BetB_Amount", "{0:F2}") %><br />
+            To win: $<%# Eval("Pending_Bet", "{0:F2}") %><br />
+            Sender Result: <%# Eval("sender_Result") %><br />
+            Receiver Result: <%# Eval("receiver_Result") %>
+        </div>
+        <div class="winner-buttons">
+            <asp:Button ID="btnSenderWin" runat="server" CssClass="winner-button sender-win" 
+                CommandName="SenderWin" CommandArgument='<%# Eval("BetID") %>' 
+                OnCommand="BetWinner_Command" />
+            <asp:Button ID="btnReceiverWin" runat="server" CssClass="winner-button receiver-win" 
+                CommandName="ReceiverWin" CommandArgument='<%# Eval("BetID") %>' 
+                OnCommand="BetWinner_Command" />
+        </div>
+        <div class="bet-date">
+            Created: <%# Eval("Created_at", "{0:MMM dd, yyyy hh:mm tt}") %>
+        </div>
+    </div>
+</ItemTemplate>
+
             </asp:Repeater>
             </div>
         </div>

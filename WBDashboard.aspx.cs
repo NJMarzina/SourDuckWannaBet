@@ -86,6 +86,10 @@ namespace SourDuckWannaBet
                 Button btnSenderWin = (Button)e.Item.FindControl("btnSenderWin");
                 Button btnReceiverWin = (Button)e.Item.FindControl("btnReceiverWin");
 
+                // Get sender and receiver results
+                Label lblSenderResult = (Label)e.Item.FindControl("lblSenderResult");
+                Label lblReceiverResult = (Label)e.Item.FindControl("lblReceiverResult");
+
                 // Get usernames
                 var senderUser = await _usersController.GetUserByUserIDAsync(bet.UserID_Sender);
                 var receiverUser = await _usersController.GetUserByUserIDAsync(bet.UserID_Receiver);
@@ -99,9 +103,14 @@ namespace SourDuckWannaBet
                     // Set button text
                     btnSenderWin.Text = senderUser.Username + " wins";
                     btnReceiverWin.Text = receiverUser.Username + " wins";
+
+                    // Set the sender and receiver results
+                    //lblSenderResult.Text = bet.Sender_Result ?? "No result yet"; // Display default message if no result
+                    //lblReceiverResult.Text = bet.Receiver_Result ?? "No result yet"; // Display default message if no result
                 }
             }
         }
+
 
         protected async void BetWinner_Command(object sender, CommandEventArgs e)
         {
