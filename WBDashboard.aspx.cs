@@ -197,7 +197,8 @@ namespace SourDuckWannaBet
             }
             else if (response == "Modify")
             {
-                Response.Redirect("WBModifyBet.aspx");
+                Response.Redirect("WBModifyBet.aspx", false);
+                Context.ApplicationInstance.CompleteRequest(); // Ensure that the response is completed
             }
 
             // Reload the bets
