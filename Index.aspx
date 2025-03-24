@@ -176,6 +176,14 @@
             <p>
                 Add actual, proper devlog page. starting w updates that look like entry 14
             </p>
+            <p>
+                Add group bets
+                - completely different interface
+                - more along the lines of 1 person sets it up, and then invites people
+                - invited people can accept/deny
+                - v1 will be everyone having the same bet amount, winner takes all
+                - v2 will be customizable
+            </p>
         </div>
     </form>
 </body>
