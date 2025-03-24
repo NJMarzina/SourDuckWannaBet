@@ -367,11 +367,11 @@ h3 {
                 <div style="display: flex; align-items: center;">
                     <div class="hamburger-menu" onclick="toggleMenu()">☰</div>
                     <div class="site-title">
-                        Wanna Bet <%= Request.Cookies["Username"]?.Value %>?
+                        Wanna Bet <asp:Label ID="lblUsername" runat="server" Text=""></asp:Label>?
                     </div>
                 </div>
                 <div class="user-balance">
-                    Balance: $<%= Request.Cookies["Balance"]?.Value %>
+                    Balance: $<asp:Label ID="lblBalance" runat="server" Text=""></asp:Label>
                 </div>
             </div>
 
@@ -386,7 +386,7 @@ h3 {
 
             <div id="content1">
                 <h3>
-                    Welcome to your dashboard, <%= Request.Cookies["Username"]?.Value %>!
+                    Welcome to your dashboard, <asp:Label ID="lblUsername2" runat="server" Text=""></asp:Label>
                 </h3>
                 <p>
                     Here you can view your active bets, manage your profile, and interact with your friends.

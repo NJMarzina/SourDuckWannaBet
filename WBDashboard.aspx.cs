@@ -33,6 +33,10 @@ namespace SourDuckWannaBet
                     return;
                 }
 
+                lblUsername.Text = Request.Cookies["Username"].Value;
+                lblUsername2.Text = Request.Cookies["Username"].Value;
+                lblBalance.Text = Request.Cookies["Balance"].Value;
+
                 await LoadAcceptedBetsAsync();
                 await LoadPendingBetsAsync();
             }
@@ -180,6 +184,41 @@ namespace SourDuckWannaBet
             }
         }
 
+
+        protected async void BetResponse_Command(object sender, CommandEventArgs e)
+        {
+            long betId = Convert.ToInt64(e.CommandArgument);
+            string response = e.CommandName;
+
+            // Store the bet ID in session
+            Session["BetID"] = betId;
+
+            if (response == "Modify")
+            {
+                // Ensure any necessary async operations are completed before redirecting
+                await LoadPendingBetsAsync();  // Or any other async method that should finish first
+
+                Response.Cookies["BetID"].Value = betId.ToString(); // Store the bet ID in session
+
+                Response.Redirect("WBModifyBet.aspx");
+                //Context.ApplicationInstance.CompleteRequest();
+            }
+            else if (response == "Accept")
+            {
+                // Update bet status to Accepted
+                await _betsController.UpdateBetStatusAsync(betId, "Accepted");
+            }
+            else if (response == "Decline")
+            {
+                // Update bet status to Declined
+                await _betsController.UpdateBetStatusAsync(betId, "Declined");
+            }
+
+            // Reload the bets
+            await LoadPendingBetsAsync();
+        }
+
+        /*
         protected async void BetResponse_Command(object sender, CommandEventArgs e)
         {
             long betId = Convert.ToInt64(e.CommandArgument);
@@ -197,12 +236,13 @@ namespace SourDuckWannaBet
             }
             else if (response == "Modify")
             {
-                Response.Redirect("WBModifyBet.aspx", false);
+                Response.Redirect($"WBModifyBet.aspx?betID={betId}", false);
                 Context.ApplicationInstance.CompleteRequest(); // Ensure that the response is completed
             }
 
             // Reload the bets
             await LoadPendingBetsAsync();
         }
+        */
     }
 }
