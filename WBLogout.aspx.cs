@@ -29,6 +29,13 @@ namespace SourDuckWannaBet
                 Response.Cookies.Add(balanceCookie);  // Add the expired cookie to response to delete it
             }
 
+            if (Request.Cookies["BetID"] != null)
+            {
+                HttpCookie betCookie = new HttpCookie("BetID");
+                betCookie.Expires = DateTime.Now.AddDays(-1);  // Set expiry to past date
+                Response.Cookies.Add(betCookie);  // Add the expired cookie to response to delete it
+            }
+
             // Redirect to the login page after logging out
             Response.Redirect("WBLogin.aspx");
         }

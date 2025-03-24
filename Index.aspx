@@ -164,22 +164,27 @@
             <h2>Bulletin:</h2>
             <h5>TODO List:</h5>
             <p>
-                created WBRegistration, WBLogin, WBDashboard
+                Edit/view profile
+                - pfp (buckets?)
             </p>
             <p>
-                Add balance_at_time_of_bet to transactions table, which also should be reworked</p>
-            <p>
-                Bet now has money/balance aspect, actually subtracting from users account to be put on hold through the wait for usernameB
+                Add balance_at_time_of_bet to transactions table, which also should be reworked
             </p>
             <p>
                 Security for bets, adding a mediator, 'are you sure' modifications, can be voided
             </p>
             <p>
-                Actual registration and user can remain signed in upon login
+                Add actual, proper devlog page. starting w updates that look like entry 14
+            </p>
+            <p>
+                Add group bets
+                - completely different interface
+                - more along the lines of 1 person sets it up, and then invites people
+                - invited people can accept/deny
+                - v1 will be everyone having the same bet amount, winner takes all
+                - v2 will be customizable
             </p>
         </div>
-
-        
     </form>
 </body>
 </html>

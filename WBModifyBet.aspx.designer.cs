@@ -11,88 +11,79 @@ namespace SourDuckWannaBet
 {
 
 
-    public partial class WBDashboard
+    public partial class WBModifyBet
     {
 
         /// <summary>
-        /// frmDashboard control.
+        /// frmWBModifyBet control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm frmDashboard;
+        protected global::System.Web.UI.HtmlControls.HtmlForm frmWBModifyBet;
 
         /// <summary>
-        /// lblUsername control.
+        /// lblBetDescription control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUsername;
+        protected global::System.Web.UI.WebControls.Label lblBetDescription;
 
         /// <summary>
-        /// lblBalance control.
+        /// lblSenderVsReceiver control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblBalance;
+        protected global::System.Web.UI.WebControls.Label lblSenderVsReceiver;
 
         /// <summary>
-        /// lblUsername2 control.
+        /// txtBetA_Amount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUsername2;
+        protected global::System.Web.UI.WebControls.TextBox txtBetA_Amount;
 
         /// <summary>
-        /// btnSendBet control.
+        /// txtBetB_Amount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSendBet;
+        protected global::System.Web.UI.WebControls.TextBox txtBetB_Amount;
 
         /// <summary>
-        /// btnAnotherButton control.
+        /// txtSender_Result control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAnotherButton;
+        protected global::System.Web.UI.WebControls.TextBox txtSender_Result;
 
         /// <summary>
-        /// btnAddFriend control.
+        /// txtReceiver_Result control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddFriend;
+        protected global::System.Web.UI.WebControls.TextBox txtReceiver_Result;
 
         /// <summary>
-        /// rptPendingBets control.
+        /// btnSave control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptPendingBets;
-
-        /// <summary>
-        /// rptAcceptedBets control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptAcceptedBets;
+        protected global::System.Web.UI.WebControls.Button btnSave;
     }
 }

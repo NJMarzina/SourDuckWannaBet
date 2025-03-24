@@ -295,8 +295,9 @@
 }
 
 .active-bet-card .btn-accept,
-.active-bet-card .btn-decline {
-    width: 48%;
+.active-bet-card .btn-decline,
+.active-bet-card .btn-modify {
+    width: 30%;
     padding: 12px;
     border: none;
     border-radius: 5px;
@@ -323,6 +324,14 @@
 
 .active-bet-card .btn-decline:hover {
     background-color: #d32f2f;
+    transform: translateY(-2px);
+}
+.active-bet-card .btn-modify {
+    background-color: mediumpurple;
+    color: white;
+}
+.active-bet-card .btn-modify:hover {
+    background-color: rebeccapurple;
     transform: translateY(-2px);
 }
 h3 {
@@ -358,11 +367,11 @@ h3 {
                 <div style="display: flex; align-items: center;">
                     <div class="hamburger-menu" onclick="toggleMenu()">☰</div>
                     <div class="site-title">
-                        Wanna Bet <%= Request.Cookies["Username"]?.Value %>?
+                        Wanna Bet <asp:Label ID="lblUsername" runat="server" Text=""></asp:Label>?
                     </div>
                 </div>
                 <div class="user-balance">
-                    Balance: $<%= Request.Cookies["Balance"]?.Value %>
+                    Balance: $<asp:Label ID="lblBalance" runat="server" Text=""></asp:Label>
                 </div>
             </div>
 
@@ -377,7 +386,7 @@ h3 {
 
             <div id="content1">
                 <h3>
-                    Welcome to your dashboard, <%= Request.Cookies["Username"]?.Value %>!
+                    Welcome to your dashboard, <asp:Label ID="lblUsername2" runat="server" Text=""></asp:Label>
                 </h3>
                 <p>
                     Here you can view your active bets, manage your profile, and interact with your friends.
@@ -409,7 +418,12 @@ h3 {
                 
                 <div class="bet-amounts">
                     Bet: $<%# Eval("BetB_Amount", "{0:F2}") %><br />
-                    To win: $<%# Eval("Pending_Bet", "{0:F2}") %>
+                    To win: $<%# Eval("Pending_Bet", "{0:F2}") %> <br />
+                    <asp:Label ID="lblPendingSides" runat="server"></asp:Label>
+                </div>
+
+                <div>
+                    
                 </div>
                 
                 <div class="bet-created">
@@ -420,6 +434,9 @@ h3 {
                     <asp:Button ID="btnAccept" runat="server" Text="Accept" 
                         CommandName="Accept" CommandArgument='<%# Eval("BetID") %>' 
                         OnCommand="BetResponse_Command" CssClass="btn-accept" />
+                    <asp:Button ID="btnModify" runat="server" Text="Modify" 
+                        CommandName="Modify" CommandArgument='<%# Eval("BetID") %>' 
+                        OnCommand="BetResponse_Command" CssClass="btn-modify" />
                     <asp:Button ID="btnDecline" runat="server" Text="Decline" 
                         CommandName="Decline" CommandArgument='<%# Eval("BetID") %>' 
                         OnCommand="BetResponse_Command" CssClass="btn-decline" />
@@ -434,33 +451,36 @@ h3 {
                     Active Bets
                 </h3>
                 <asp:Repeater ID="rptAcceptedBets" runat="server" OnItemDataBound="rptAcceptedBets_ItemDataBound">
-                <ItemTemplate>
-                <div class="bet-container">
-                <div class="bet-header">
-                <asp:Label ID="lblSenderUsername" runat="server" Text="" CssClass="sender-name"></asp:Label>
-                <span> vs </span>
-                <asp:Label ID="lblReceiverUsername" runat="server" Text="" CssClass="receiver-name"></asp:Label>
-                </div>
-                <div class="bet-description">
-                <%# Eval("Description") %>
-                </div>
-                <div class="bet-stakes">
-                $<%# Eval("BetA_Amount", "{0:F2}") %> vs $<%# Eval("BetB_Amount", "{0:F2}") %><br />
-                To win: $<%# Eval("Pending_Bet", "{0:F2}") %>
-                </div>
-                <div class="winner-buttons">
-                <asp:Button ID="btnSenderWin" runat="server" CssClass="winner-button sender-win" 
-                    CommandName="SenderWin" CommandArgument='<%# Eval("BetID") %>' 
-                    OnCommand="BetWinner_Command" />
-                <asp:Button ID="btnReceiverWin" runat="server" CssClass="winner-button receiver-win" 
-                    CommandName="ReceiverWin" CommandArgument='<%# Eval("BetID") %>' 
-                    OnCommand="BetWinner_Command" />
-                </div>
-                <div class="bet-date">
-                    Created: <%# Eval("Created_at", "{0:MMM dd, yyyy hh:mm tt}") %>
-                </div>
-            </div>
-            </ItemTemplate>
+               <ItemTemplate>
+    <div class="bet-container">
+        <div class="bet-header">
+            <asp:Label ID="lblSenderUsername" runat="server" Text="" CssClass="sender-name"></asp:Label>
+            <span> vs </span>
+            <asp:Label ID="lblReceiverUsername" runat="server" Text="" CssClass="receiver-name"></asp:Label>
+        </div>
+        <div class="bet-description">
+            <%# Eval("Description") %>
+        </div>
+        <div class="bet-stakes">
+            $<%# Eval("BetA_Amount", "{0:F2}") %> vs $<%# Eval("BetB_Amount", "{0:F2}") %><br />
+            To win: $<%# Eval("Pending_Bet", "{0:F2}") %><br />
+            Sender Result: <%# Eval("sender_Result") %><br />
+            Receiver Result: <%# Eval("receiver_Result") %>
+        </div>
+        <div class="winner-buttons">
+            <asp:Button ID="btnSenderWin" runat="server" CssClass="winner-button sender-win" 
+                CommandName="SenderWin" CommandArgument='<%# Eval("BetID") %>' 
+                OnCommand="BetWinner_Command" />
+            <asp:Button ID="btnReceiverWin" runat="server" CssClass="winner-button receiver-win" 
+                CommandName="ReceiverWin" CommandArgument='<%# Eval("BetID") %>' 
+                OnCommand="BetWinner_Command" />
+        </div>
+        <div class="bet-date">
+            Created: <%# Eval("Created_at", "{0:MMM dd, yyyy hh:mm tt}") %>
+        </div>
+    </div>
+</ItemTemplate>
+
             </asp:Repeater>
             </div>
         </div>

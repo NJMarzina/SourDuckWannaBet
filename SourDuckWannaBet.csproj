@@ -242,6 +242,7 @@
     <Content Include="WBForgotPassword.aspx" />
     <Content Include="WBLogin.aspx" />
     <Content Include="WBLogout.aspx" />
+    <Content Include="WBModifyBet.aspx" />
     <Content Include="WBRegistration.aspx" />
     <Content Include="WBSendABet.aspx" />
     <Content Include="Web.config" />
@@ -265,6 +266,7 @@
     <Compile Include="Controllers\FriendsController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
+    <Compile Include="Controllers\PasswordHasher.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Index.aspx.cs">
@@ -358,6 +360,13 @@
     </Compile>
     <Compile Include="WBLogout.aspx.designer.cs">
       <DependentUpon>WBLogout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WBModifyBet.aspx.cs">
+      <DependentUpon>WBModifyBet.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WBModifyBet.aspx.designer.cs">
+      <DependentUpon>WBModifyBet.aspx</DependentUpon>
     </Compile>
     <Compile Include="WBRegistration.aspx.cs">
       <DependentUpon>WBRegistration.aspx</DependentUpon>

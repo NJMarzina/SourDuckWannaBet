@@ -33,6 +33,10 @@ namespace SourDuckWannaBet
                     return;
                 }
 
+                lblUsername.Text = Request.Cookies["Username"].Value;
+                lblUsername2.Text = Request.Cookies["Username"].Value;
+                lblBalance.Text = Request.Cookies["Balance"].Value;
+
                 await LoadAcceptedBetsAsync();
                 await LoadPendingBetsAsync();
             }
@@ -86,6 +90,10 @@ namespace SourDuckWannaBet
                 Button btnSenderWin = (Button)e.Item.FindControl("btnSenderWin");
                 Button btnReceiverWin = (Button)e.Item.FindControl("btnReceiverWin");
 
+                // Get sender and receiver results
+                Label lblSenderResult = (Label)e.Item.FindControl("lblSenderResult");
+                Label lblReceiverResult = (Label)e.Item.FindControl("lblReceiverResult");
+
                 // Get usernames
                 var senderUser = await _usersController.GetUserByUserIDAsync(bet.UserID_Sender);
                 var receiverUser = await _usersController.GetUserByUserIDAsync(bet.UserID_Receiver);
@@ -99,9 +107,14 @@ namespace SourDuckWannaBet
                     // Set button text
                     btnSenderWin.Text = senderUser.Username + " wins";
                     btnReceiverWin.Text = receiverUser.Username + " wins";
+
+                    // Set the sender and receiver results
+                    //lblSenderResult.Text = bet.Sender_Result ?? "No result yet"; // Display default message if no result
+                    //lblReceiverResult.Text = bet.Receiver_Result ?? "No result yet"; // Display default message if no result
                 }
             }
         }
+
 
         protected async void BetWinner_Command(object sender, CommandEventArgs e)
         {
@@ -154,10 +167,14 @@ namespace SourDuckWannaBet
                 // Get buttons
                 Button btnAccept = (Button)e.Item.FindControl("btnAccept");
                 Button btnDecline = (Button)e.Item.FindControl("btnDecline");
+                Button btnModify = (Button)e.Item.FindControl("btnModify");
 
                 // Get usernames
                 var senderUser = await _usersController.GetUserByUserIDAsync(bet.UserID_Sender);
                 var receiverUser = await _usersController.GetUserByUserIDAsync(bet.UserID_Receiver);
+
+                Label lblPendingSides = (Label)e.Item.FindControl("lblPendingSides");
+                lblPendingSides.Text = "Sender: " + bet.Sender_Result.ToString() + " vs Receiver: " + bet.Receiver_Result.ToString();
 
                 if (senderUser != null && receiverUser != null)
                 {
@@ -167,6 +184,41 @@ namespace SourDuckWannaBet
             }
         }
 
+
+        protected async void BetResponse_Command(object sender, CommandEventArgs e)
+        {
+            long betId = Convert.ToInt64(e.CommandArgument);
+            string response = e.CommandName;
+
+            // Store the bet ID in session
+            Session["BetID"] = betId;
+
+            if (response == "Modify")
+            {
+                // Ensure any necessary async operations are completed before redirecting
+                await LoadPendingBetsAsync();  // Or any other async method that should finish first
+
+                Response.Cookies["BetID"].Value = betId.ToString(); // Store the bet ID in session
+
+                Response.Redirect("WBModifyBet.aspx");
+                //Context.ApplicationInstance.CompleteRequest();
+            }
+            else if (response == "Accept")
+            {
+                // Update bet status to Accepted
+                await _betsController.UpdateBetStatusAsync(betId, "Accepted");
+            }
+            else if (response == "Decline")
+            {
+                // Update bet status to Declined
+                await _betsController.UpdateBetStatusAsync(betId, "Declined");
+            }
+
+            // Reload the bets
+            await LoadPendingBetsAsync();
+        }
+
+        /*
         protected async void BetResponse_Command(object sender, CommandEventArgs e)
         {
             long betId = Convert.ToInt64(e.CommandArgument);
@@ -182,9 +234,15 @@ namespace SourDuckWannaBet
                 // Update bet status to Declined
                 await _betsController.UpdateBetStatusAsync(betId, "Declined");
             }
+            else if (response == "Modify")
+            {
+                Response.Redirect($"WBModifyBet.aspx?betID={betId}", false);
+                Context.ApplicationInstance.CompleteRequest(); // Ensure that the response is completed
+            }
 
             // Reload the bets
             await LoadPendingBetsAsync();
         }
+        */
     }
 }
