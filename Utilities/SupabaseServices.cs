@@ -6,6 +6,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Models;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 
 namespace Utilities
 {
@@ -18,9 +20,31 @@ namespace Utilities
         public SupabaseServices(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _supabaseUrl = "https://sliykwxeogrnrqgysvrh.supabase.co";
-            _supabaseServiceRoleKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNsaXlrd3hlb2dybnJxZ3lzdnJoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczNDcyNjIxMiwiZXhwIjoyMDUwMzAyMjEyfQ.ycvakwhbuLIowmE7X_V-AXCB5GB2EWmbr1_ua9JMzgM";
+
+            // Load the configuration from the JSON file
+            var config = LoadConfig();
+
+            _supabaseUrl = config.GetProperty("supabaseUrl").GetString();
+            _supabaseServiceRoleKey = config.GetProperty("supabaseServiceRoleKey").GetString();
         }
+
+        private JsonElement LoadConfig()
+        {
+            //var configFilePath = "config.json";
+            //C: \Users\njmar\Desktop\SourDuckWannaBet\config.json
+            var configFilePath = @"C:\Users\njmar\Desktop\SourDuckWannaBet\config.json";
+
+            if (!File.Exists(configFilePath))
+            {
+                throw new FileNotFoundException("Configuration file not found.");
+            }
+
+            var jsonString = File.ReadAllText(configFilePath);
+
+            // Ensure you're using System.Text.Json.JsonSerializer
+            return System.Text.Json.JsonSerializer.Deserialize<JsonElement>(jsonString);
+        }
+
 
         public SupabaseServices(HttpClient httpClient, string supabaseUrl, string supabaseServiceRoleKey)
         {
