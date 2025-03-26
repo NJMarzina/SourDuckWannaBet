@@ -7,6 +7,10 @@
 
 ---
 
+Click here for demo: https://wannabet-apczh6bmfbfvfef8.centralus-01.azurewebsites.net/WBLogin.aspx 
+
+---
+
 ## Key Features
 
 - **Create Bets**: Users can create bets by specifying the terms, amounts, and participants. The app supports both one-sided and two-sided bets.
