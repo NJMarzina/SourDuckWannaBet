@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
-namespace Utilities
+namespace Utilities //your namespace
 {
     public class SupabaseServices
     {
@@ -26,13 +26,16 @@ namespace Utilities
 
             _supabaseUrl = config.GetProperty("supabaseUrl").GetString();
             _supabaseServiceRoleKey = config.GetProperty("supabaseServiceRoleKey").GetString();
+
+            // _supabaseUrl = "YOUR_URL";
+            // replace with your Supabase URL ^^^
+            // _supabaseServiceRoleKey = "YOUR_SERVICE_ROLE_KEY";
+            // replace with your Supabase Service Role Key ^^^
         }
 
         private JsonElement LoadConfig()
         {
-            //var configFilePath = "config.json";
-            //C: \Users\njmar\Desktop\SourDuckWannaBet\config.json
-            var configFilePath = @"C:\Users\njmar\Desktop\SourDuckWannaBet\config.json";
+            var configFilePath = @"xxx\config.json";
 
             if (!File.Exists(configFilePath))
             {
@@ -54,6 +57,29 @@ namespace Utilities
         }
 
         // Generic method to add any object to any table
+
+        /*  Example call:
+         * 
+         * User user = new User
+            {
+                UserID = 1, // Replace with actual user ID
+                Username = "xxx",  // Replace with actual username
+                CreatedAt = DateTime.UtcNow,
+            };
+         * 
+         * try
+            {
+                var tableName = "users";
+                int id = await _supabaseService.AddToIndicatedTableAsync(user, tableName);
+                return new { Message = "Friend request sent successfully!", Id = id };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error adding user: {ex.Message}");
+                return new { Message = $"Failed add user: {ex.Message}" };
+            }
+         * 
+         */
         public async Task<int> AddToIndicatedTableAsync<T>(T entity, string tableName)
         {
             // Convert entity to DTO based on its type
