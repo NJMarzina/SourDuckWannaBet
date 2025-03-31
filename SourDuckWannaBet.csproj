@@ -249,6 +249,8 @@
     <Content Include="WBLogin.aspx" />
     <Content Include="WBLogout.aspx" />
     <Content Include="WBModifyBet.aspx" />
+    <Content Include="WBMyBets.aspx" />
+    <Content Include="WBProfile.aspx" />
     <Content Include="WBRegistration.aspx" />
     <Content Include="WBSendABet.aspx" />
     <Content Include="Web.config" />
@@ -373,6 +375,20 @@
     </Compile>
     <Compile Include="WBModifyBet.aspx.designer.cs">
       <DependentUpon>WBModifyBet.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WBMyBets.aspx.cs">
+      <DependentUpon>WBMyBets.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WBMyBets.aspx.designer.cs">
+      <DependentUpon>WBMyBets.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WBProfile.aspx.cs">
+      <DependentUpon>WBProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WBProfile.aspx.designer.cs">
+      <DependentUpon>WBProfile.aspx</DependentUpon>
     </Compile>
     <Compile Include="WBRegistration.aspx.cs">
       <DependentUpon>WBRegistration.aspx</DependentUpon>
