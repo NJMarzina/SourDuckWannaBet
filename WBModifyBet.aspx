@@ -119,13 +119,13 @@
             </div>
             
             <div class="form-group">
-                <label for="txtSender_Result">Your Proposed Outcome:</label>
-                <asp:TextBox ID="txtSender_Result" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
-            
-            <div class="form-group">
-                <label for="txtReceiver_Result">Their Proposed Outcome:</label>
+                <label for="txtReceiver_Result">Your Proposed Outcome:</label>
                 <asp:TextBox ID="txtReceiver_Result" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+
+            <div class="form-group">
+                <label for="txtSender_Result">Their Proposed Outcome:</label>
+                <asp:TextBox ID="txtSender_Result" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             
             <div class="form-group">

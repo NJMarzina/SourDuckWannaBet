@@ -31,6 +31,7 @@ namespace SourDuckWannaBet
             RegisterAsyncTask(new PageAsyncTask(async () =>
             {
                 var _betsController = new BetsController(new HttpClient());
+                var _usersController = new UsersController(new HttpClient());
 
                 try
                 {
@@ -97,6 +98,12 @@ namespace SourDuckWannaBet
                     txtReceiverResult.Text = "";
                     chkNeedMediator.Checked = false;
                     txtMediatorID.Text = "";
+
+                    //remove amount sent from sender's user account
+
+                    var user = await _usersController.GetUserByUserIDAsync(senderUserID);
+                    user.Balance -= betA_Amount;
+                    var updateResult = await _usersController.UpdateUserAsync(user);
                 }
                 catch (Exception ex)
                 {

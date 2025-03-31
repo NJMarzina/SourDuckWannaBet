@@ -33,9 +33,15 @@ namespace SourDuckWannaBet
                     return;
                 }
 
-                lblUsername.Text = Request.Cookies["Username"].Value;
-                lblUsername2.Text = Request.Cookies["Username"].Value;
-                lblBalance.Text = Request.Cookies["Balance"].Value;
+                var user = await _usersController.GetUserByUserIDAsync(long.Parse(Request.Cookies["UserID"].Value));
+
+                //lblUsername.Text = Request.Cookies["Username"].Value;
+                //lblUsername2.Text = Request.Cookies["Username"].Value;
+                //lblBalance.Text = Request.Cookies["Balance"].Value;
+
+                lblUsername.Text = user.Username;
+                lblUsername2.Text = user.Username;
+                lblBalance.Text = user.Balance.ToString();
 
                 await LoadAcceptedBetsAsync();
                 await LoadPendingBetsAsync();
