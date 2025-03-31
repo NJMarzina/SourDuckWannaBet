@@ -27,11 +27,16 @@ namespace SourDuckWannaBet
         private async Task LoadBetDataAsync()
         {
             var betsController = new BetsController(new HttpClient());
+            var usersController = new UsersController(new HttpClient());
+            
             _bet = await betsController.GetBetByIdAsync(_betId);
+            _user = await usersController.GetUserByUserIDAsync(_bet.UserID_Sender);
+            _user2 = await usersController.GetUserByUserIDAsync(_bet.UserID_Receiver);
+
             if (_bet != null)
             {
                 lblBetDescription.Text = _bet.Description;
-                lblSenderVsReceiver.Text = $"{_bet.UserID_Sender} vs {_bet.UserID_Receiver}";
+                lblSenderVsReceiver.Text = $"{_user.Username} vs {_user2.Username}";
                 txtBetA_Amount.Text = _bet.BetA_Amount.ToString();
                 txtBetB_Amount.Text = _bet.BetB_Amount.ToString();
                 txtSender_Result.Text = _bet.Sender_Result;
@@ -84,7 +89,7 @@ namespace SourDuckWannaBet
             {
                 long currentUserId = long.Parse(Request.Cookies["UserID"].Value);
                 var usersController = new UsersController(new HttpClient());
-                _user = await usersController.GetUserByUserIDAsync(_bet.UserID_Sender);
+                _user = await usersController.GetUserByUserIDAsync(originalSenderId); //updateddd!!
 
                 // Refund the original pending bet amount
                 if (_user != null)
@@ -93,7 +98,7 @@ namespace SourDuckWannaBet
                     await usersController.UpdateUserAsync(_user);
                 }
 
-                _user2 = await usersController.GetUserByUserIDAsync(_bet.UserID_Receiver);
+                _user2 = await usersController.GetUserByUserIDAsync(originalReceiverId); //updated!!
                 _user2.Balance -= _bet.BetA_Amount;
                 await usersController.UpdateUserAsync(_user2);
             }
