@@ -377,10 +377,10 @@ h3 {
 
             <!-- Dropdown menu -->
             <div id="dropdownMenu" class="dropdown-menu">
-                <a href="Index.aspx">Home</a>
-                <a href="Profile.aspx">My Profile</a>
-                <a href="MyBets.aspx">My Bets</a>
-                <a href="Friends.aspx">Friends</a>
+                <a href="WBDashboard.aspx">Home</a>
+                <a href="WBProfile.aspx">My Profile</a>
+                <a href="WBMyBets.aspx">My Bets</a>
+                <a href="WBAddAFriend.aspx">Friends</a>
                 <a href="WBLogout.aspx">Logout</a>
             </div>
 
