@@ -96,24 +96,6 @@ namespace SourDuckWannaBet
         protected global::System.Web.UI.WebControls.TextBox txtReceiverResult;
 
         /// <summary>
-        /// chkNeedMediator control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkNeedMediator;
-
-        /// <summary>
-        /// txtMediatorID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMediatorID;
-
-        /// <summary>
         /// btnSendBet control.
         /// </summary>
         /// <remarks>

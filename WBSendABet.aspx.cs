@@ -96,8 +96,6 @@ namespace SourDuckWannaBet
                     txtDescription.Text = "";
                     txtSenderResult.Text = "";
                     txtReceiverResult.Text = "";
-                    chkNeedMediator.Checked = false;
-                    txtMediatorID.Text = "";
 
                     //remove amount sent from sender's user account
 

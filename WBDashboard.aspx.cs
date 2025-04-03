@@ -212,12 +212,42 @@ namespace SourDuckWannaBet
             else if (response == "Accept")
             {
                 // Update bet status to Accepted
-                await _betsController.UpdateBetStatusAsync(betId, "Accepted");
+                var betsController = new BetsController(new HttpClient());
+                Bet _bet = await betsController.GetBetByIdAsync(betId);
+
+                var usersController = new UsersController(new HttpClient());
+                User _user = await usersController.GetUserByUserIDAsync(long.Parse(Request.Cookies["UserID"].Value));
+
+                _bet.Pending_Bet += _bet.BetB_Amount;
+                _bet.Status = "Accepted";
+
+                _user.Balance -= _bet.BetB_Amount;
+
+                // TODO
+                // add to total bets in users table ??
+
+                await betsController.UpdateBetAsync(_bet);
+                await usersController.UpdateUserAsync(_user);
             }
             else if (response == "Decline")
             {
                 // Update bet status to Declined
-                await _betsController.UpdateBetStatusAsync(betId, "Declined");
+                var betsController = new BetsController(new HttpClient());
+                Bet _bet = await betsController.GetBetByIdAsync(betId);
+
+                var usersController = new UsersController(new HttpClient());
+                User _user = await usersController.GetUserByUserIDAsync(long.Parse(_bet.UserID_Sender.ToString()));
+
+                _user.Balance += _bet.BetA_Amount;
+
+                _bet.Pending_Bet = 0;
+                _bet.Status = "Declined";
+
+                // TODO
+                // remove 1 from total bets in users table ??
+
+                await betsController.UpdateBetAsync(_bet);
+                await usersController.UpdateUserAsync(_user);
             }
 
             // Reload the bets
