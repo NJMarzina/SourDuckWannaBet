@@ -1,97 +1,80 @@
-
----
-
 # SourDuckWannaBet
 
-**SourDuckWannaBet** is a dynamic and interactive betting platform designed to bring users together for friendly wagers. Whether you're betting on sports, games, or personal challenges, SourDuckWannaBet provides a seamless experience for creating, managing, and resolving bets. With a focus on user-friendly design and robust functionality, this app ensures that every bet is fair, transparent, and fun.
+**SourDuckWannaBet** is an interactive, feature-rich betting platform built to provide users with a seamless experience for creating, managing, and resolving bets. Whether you're placing bets on sports, games, or personal challenges, the app ensures everything is transparent, fun, and fair. Built with **ASP.NET** and **C#**, SourDuckWannaBet integrates a **Supabase** backend database and is deployed via **Azure** for easy access and scalability.
+
+![Screenshot_of_login](https://github.com/NJMarzina/SourDuckWannaBet/blob/master/WBLogin_sc1.png)
+![Screenshot_of_dashboard](https://github.com/NJMarzina/SourDuckWannaBet/blob/master/WBDashboard_sc1.png)
+![Screenshot_of_dashboard2](https://github.com/NJMarzina/SourDuckWannaBet/blob/master/WBDashboard_sc2.png)
 
 ---
 
-Click here for demo: https://wannabet-apczh6bmfbfvfef8.centralus-01.azurewebsites.net/WBLogin.aspx 
+### 🔗 [Demo here](https://wannabet-apczh6bmfbfvfef8.centralus-01.azurewebsites.net/WBLogin.aspx)
 
 ---
 
 ## Key Features
 
-- **Create Bets**: Users can create bets by specifying the terms, amounts, and participants. The app supports both one-sided and two-sided bets.
-- **Accept or Deny Bets**: Recipients can accept or deny incoming bets. If accepted, the bet amounts are locked in. If denied, the sender's amount is refunded.
-- **Balance Management**: The app automatically deducts and refunds amounts from user balances based on bet outcomes.
-- **Transaction History**: Every bet and balance change is recorded in the `transactions` table, providing a clear audit trail.
-- **Real-Time Updates**: Users receive real-time updates on bet statuses and balance changes.
-- **Mediator Support**: Bets can involve a mediator to ensure fairness and resolve disputes.
+- **User Creation**: Easily create new users and manage profiles.
+- **Bet Management**: Send, modify, and complete bets with real-time updates.
+- **Balance Alteration**: Adjust user balances based on bet outcomes, ensuring accurate financial tracking.
+- **Bet Modification**: Users can modify their bets before they’re completed, providing flexibility.
+- **Bet Completion**: Once a bet is completed, users are notified and their balances updated accordingly.
+  
+This platform is built for a smooth betting experience, allowing users to make informed decisions and manage their wagers with confidence.
 
 ---
 
-## Database Support Provided by Supabase
+## Backend Technology
 
-SourDuckWannaBet leverages **Supabase**, an open-source Firebase alternative, for its backend database needs. Supabase provides a powerful and scalable PostgreSQL database, enabling seamless data management and real-time functionality.
+**SourDuckWannaBet** uses **ASP.NET** and **C#** for its backend, ensuring high performance, security, and scalability. The backend is seamlessly connected to a **Supabase** database, providing real-time capabilities and secure data management.
 
-### How We Use Supabase
+### Supabase Database Integration
+
+SourDuckWannaBet leverages **Supabase** for backend database services, using a **PostgreSQL** database to manage users, bets, and transactions.
 
 1. **User Management**:
-   - User profiles, including usernames, balances, and betting history, are stored in the `users` table.
-   - Supabase handles authentication and user data securely.
+   - User profiles are stored securely in the `users` table with data like usernames, balances, and betting history.
+   - Authentication and security are managed by Supabase for ease and safety.
+  
+2. **Betting System**:
+   - All bets are tracked in the `bets` table, with details such as participants, amounts, bet statuses, and timestamps.
+   - Real-time updates from Supabase ensure instant feedback on bet actions and balance changes.
 
-2. **Bet Management**:
-   - Bets are stored in the `bets` table, which tracks details such as sender, receiver, amounts, status, and timestamps.
-   - Supabase's real-time capabilities ensure that users receive instant updates on bet statuses.
+3. **Transaction History**:
+   - Financial transactions, including bet placements, modifications, and payouts, are stored in the `transactions` table for full transparency.
 
-3. **Transaction Tracking**:
-   - All financial transactions, including bet creation, acceptance, and refunds, are recorded in the `transactions` table.
-   - This ensures transparency and provides a complete history of user activity.
+4. **Scalability & Performance**:
+   - Supabase's PostgreSQL backend provides high scalability to handle large volumes of users and bets efficiently.
 
-4. **Scalability and Performance**:
-   - Supabase's PostgreSQL database is highly scalable, ensuring that the app can handle a growing number of users and bets without compromising performance.
-
-5. **RESTful API**:
-   - Supabase provides a RESTful API that allows the app to interact with the database seamlessly. This includes querying, inserting, updating, and deleting records.
-
-6. **Security**:
-   - Supabase ensures data security with built-in authentication, row-level security, and encryption.
+5. **API Access**:
+   - Supabase's RESTful API allows for easy querying, updating, and managing of data between the frontend and the database.
 
 ---
 
-## Supabase Dashboard
+## Future Updates
 
-You can explore the database structure and manage data directly through the **Supabase Dashboard**:
+**What's Coming Next**:
+
+- **Edit Profile**: We’re adding a feature that allows users to edit their profiles, including changing usernames and updating other personal details.
+  
+- **Game Room**: We’re also working on integrating a gaming area with classic games like **Dice**, **Roulette**, **Blackjack**, and more, bringing a new level of fun to the platform!
+
+---
+
+## Database Management with Supabase
+
+You can explore and manage the database directly via the **Supabase Dashboard**:  
 👉 [Supabase Dashboard](https://supabase.com/dashboard/project/sliykwxeogrnrqgysvrh)
-
----
-
-## Getting Started
-
-### Prerequisites
-- .NET Framework (for the backend)
-- Supabase account and project setup
-- Basic understanding of REST APIs and PostgreSQL
-
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-repo/SourDuckWannaBet.git
-   ```
-2. Set up your Supabase project and update the connection details in the app configuration.
-3. Run the app locally or deploy it to your preferred hosting platform.
-
----
-
-
-## Acknowledgments
-
-- **Supabase** for providing a robust and scalable database solution.
-- The .NET community for their extensive resources and support.
-- All contributors and users who help make SourDuckWannaBet better every day.
 
 ---
 
 ## Contact
 
-For questions, feedback, or support, please reach out to us at:
-- **Email**: NJMarzina@gmail.com
+For questions, feedback, or support, feel free to reach out:
+
+- **Email**: OhMarzy23@gmail.com
 - **GitHub Issues**: [Open an Issue](https://github.com/NJMarzina/SourDuckWannaBet/issues)
 
 ---
 
-**SourDuckWannaBet** – Where every bet is a win-win! 🦆🎲
-
----
+**SourDuckWannaBet** – Place your bets, have some fun! 🦆🎲
