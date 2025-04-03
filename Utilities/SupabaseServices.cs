@@ -175,7 +175,6 @@ namespace Utilities
                     status = transaction.Status
                 };
             }
-            // Add this to the ConvertToDTO method in SupabaseServices.cs
             else if (entity is Message message)
             {
                 return new
@@ -204,7 +203,6 @@ namespace Utilities
         }
 
         // Helper method to get the ID column name for a table
-        // Update the GetIdColumnName method in SupabaseServices.cs
         private string GetIdColumnName(string tableName)
         {
             switch (tableName.ToLower())
@@ -225,7 +223,6 @@ namespace Utilities
             }
         }
 
-        // Add this method to your existing SupabaseServices class
         public async Task<List<T>> GetAllFromTableAsync<T>(string tableName) where T : class, new()
         {
             var url = $"{_supabaseUrl}/rest/v1/{tableName}?select=*";
