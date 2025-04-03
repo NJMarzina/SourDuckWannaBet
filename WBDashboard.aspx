@@ -70,9 +70,24 @@
             transition: background-color 0.3s;
         }
 
+        .action-button2 {
+    background-color: #747bf6; /* Blue color */
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
         .action-button:hover {
             background-color: #e6b800; /* Darker gold on hover */
         }
+
+        .action-button2:hover {
+    background-color: #2a468e; /* Darker blue on hover */
+}
 
         /* Bet list styling */
         .bet-list {
@@ -399,7 +414,7 @@ h3 {
             <!-- Actions bar -->
             <div class="actions-bar">
                 <asp:Button ID="btnSendBet" runat="server" Text="Send A Bet" CssClass="action-button" OnClick="btnSendBet_Click" />
-                <asp:Button ID="btnAnotherButton" runat="server" Text="Another Button" CssClass="action-button" />
+                <asp:Button ID="btnAnotherButton" runat="server" Text="Gameroom" CssClass="action-button2" />
                 <asp:Button ID="btnAddFriend" runat="server" Text="Add A Friend" CssClass="action-button" OnClick="btnAddFriend_Click" />
             </div>
 

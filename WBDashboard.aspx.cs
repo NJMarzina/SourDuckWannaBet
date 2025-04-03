@@ -180,7 +180,7 @@ namespace SourDuckWannaBet
                 var receiverUser = await _usersController.GetUserByUserIDAsync(bet.UserID_Receiver);
 
                 Label lblPendingSides = (Label)e.Item.FindControl("lblPendingSides");
-                lblPendingSides.Text = "Sender: " + bet.Sender_Result.ToString() + " vs Receiver: " + bet.Receiver_Result.ToString();
+                lblPendingSides.Text = "Their proposition: " + bet.Sender_Result.ToString() + "<br /> Your expected proposition: " + bet.Receiver_Result.ToString();
 
                 if (senderUser != null && receiverUser != null)
                 {
