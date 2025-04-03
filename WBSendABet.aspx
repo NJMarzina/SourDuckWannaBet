@@ -97,10 +97,7 @@
                 <asp:TextBox ID="txtReceiverResult" runat="server" placeholder="e.g., Team B wins, Under 30 points, etc."></asp:TextBox>
             </div>
             
-            <div class="form-group">
-                <asp:CheckBox ID="chkNeedMediator" runat="server" Text="Request a mediator for this bet" OnCheckedChanged="chkNeedMediator_CheckedChanged" />
-                <asp:TextBox ID="txtMediatorID" runat="server" TextMode="Number" step="0.01" min="0"></asp:TextBox>
-            </div>
+            
             
             <div class="form-group">
                 <asp:Button ID="btnSendBet" runat="server" Text="Send Bet" CssClass="btn-primary" OnClick="btnSendBet_Click" />

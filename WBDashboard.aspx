@@ -105,6 +105,12 @@
     cursor: pointer;
 }
 
+.bet-container .bet-created {   
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
 .bet-container:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
@@ -479,9 +485,14 @@ h3 {
         <div class="bet-stakes">
             $<%# Eval("BetA_Amount", "{0:F2}") %> vs $<%# Eval("BetB_Amount", "{0:F2}") %><br />
             To win: $<%# Eval("Pending_Bet", "{0:F2}") %><br />
-            Sender Result: <%# Eval("sender_Result") %><br />
-            Receiver Result: <%# Eval("receiver_Result") %>
+            Their Proposition: <%# Eval("sender_Result") %><br />
+            Your Expected Proposition: <%# Eval("receiver_Result") %>
         </div>
+
+        <div class="bet-created">
+            Created: <%# Eval("Created_at", "{0:MMM dd, yyyy hh:mm tt}") %>
+        </div>
+
         <div class="winner-buttons">
             <asp:Button ID="btnSenderWin" runat="server" CssClass="winner-button sender-win" 
                 CommandName="SenderWin" CommandArgument='<%# Eval("BetID") %>' 
@@ -489,9 +500,6 @@ h3 {
             <asp:Button ID="btnReceiverWin" runat="server" CssClass="winner-button receiver-win" 
                 CommandName="ReceiverWin" CommandArgument='<%# Eval("BetID") %>' 
                 OnCommand="BetWinner_Command" />
-        </div>
-        <div class="bet-date">
-            Created: <%# Eval("Created_at", "{0:MMM dd, yyyy hh:mm tt}") %>
         </div>
     </div>
 </ItemTemplate>
