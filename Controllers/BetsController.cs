@@ -375,6 +375,9 @@ namespace SourDuckWannaBet.Controllers
                         sender.NumWins += 1;
                         receiver.NumLoses += 1;
 
+                        sender.NumBets += 1;
+                        receiver.NumBets += 1;
+
                         await usersController.UpdateUserAsync(sender);
                         await usersController.UpdateUserAsync(receiver);
 
@@ -394,6 +397,9 @@ namespace SourDuckWannaBet.Controllers
                         receiver.Balance += double.Parse(bet.Pending_Bet.ToString());
                         receiver.NumWins += 1;
                         sender.NumLoses += 1;
+
+                        sender.NumBets += 1;
+                        receiver.NumBets += 1;
 
                         await usersController.UpdateUserAsync(receiver);
                         await usersController.UpdateUserAsync(sender);
