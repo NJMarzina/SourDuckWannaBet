@@ -254,6 +254,11 @@ namespace SourDuckWannaBet
             await LoadPendingBetsAsync();
         }
 
+        protected void btnAnotherButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("GRDashboard.aspx");
+        }
+
         /*
         protected async void BetResponse_Command(object sender, CommandEventArgs e)
         {

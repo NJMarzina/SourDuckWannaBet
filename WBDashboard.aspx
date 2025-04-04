@@ -420,7 +420,7 @@ h3 {
             <!-- Actions bar -->
             <div class="actions-bar">
                 <asp:Button ID="btnSendBet" runat="server" Text="Send A Bet" CssClass="action-button" OnClick="btnSendBet_Click" />
-                <asp:Button ID="btnAnotherButton" runat="server" Text="Gameroom" CssClass="action-button2" />
+                <asp:Button ID="btnAnotherButton" runat="server" Text="Gameroom" CssClass="action-button2" OnClick="btnAnotherButton_Click" />
                 <asp:Button ID="btnAddFriend" runat="server" Text="Add A Friend" CssClass="action-button" OnClick="btnAddFriend_Click" />
             </div>
 

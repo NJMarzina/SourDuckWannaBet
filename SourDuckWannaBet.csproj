@@ -234,6 +234,7 @@
   <ItemGroup>
     <Content Include="AddAFriend.aspx" />
     <Content Include="BetsControllerDemos.aspx" />
+    <Content Include="GRDashboard.aspx" />
     <Content Include="images\selfie1.jpg" />
     <Content Include="Index.aspx" />
     <Content Include="MarzyBlog.aspx" />
@@ -277,6 +278,13 @@
     <Compile Include="Controllers\PasswordHasher.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="GRDashboard.aspx.cs">
+      <DependentUpon>GRDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GRDashboard.aspx.designer.cs">
+      <DependentUpon>GRDashboard.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
