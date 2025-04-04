@@ -137,6 +137,12 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Supabase.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Supabase.Core.1.0.0\lib\netstandard2.0\Supabase.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Supabase.Postgrest, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Supabase.Postgrest.4.1.0\lib\netstandard2.0\Supabase.Postgrest.dll</HintPath>
+    </Reference>
     <Reference Include="System.Buffers, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Buffers.4.6.0\lib\net462\System.Buffers.dll</HintPath>
     </Reference>
@@ -235,6 +241,7 @@
     <Content Include="AddAFriend.aspx" />
     <Content Include="BetsControllerDemos.aspx" />
     <Content Include="GRDashboard.aspx" />
+    <Content Include="GRDice.aspx" />
     <Content Include="images\selfie1.jpg" />
     <Content Include="Index.aspx" />
     <Content Include="MarzyBlog.aspx" />
@@ -284,6 +291,13 @@
     </Compile>
     <Compile Include="GRDashboard.aspx.designer.cs">
       <DependentUpon>GRDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GRDice.aspx.cs">
+      <DependentUpon>GRDice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GRDice.aspx.designer.cs">
+      <DependentUpon>GRDice.aspx</DependentUpon>
     </Compile>
     <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
