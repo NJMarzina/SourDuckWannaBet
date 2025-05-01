@@ -44,6 +44,8 @@ namespace SourDuckWannaBet
                     var senderResult = txtSenderResult.Text;
                     var receiverResult = txtReceiverResult.Text;
 
+                    double sender_balance = double.Parse(Request.Cookies["Balance"].Value);
+
                     // Get sender and recipient user IDs
                     var senderUserID = await GetUserIDByUsernameAsync(senderUsername);
                     var recipientUserID = await GetUserIDByUsernameAsync(recipientUsername);
@@ -58,6 +60,18 @@ namespace SourDuckWannaBet
                     if (recipientUserID == -1)
                     {
                         lblStatus.Text = "Invalid recipient. Please enter a valid username.";
+                        return;
+                    }
+
+                    if(senderUserID == recipientUserID)
+                    {
+                        lblStatus.Text = "You cannot send a bet to yourself.";
+                        return;
+                    }
+
+                    if(betA_Amount > sender_balance)
+                    {
+                        lblStatus.Text = "You do not have a balance large enough to support that bet. Your balance is " + Request.Cookies["Balance"].Value;
                         return;
                     }
 
@@ -98,7 +112,6 @@ namespace SourDuckWannaBet
                     txtReceiverResult.Text = "";
 
                     //remove amount sent from sender's user account
-
                     var user = await _usersController.GetUserByUserIDAsync(senderUserID);
                     user.Balance -= betA_Amount;
                     var updateResult = await _usersController.UpdateUserAsync(user);
