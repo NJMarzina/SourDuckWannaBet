@@ -238,6 +238,8 @@ namespace SourDuckWannaBet
                 var usersController = new UsersController(new HttpClient());
                 User _user = await usersController.GetUserByUserIDAsync(long.Parse(_bet.UserID_Sender.ToString()));
 
+
+                ////////////
                 _user.Balance += _bet.BetA_Amount;
 
                 _bet.Pending_Bet = 0;
