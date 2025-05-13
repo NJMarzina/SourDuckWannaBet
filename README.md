@@ -54,8 +54,6 @@ SourDuckWannaBet leverages **Supabase** for backend database services, using a *
 ## Future Updates
 
 **What's Coming Next**:
-
-- **Edit Profile**: We’re adding a feature that allows users to edit their profiles, including changing usernames and updating other personal details.
   
 - **Game Room**: We’re also working on integrating a gaming area with classic games like **Dice**, **Roulette**, **Blackjack**, and more, bringing a new level of fun to the platform!
 
