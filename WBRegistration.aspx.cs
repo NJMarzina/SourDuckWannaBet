@@ -124,6 +124,28 @@ namespace SourDuckWannaBet
             if (result != null) // Check if the user was successfully added
             {
                 lblError.Visible = false; // Hide the error label on success
+
+                // Set cookies
+                Response.Cookies["Username"].Value = txtUsername.Value;
+                //cookie for userID Response.Cookies["UserID"].Value = ;
+                //cookie for balance Response.Cookies["Balance"].Value = ;
+
+                // Set cookie expiration (e.g., 7 days)
+                Response.Cookies["Username"].Expires = DateTime.Now.AddDays(7);
+                //cookie for userID Response.Cookies["UserID"].Expires = DateTime.Now.AddDays(7);
+                //cookie for balance Response.Cookies["Balance"].Expires = DateTime.Now.AddDays(7);
+
+                //get user from database
+                var newUser2 = await _usersController.GetUserByUsername(txtUsername.Value);
+
+                // Set cookies for userID and balance
+                Response.Cookies["UserID"].Value = newUser2.UserID.ToString();
+                Response.Cookies["Balance"].Value = newUser2.Balance.ToString();
+
+                // Set cookie expiration (e.g., 7 days)
+                Response.Cookies["UserID"].Expires = DateTime.Now.AddDays(7);
+                Response.Cookies["Balance"].Expires = DateTime.Now.AddDays(7);
+
                 Response.Redirect("WBDashboard.aspx"); // Redirect to the dashboard after successful registration
             }
             else
