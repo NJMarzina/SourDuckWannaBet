@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <link rel="icon" type="image/x-icon" href="https://sliykwxeogrnrqgysvrh.supabase.co/storage/v1/object/sign/images/WannaBet_GoldDuck.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJpbWFnZXMvV2FubmFCZXRfR29sZER1Y2sucG5nIiwiaWF0IjoxNzQ3MTg2NTkyLCJleHAiOjE3Nzg3MjI1OTJ9.2wQRIf3mnARn5k25gYARTScThqFjj4NDbLhX-iT27XE" />
     <title>Wanna Bet Dashboard</title>
     <style>
         /* General body styling */
@@ -420,7 +421,7 @@ h3 {
             <!-- Actions bar -->
             <div class="actions-bar">
                 <asp:Button ID="btnSendBet" runat="server" Text="Send A Bet" CssClass="action-button" OnClick="btnSendBet_Click" />
-                <asp:Button ID="btnAnotherButton" runat="server" Text="Gameroom" CssClass="action-button2" />
+                <!--<asp:Button ID="btnAnotherButton" runat="server" Text="Gameroom" CssClass="action-button2" />-->
                 <asp:Button ID="btnAddFriend" runat="server" Text="Add A Friend" CssClass="action-button" OnClick="btnAddFriend_Click" />
             </div>
 
