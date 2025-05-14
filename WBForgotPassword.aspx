@@ -86,11 +86,12 @@
             </div>
             <div>
                 <label for="txtEmail">Email Address:</label>
-                <input type="email" id="txtEmail" runat="server" />
+                <input type="email" id="txtEmailTO" runat="server" />
             </div>
             <div>
                 <asp:Button ID="btnRecover" runat="server" Text="Recover Password" CssClass="button btn-recover" OnClick="btnRecover_Click" />
             </div>
+                    <asp:Label ID="lblDisplay" runat="server" />
             <div>
                 <asp:Button ID="btnBackToLogin" runat="server" Text="Back to Login" CssClass="btn-back" OnClick="btnBackToLogin_Click" />
             </div>

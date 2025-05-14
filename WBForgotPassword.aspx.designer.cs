@@ -33,13 +33,13 @@ namespace SourDuckWannaBet
         protected global::System.Web.UI.WebControls.Label lblMessage;
 
         /// <summary>
-        /// txtEmail control.
+        /// txtEmailTO control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txtEmail;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txtEmailTO;
 
         /// <summary>
         /// btnRecover control.
@@ -49,6 +49,15 @@ namespace SourDuckWannaBet
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRecover;
+
+        /// <summary>
+        /// lblDisplay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDisplay;
 
         /// <summary>
         /// btnBackToLogin control.

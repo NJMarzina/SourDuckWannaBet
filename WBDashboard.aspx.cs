@@ -282,3 +282,13 @@ namespace SourDuckWannaBet
         */
     }
 }
+
+//wbaddafriend
+//wbdashboard
+//wbforgotpassword
+//wblogout
+//wbmodifybet
+//wbmybets
+//wbprofile
+//wbregistration
+//wbsendabet

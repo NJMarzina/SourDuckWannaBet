@@ -3,8 +3,108 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <link rel="icon" type="image/x-icon" href="https://sliykwxeogrnrqgysvrh.supabase.co/storage/v1/object/sign/images/WannaBet_GoldDuck.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJpbWFnZXMvV2FubmFCZXRfR29sZER1Y2sucG5nIiwiaWF0IjoxNzQ3MTg2NTkyLCJleHAiOjE3Nzg3MjI1OTJ9.2wQRIf3mnARn5k25gYARTScThqFjj4NDbLhX-iT27XE" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add a Friend</title>
     <style>
+        @media all and (min-width:360px) and (max-width: 430px) {
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        #header {
+            width: 100%;
+            background-color: gold;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+        
+        .container {
+            margin-top: 30px;
+            padding: 20px 2% 0 2%;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #333;
+            margin-top: 0;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        
+        .status {
+            color: #28a745;
+            margin: 10px 0;
+        }
+        
+        .error {
+            color: #dc3545;
+            margin: 10px 0;
+        }
+        
+        .friend-item, .request-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .friend-item:last-child, .request-item:last-child {
+            border-bottom: none;
+        }
+        
+        .button-group {
+            text-align: right;
+        }
+        
+        .empty-message {
+            color: #666;
+            font-style: italic;
+        }
+        }
         body {
             font-family: Arial, sans-serif;
             margin: 0;
