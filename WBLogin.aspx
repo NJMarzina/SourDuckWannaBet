@@ -94,6 +94,12 @@
             <div>
                 <asp:Button ID="btnForgotPassword" runat="server" Text="Forgot Password?" CssClass="btn-forgot" OnClick="btnForgotPassword_Click" />
             </div>
+            <div>
+                <br />
+                <h4>Guest?</h4>
+                <p>username: guest</p>
+                <p>password: password123</p>
+            </div>
         </div>
     </form>
 </body>

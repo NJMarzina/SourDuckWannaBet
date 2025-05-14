@@ -56,6 +56,11 @@
             left: 0;
             right: 0;
         }
+        input[readonly] {
+            background-color: #f0f0f0;
+            cursor: not-allowed;
+        }
+
     </style>
 </head>
 <body>
@@ -65,6 +70,11 @@
         </div>
         <div class="form-container">
             <h2>Send A Bet</h2>
+
+            <div class="form-group">
+                <label for="txtFriendList">Friend List:</label>
+                <asp:DropDownList ID="ddlFriendList" runat="server" OnSelectedIndexChanged="ddlFriendList_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+            </div>
 
             <div class="form-group">
                 <label for="txtRecipientUsername">Recipient Username:</label>
@@ -105,47 +115,5 @@
             </div>
         </div>
     </form>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            // Load usernames for autocomplete
-            $.ajax({
-                type: "POST",
-                url: '<%=ResolveUrl("~/WBSendABet.aspx/GetUsernames") %>',
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (data) {
-                    console.log("Usernames fetched from server:", data.d); // Log all usernames
-
-                    $(".username-autocomplete").autocomplete({
-                        source: data.d,
-                        minLength: 2,
-                        select: function (event, ui) {
-                            console.log("Selected username:", ui.item.value); // Log selected username
-
-                            // When a username is selected, get the corresponding user ID
-                            $.ajax({
-                                type: "POST",
-                                url: '<%=ResolveUrl("~/WBSendABet.aspx/GetUserIDByUsername") %>',
-                                data: JSON.stringify({ username: ui.item.value }),
-                                contentType: "application/json; charset=utf-8",
-                                dataType: "json",
-                                success: function (data) {
-                                    console.log("User ID fetched for username:", ui.item.value, "is", data.d); // Log fetched user ID
-                                    $("#<%= hdnRecipientUserID.ClientID %>").val(data.d);
-                                    console.log("hdnRecipientUserID set to:", data.d); // Log hidden field value
-                                },
-                                error: function (xhr, status, error) {
-                                    console.error("Error getting user ID: " + error);
-                                }
-                            });
-                        }
-                    });
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error loading usernames: " + error);
-                }
-            });
-        });
-    </script>
 </body>
 </html>

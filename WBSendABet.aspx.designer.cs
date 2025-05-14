@@ -33,6 +33,15 @@ namespace SourDuckWannaBet
         protected global::System.Web.UI.WebControls.Button btnIndex;
 
         /// <summary>
+        /// ddlFriendList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFriendList;
+
+        /// <summary>
         /// txtRecipientUsername control.
         /// </summary>
         /// <remarks>

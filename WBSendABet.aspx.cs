@@ -10,12 +10,15 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Models;
 using Microsoft.AspNetCore.Mvc;
+using Utilities;
 
 namespace SourDuckWannaBet
 {
     public partial class WBSendABet : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+        private FriendsController _friendsController;
+        private UsersController _usersController;
+        protected async void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
@@ -24,7 +27,53 @@ namespace SourDuckWannaBet
                 // Currently running with manual sender selection
 
                 //btnSendBet.Click += new EventHandler(btnSendBet_Click);
+
+            var httpClient = new HttpClient();
+            _friendsController = new FriendsController(httpClient);
+            _usersController = new UsersController(httpClient);
+
+            long currentUserId = long.Parse(Request.Cookies["UserID"].Value);
+
+            // Get accepted friends
+            var friends = await _friendsController.GetAcceptedFriendsAsync(currentUserId);
+
+            // Determine the friend's ID (the other user in each friend pair)
+            var friendUserIds = friends
+                .Select(f => f.UserID_1 == currentUserId ? f.UserID_2 : f.UserID_1)
+                .Distinct()
+                .ToList();
+
+            // Fetch all users (or ideally just the needed ones, if possible)
+            var allUsers = await _usersController.GetAllUsersFromTableAsync();
+
+            // Filter to include only the user's accepted friends
+            var friendUsers = allUsers
+                .Where(u => friendUserIds.Contains(u.UserID))
+                .ToList();
+
+            // Bind to the dropdown
+            ddlFriendList.DataSource = friendUsers;
+            ddlFriendList.DataTextField = "Username"; // or "FullName", etc.
+            ddlFriendList.DataValueField = "Username";
+            ddlFriendList.DataBind();
+
+            ddlFriendList.Items.Insert(0, new ListItem("-- Select a Friend --", ""));
             }
+
+            if (IsPostBack)
+            {
+                if (ddlFriendList.SelectedIndex == 0)
+                {
+                    txtRecipientUsername.Text = "";
+                    txtRecipientUsername.ReadOnly = false;
+                }
+                else
+                {
+                    txtRecipientUsername.Text = ddlFriendList.SelectedItem.Text;
+                    txtRecipientUsername.ReadOnly = true;
+                }
+            }
+            //ddlFriendList
         }
         protected void btnSendBet_Click(object sender, EventArgs e)
         {
@@ -130,7 +179,6 @@ namespace SourDuckWannaBet
             }
         }
 
-        [WebMethod]
         public static long GetUserIDByUsername(string username)
         {
             try
@@ -150,7 +198,6 @@ namespace SourDuckWannaBet
             }
         }
 
-        [WebMethod]
         public static List<string> GetUsernames()
         {
             try
@@ -178,5 +225,21 @@ namespace SourDuckWannaBet
         {
             //double clicked now we r stuck with this bullshit
         }
+
+        protected void ddlFriendList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlFriendList.SelectedIndex == 0)
+            {
+                // Default option selected
+                txtRecipientUsername.Text = "";
+                txtRecipientUsername.ReadOnly = false;
+            }
+            else
+            {
+                txtRecipientUsername.Text = ddlFriendList.SelectedItem.Value.ToString();
+                txtRecipientUsername.ReadOnly = true;
+            }
+        }
+
     }
 }

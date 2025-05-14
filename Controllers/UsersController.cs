@@ -140,5 +140,20 @@ namespace SourDuckWannaBet.Controllers
                 throw new Exception($"Error fetching username for userID {username}: {ex.Message}");
             }
         }
+
+        public async Task<List<User>> GetAllUsersFromTableAsync()
+        {
+            try
+            {
+                // Fetch all users from the database
+                var tableName = "users";
+                var users = await _supabaseService.GetAllFromTableAsync<User>(tableName);
+                return users;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to get users: {ex.Message}");
+            }
+        }
     }
 }

@@ -62,7 +62,7 @@
         }
 
         .btn {
-            width: 100%;
+            width: 40%;
             padding: 14px;
             background-color: #4CAF50;
             color: #fff;
@@ -71,6 +71,16 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s ease;
+        }
+
+        #btnSave {
+            float: left;
+        }
+
+        #btnReturnDashboard {
+            background-color: gold;
+            color: black;
+            float: right;
         }
 
         .btn:hover {
@@ -126,6 +136,15 @@
 
             <div class="form-group">
                 <asp:Button ID="btnSave" runat="server" Text="Save Changes" CssClass="btn" OnClick="btnSave_Click" />
+            </div>
+
+            <div class="form-group">
+                <asp:Button ID="btnReturnDashboard" runat="server" Text="Dashboard" CssClass="btn" OnClick="btnDashboard_Click" />
+            </div>
+            <div>
+                <br />
+                <br />
+                <br />
             </div>
         </div>
     </form>

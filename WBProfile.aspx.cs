@@ -4,6 +4,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.UI;
+using Utilities;
 
 namespace SourDuckWannaBet
 {
@@ -64,7 +65,8 @@ namespace SourDuckWannaBet
                 // If a new password is provided, update it (should hash before storing)
                 if (!string.IsNullOrEmpty(txtPassword.Text))
                 {
-                    _user.Password = txtPassword.Text; // Ideally, hash the password before saving
+                //_user.Password = txtPassword.Text; // Ideally, hash the password before saving
+                    _user.Password = PasswordHasher.HashPassword(txtPassword.Text);
                 }
 
                 //var usersController = new UsersController(new HttpClient());
@@ -83,6 +85,11 @@ namespace SourDuckWannaBet
                     Response.Write("<script>alert('Failed to save profile changes.');</script>");
                 }
             //}
+        }
+
+        protected void btnDashboard_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("WBDashboard.aspx");
         }
     }
 }
