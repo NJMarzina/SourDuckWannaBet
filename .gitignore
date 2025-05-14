@@ -363,3 +363,14 @@ MigrationBackup/
 FodyWeavers.xsd
 
 config.json
+
+AddAFriend.aspx
+BetsControllerDemos.aspx
+Index.aspx
+MarzyBlog.aspx
+SendABet.aspx
+ViewAcceptedBets.aspx
+ViewAllBets.aspx
+ViewAllUsers.aspx
+ViewAllBets.aspx
+ViewSelectedBets.aspx
