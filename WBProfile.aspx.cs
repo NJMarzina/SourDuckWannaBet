@@ -60,25 +60,38 @@ namespace SourDuckWannaBet
                 _user.FirstName = txtFirstName.Text;
                 _user.LastName = txtLastName.Text;
                 _user.Email = txtEmail.Text;
-                _user.PhoneNumber = long.Parse(txtPhoneNumber.Text);
 
-                // If a new password is provided, update it (should hash before storing)
+            if (long.TryParse(txtPhoneNumber.Text, out long phoneNumber))
+            {
+                _user.PhoneNumber = phoneNumber;
+            }
+            else
+            {
+                // Handle invalid phone number format (optional)
+                Response.Write("<script>alert('Invalid phone number format.');</script>");
+                return;
+            }
+
                 if (!string.IsNullOrEmpty(txtPassword.Text))
                 {
-                //_user.Password = txtPassword.Text; // Ideally, hash the password before saving
+                    //hash before saving:
                     _user.Password = PasswordHasher.HashPassword(txtPassword.Text);
                 }
-
-                //var usersController = new UsersController(new HttpClient());
 
                 // Update user in the database
                 bool success = await usersController.UpdateUserAsync(_user);
 
-                if (success)
+                if(_user.UserID == 34)
+                {
+                    Response.Write("<script>alert('Cannot edit information pertaining to guest');</script>");
+                }
+
+                else if (success)
                 {
                     // Redirect to the dashboard after saving the changes
                     Response.Redirect("WBDashboard.aspx");
                 }
+
                 else
                 {
                     // Handle error (optional)
