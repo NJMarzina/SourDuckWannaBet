@@ -78,15 +78,16 @@ namespace SourDuckWannaBet
                     _user.Password = PasswordHasher.HashPassword(txtPassword.Text);
                 }
 
+                if (_user.UserID == 34)
+                {
+                    Response.Write("<script>alert('Cannot edit information pertaining to guest');</script>");
+                    return;
+                }
+
                 // Update user in the database
                 bool success = await usersController.UpdateUserAsync(_user);
 
-                if(_user.UserID == 34)
-                {
-                    Response.Write("<script>alert('Cannot edit information pertaining to guest');</script>");
-                }
-
-                else if (success)
+                if (success)
                 {
                     // Redirect to the dashboard after saving the changes
                     Response.Redirect("WBDashboard.aspx");
